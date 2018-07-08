@@ -6,21 +6,21 @@
     "up": "NODE_ENV=production node ./built/bin/www",
     "compile": "tsc",
     "clean": "rm -r built/views || true",
-    "copy": "cp -r views/ built/views/",
+    "copy": "cp -r views/ built/views/ && cp -r public/ built/public/",
     "start": "npm run clean && npm run compile && npm run copy && npm run up"
   },
   "dependencies": {
+    "@types/promise.prototype.finally": "^2.0.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
+    "express-mysql-session": "latest",
+    "express-session": "latest",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
     "pug": "2.0.0-beta11",
-    "express-session": "latest",
-    "express-mysql-session": "latest",
-    "underscore.string": "latest",
-    "sprintf": "latest",
-    "sprintf-js": "latest"
+    "sprintf-js": "latest",
+    "underscore.string": "latest"
   },
   "devDependencies": {
     "@types/express": "^4.16.0",

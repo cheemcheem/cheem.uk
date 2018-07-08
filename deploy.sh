@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+set -e
 # The above line uses zsh because I do, you might need to change this (google 'shebang line')
 
 # Compiles files, transfers to remote, kills old server, and runs new server.
@@ -21,9 +22,9 @@ remote_dir="LabChecker" # Where to send files remotely
 # todo add "local_dir" param to npm commands
 npm run compile && npm run copy
 
+
 # Use rsync to transfer files
-rsync -r "$PWD/$local_dir" "$CSLOC/$remote_dir"
-rsync -r "$PWD/public" "$CSLOC/$remote_dir"
+rsync -r "--exclude=*.ts --exclude=*.js.map" "$PWD/$local_dir" "$CSLOC/$remote_dir"
 rsync "$PWD/package.json" "$CSLOC/$remote_dir"
 rsync "$PWD/package-lock.json" "$CSLOC/$remote_dir"
 

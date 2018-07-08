@@ -7,7 +7,8 @@
     "target": "es2018",
     "sourceMap": true,
     "lib": [
-      "es2016"
+      "es2016",
+      "dom"
     ]
   },
   "exclude": [
@@ -16,8 +17,10 @@
   "include": [
     "./app.ts",
     "./bin",
+    "./public",
     "./routes",
     "./test",
-    "./utilities/**/*"
+    "./utilities/**/*",
+    "./public/javascripts"
   ]
 }
