@@ -1,0 +1,20 @@
+extends layout
+
+block content
+    div.header
+        h2#title List of PCS
+        input#search(placeholder="  Search Here")
+    div.content
+        table
+            thead
+                tr
+                    th Address
+                    th Users
+            tbody#pcTableBody
+                each pc in pcList
+                    tr.pc
+                        td.address #{pc}
+                        td.users
+    script(src='/javascripts/pcScript.js')
+
+

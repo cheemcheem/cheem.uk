@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./built",
+    "allowJs": true,
+    "target": "es2018",
+    "sourceMap": true,
+    "lib": [
+      "es2016"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "./app.ts",
+    "./bin",
+    "./routes",
+    "./test",
+    "./utilities/**/*"
+  ]
+}

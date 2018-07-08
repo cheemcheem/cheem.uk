@@ -1,0 +1,30 @@
+{
+  "name": "labchecker",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "up": "NODE_ENV=production node ./built/bin/www",
+    "compile": "tsc",
+    "clean": "rm -r built/views || true",
+    "copy": "cp -r views/ built/views/",
+    "start": "npm run clean && npm run compile && npm run copy && npm run up"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0",
+    "pug": "2.0.0-beta11",
+    "express-session": "latest",
+    "express-mysql-session": "latest",
+    "underscore.string": "latest",
+    "sprintf": "latest",
+    "sprintf-js": "latest"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/node": "^10.5.2",
+    "@types/sprintf-js": "^1.1.0"
+  }
+}
