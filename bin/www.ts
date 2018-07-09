@@ -5,10 +5,9 @@
  */
 import {app} from '../app';
 import * as deb from 'debug';
+import * as http from 'http';
 
 const debug = deb('labchecker:server');
-import * as http from 'http';
-import {log} from "util";
 
 /**
  * Get port from environment and store in Express.

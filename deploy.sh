@@ -28,6 +28,12 @@ rsync -r "--exclude=*.ts --exclude=*.js.map" "$PWD/$local_dir" "$CSLOC/$remote_d
 rsync "$PWD/package.json" "$CSLOC/$remote_dir"
 rsync "$PWD/package-lock.json" "$CSLOC/$remote_dir"
 
+
 # Kill old server and start server (change port in bin/www.ts to own port!)
-ssh "$CSADDR" "killall node"
-ssh "$CSADDR" "cd $remote_dir && pwd && tree -I node_modules && npm install && npm run up -- $1"
+ssh "$CSADDR" \
+"killall node ;
+cd $remote_dir &&
+pwd &&
+tree -I node_modules &&
+npm install &&
+npm run up &"

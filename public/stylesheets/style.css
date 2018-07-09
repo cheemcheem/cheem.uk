@@ -18,6 +18,17 @@ a {
 #pcTableBody.searchMode > .pc {
   display: none;
 }
+
 #pcTableBody.searchMode > .pc.matches {
   display: table-row;
+}
+
+canvas.visible {
+  display: unset;
+}
+
+canvas {
+  width: auto;
+  height: auto;
+  display: none;
 }

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "up": "NODE_ENV=production node ./built/bin/www",
+    "up": "NODE_ENV=production node_modules/forever/bin/forever start ./built/bin/www.js $UID",
     "compile": "tsc",
     "clean": "rm -r built/views || true",
     "copy": "cp -r views/ built/views/ && cp -r public/ built/public/",
@@ -16,6 +16,7 @@
     "express": "~4.16.0",
     "express-mysql-session": "latest",
     "express-session": "latest",
+    "forever": "^0.15.3",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
     "pug": "2.0.0-beta11",
