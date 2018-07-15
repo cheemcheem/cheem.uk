@@ -5,6 +5,8 @@
   "scripts": {
     "up": "NODE_ENV=production node_modules/forever/bin/forever start ./built/bin/www.js $UID",
     "compile": "tsc",
+    "compile-front": "tsc",
+    "babel-compile": "babel temp/public/javascripts -d built/public/javascripts",
     "clean": "rm -r built/views || true",
     "copy": "cp -r views/ built/views/ && cp -r public/ built/public/",
     "start": "npm run clean && npm run compile && npm run copy && npm run up"
@@ -26,6 +28,8 @@
   "devDependencies": {
     "@types/express": "^4.16.0",
     "@types/node": "^10.5.2",
-    "@types/sprintf-js": "^1.1.0"
+    "@types/sprintf-js": "^1.1.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
   }
 }

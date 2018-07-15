@@ -9,10 +9,12 @@ a {
 
 .active {
   color: green;
+    fill: green;
 }
 
 .inactive {
   color: red;
+    fill: red;
 }
 
 #pcTableBody.searchMode > .pc {
@@ -23,12 +25,12 @@ a {
   display: table-row;
 }
 
-canvas.visible {
+.map.visible {
   display: unset;
 }
 
-canvas {
-  width: auto;
+.map {
+    width: 100%;
   height: auto;
   display: none;
 }

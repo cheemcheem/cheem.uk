@@ -1,26 +1,26 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./built",
     "allowJs": true,
     "target": "es2018",
-    "sourceMap": true,
     "lib": [
-      "es2016",
-      "dom"
+      "dom",
+      "es2016"
     ]
   },
   "exclude": [
     "node_modules"
   ],
   "include": [
+    "./public/javascripts/pcScript.ts",
     "./app.ts",
     "./bin",
     "./public",
     "./routes",
     "./test",
-    "./utilities/**/*",
-    "./public/javascripts"
+    "./utilities/**/*"
   ]
 }

@@ -3,7 +3,7 @@ set -e
 # The above line uses zsh because I do, you might need to change this (google 'shebang line')
 
 # Compiles files, transfers to remote, kills old server, and runs new server.
-# $1 = port to run on
+# $1 = whether to not server
 
 # Hints:
 # 1) You may want to run this in tmux or modify this script
@@ -20,13 +20,18 @@ remote_dir="LabChecker" # Where to send files remotely
 
 # Compile TS and copy other files into built folder like package*.json, public/*, and views/*
 # todo add "local_dir" param to npm commands
-npm run compile && npm run copy
+npm run compile && npm run compile-front && npm run copy
 
 
 # Use rsync to transfer files
-rsync -r "--exclude=*.ts --exclude=*.js.map" "$PWD/$local_dir" "$CSLOC/$remote_dir"
+#"--exclude=*.ts --exclude=*.js.map"
+rsync -r "--exclude=*tsconfig.json" "$PWD/$local_dir" "$CSLOC/$remote_dir"
 rsync "$PWD/package.json" "$CSLOC/$remote_dir"
 rsync "$PWD/package-lock.json" "$CSLOC/$remote_dir"
+
+if [ -n "$1" ]; then
+    exit 0
+fi
 
 
 # Kill old server and start server (change port in bin/www.ts to own port!)
