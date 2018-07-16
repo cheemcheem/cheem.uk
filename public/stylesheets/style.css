@@ -7,6 +7,8 @@ a {
     color: #00B7FF;
 }
 
+/* Status */
+
 .active {
     color: green;
     fill: green;
@@ -17,20 +19,70 @@ a {
     fill: red;
 }
 
-#pcTableBody.searchMode > .pc {
+/* Search */
+
+#views.searchMode > table > tbody > .pc {
     display: none;
 }
 
-#pcTableBody.searchMode > .pc.matches {
+#views.searchMode > table > tbody > .pc.matches {
     display: table-row;
 }
 
-.views > .visible {
+#views.searchMode > svg > text {
+    fill-opacity: 0.2;
+}
+
+#views.searchMode > svg > text.matches {
+    fill-opacity: 1;
+}
+
+/* Drop Down Selection Control*/
+
+#views > .visible {
     display: unset;
 }
 
-.views > * {
+#views > * {
     width: 100%;
     height: auto;
     display: none;
 }
+
+/* Header, Drop Down, and Search Input */
+#header {
+    border-bottom: 5px solid black;
+    margin-bottom: 15px;
+}
+
+#filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    margin: 15px 0 15px 0;
+
+}
+
+#search, #labSelector, #labSelector > * {
+    width: 150px;
+    padding: 5px 0 5px 0;
+    border: 0;
+    margin: 0;
+}
+
+#search {
+    margin-right: 5px;
+}
+
+/* SVG */
+#content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+svg {
+    border: 5px solid black;
+}
+

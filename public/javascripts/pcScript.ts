@@ -16,7 +16,7 @@ window.onload = () => {
         // Create search handler for pc list and assign to the search bar
         SearchHandler.assignSearchHandler(searchBar, listOfPCs);
 
-        // Set up dropdown
+        // Set up drop down
         const svgs = document.getElementsByTagNameNS("http://www.w3.org/2000/svg", "svg");
         const pcList = document.getElementById("List");
         const list = [];
@@ -75,14 +75,15 @@ class StatusHandler {
             // Get current table row info
             const tablePC = this.listOfPCs[i];
             const tablePCAddress = tablePC.children[0];
+            const tablePCAddressInner = tablePCAddress.innerHTML;
             const tablePCUsers = tablePC.children[1];
 
-            const id = "svg-" + tablePCAddress.innerHTML;
+            const id = "svg-" + tablePCAddressInner;
 
             const svgPCText = document.getElementById(id);
 
             // Update status each PC in the table
-            StatusHandler.getStatus(tablePCAddress.innerHTML)
+            StatusHandler.getStatus(tablePCAddressInner)
                 .then((foundUsers) => {
                     // PC is active
                     tablePC.classList.remove("inactive");
@@ -162,7 +163,7 @@ class StatusHandler {
             // Accept any state via onLoad method
             req.addEventListener("load", onResponseLoad);
             req.addEventListener("abort", onResponseLoad);
-            req.addEventListener("error", onResponseLoad);
+            req.addEventListener("error", onResponseLoad); //todo change this as indicates connection issue to server not pc
 
             // Send GET to url asynchronously so all can be sent at once
             req.open("GET", pc, true);
@@ -179,7 +180,7 @@ class SearchHandler {
     private readonly searchBar: HTMLInputElement;
     private readonly listOfPCs: HTMLCollection;
 
-    constructor(searchBar: HTMLInputElement, listOfPCs: HTMLCollection) {
+    private constructor(searchBar: HTMLInputElement, listOfPCs: HTMLCollection) {
         this.searchBar = searchBar;
         this.listOfPCs = listOfPCs;
         this.init()
@@ -191,11 +192,9 @@ class SearchHandler {
          */
         const onKeyUp = () => {
             this.findMatches(this.searchBar.value)
-                .then((val) => {
-                    console.log(val);
+                .then((ignored) => {
                 })
-                .catch((error) => {
-                    console.error(error);
+                .catch((ignored) => {
                 });
         };
 
@@ -211,9 +210,14 @@ class SearchHandler {
 
         return new Promise((resolve, reject) => {
 
-            // Set #pcTableBody to searching mode for css sorting of visibility
-            const tableBody = document.getElementById("pcTableBody");
-            tableBody.classList.add("searchMode");
+            // Set #views to searching mode for css sorting of visibility
+            const views = document.getElementById("views");
+            views.classList.add("searchMode");
+
+            if (term.length === 0) {
+                views.classList.remove("searchMode");
+                return reject("Empty List!");
+            }
 
             // PCs which match the search term
             let matchingPCs = [];
@@ -232,12 +236,12 @@ class SearchHandler {
 
             if (matchingPCs.length > 0) {
                 this.searchBar.classList.remove("inactive");
-                resolve(`Found ${matchingPCs.length} matches.`);
+                return resolve(`Found ${matchingPCs.length} matches.`);
 
             } else {
-                tableBody.classList.remove("searchMode");
+                views.classList.remove("searchMode");
                 this.searchBar.classList.add("inactive");
-                reject("Empty List!");
+                return reject("Empty List!");
 
             }
 
@@ -246,7 +250,7 @@ class SearchHandler {
     };
 
     /**
-     * Check whether a given pc index matches the term and update classes inside of it accordingly.
+     * Update a pc element's class depending of it it matches search or not.
      * @param pc {Element}
      * @param term {string}
      * @returns {Element | null}
@@ -256,14 +260,20 @@ class SearchHandler {
         // Get current table row children in String form
         const pcAddress = String(pc.children[0].innerHTML);
         const pcUsers = String(pc.children[1].innerHTML);
-
+        const pcRect = document.getElementById(`svg-${pcAddress}`);
         // Check if either match
         if (pcUsers.match(term) || pcAddress.match(term)) {
             pc.classList.add("matches");
+
+            //todo remove once added all svg versions
+            if (pcRect) pcRect.classList.add("matches");
             return pc;
 
         } else {
             pc.classList.remove("matches");
+
+            //todo remove once added all svg versions
+            if (pcRect) pcRect.classList.remove("matches");
             return null;
 
         }
@@ -278,7 +288,12 @@ class SearchHandler {
 
 class MapHandler {
 
-    static applyCanvas(labRoom: LabRoom, roomSVG: SVGElement) {
+    /**
+     * Uses a lab room object's details and machines to populate the room svg's rect and texts elements, and properties.
+     * @param labRoom {LabRoom} Lab Room with Lab Machines.
+     * @param roomSVG {SVGElement} SVG element to customise.
+     */
+    static applyCanvas: (labRoom: LabRoom, roomSVG: SVGElement) => Promise<{}> = (labRoom: LabRoom, roomSVG: SVGElement) => {
         return new Promise((resolve, reject) => {
             const svgNS = "http://www.w3.org/2000/svg";
 
@@ -427,8 +442,8 @@ abstract class LabMachineDetails implements LabVisualObject {
 
 class SkinnyMachine extends LabMachineDetails {
 
-    static readonly width: number = 100;
-    static readonly height: number = 40;
+    static readonly width: number = 80;
+    static readonly height: number = 20;
 
     constructor(name: string, color: string, x: number, y: number) {
         super(name, SkinnyMachine.width, SkinnyMachine.height, color, x, y);
@@ -438,8 +453,8 @@ class SkinnyMachine extends LabMachineDetails {
 
 class ThiccMachine extends LabMachineDetails {
 
-    static readonly width: number = 100;
-    static readonly height: number = 80;
+    static readonly width: number = 80;
+    static readonly height: number = 40;
 
     constructor(name: string, color: string, x: number, y: number) {
         super(name, ThiccMachine.width, ThiccMachine.height, color, x, y);

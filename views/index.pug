@@ -1,21 +1,22 @@
 extends layout
 
 block content
-    div.header
+    div#header
         h2#title List of PCS
-        input#search(placeholder="  Search Here")
-    div.content
-        select#labSelector
-            optgroup(label="John Honey")
-                option(value="JH105") JH105 Quiet
-                option(value="JH103") JH103 Goldfish
-                option(value="JH110") JH110 Main
-                option(value="Morrison") Morrison
-            optgroup(label="Jack Cole")
-                option(value="JC035") JC035 Main
-            optgroup(label="List")
-                option(value="List") List of PCs
-        div.views
+        div#filter
+            input#search(placeholder="  Search by pc or user name")
+            select#labSelector
+                optgroup(label="John Honey")
+                    option(value="JH105") JH105 Quiet
+                    option(value="JH103") JH103 Goldfish
+                    option(value="JH110") JH110 Main
+                    option(value="Morrison") Morrison
+                optgroup(label="Jack Cole")
+                    option(value="JC035") JC035 Main
+                optgroup(label="List")
+                    option(value="List") List of PCs
+    div#content
+        div#views
             svg.map#JC035
             svg.map#JH105.visible
             svg.map#JH110
