@@ -1,36 +1,36 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }
 
 .active {
-  color: green;
+    color: green;
     fill: green;
 }
 
 .inactive {
-  color: red;
+    color: red;
     fill: red;
 }
 
 #pcTableBody.searchMode > .pc {
-  display: none;
+    display: none;
 }
 
 #pcTableBody.searchMode > .pc.matches {
-  display: table-row;
+    display: table-row;
 }
 
-.map.visible {
-  display: unset;
+.views > .visible {
+    display: unset;
 }
 
-.map {
+.views > * {
     width: 100%;
-  height: auto;
-  display: none;
+    height: auto;
+    display: none;
 }

@@ -16,7 +16,14 @@ window.onload = () => {
     SearchHandler.assignSearchHandler(searchBar, listOfPCs);
 
     // Set up dropdown
-    const list = document.getElementsByTagNameNS("http://www.w3.org/2000/svg", "svg");
+    const svgs = document.getElementsByTagNameNS("http://www.w3.org/2000/svg", "svg");
+    const pcList = document.getElementById("List");
+    const list = [];
+    for (let i = 0; i < svgs.length; i++) {
+        list.push(svgs[i]);
+    }
+    list.push(pcList);
+
     const dropdown = document.getElementById("labSelector") as HTMLSelectElement;
     dropdown.addEventListener("change", () => {
         for (let i = 0; i < list.length; i++) {

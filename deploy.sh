@@ -41,4 +41,4 @@ cd $remote_dir &&
 pwd &&
 tree -I node_modules &&
 npm install &&
-npm run up &"
+npm run up > log.txt 2>&1"

@@ -13,23 +13,24 @@ block content
                 option(value="Morrison") Morrison
             optgroup(label="Jack Cole")
                 option(value="JC035") JC035 Main
-
-        svg.map#JC035
-        svg.map#JH105.visible
-        svg.map#JH110
-        svg.map#JH103
-        svg.map#Morrison
-
-        table
-            thead
-                tr
-                    th Address
-                    th Users
-            tbody#pcTableBody
-                each pc in pcList
-                    tr.pc
-                        td.address #{pc}
-                        td.users
+            optgroup(label="List")
+                option(value="List") List of PCs
+        div.views
+            svg.map#JC035
+            svg.map#JH105.visible
+            svg.map#JH110
+            svg.map#JH103
+            svg.map#Morrison
+            table#List
+                thead
+                    tr
+                        th Address
+                        th Users
+                tbody#pcTableBody
+                    each pc in pcList
+                        tr.pc
+                            td.address #{pc}
+                            td.users
     script(src='/javascripts/pcScript.js')
 
 
