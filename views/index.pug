@@ -5,8 +5,16 @@ block content
         h2#title List of PCS
         input#search(placeholder="  Search Here")
     div.content
+        select#labSelector
+            optgroup(label="John Honey")
+                option(value="JH105") JH105 Quiet
+                option(value="JH103") JH103 Goldfish
+                option(value="JH110") JH110 Main
+                option(value="Morrison") Morrison
+            optgroup(label="Jack Cole")
+                option(value="JC035") JC035 Main
+
         svg.map#JC035
-        svg.map#Tutor
         svg.map#JH105.visible
         svg.map#JH110
         svg.map#JH103

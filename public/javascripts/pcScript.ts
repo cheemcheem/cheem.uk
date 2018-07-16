@@ -1,6 +1,8 @@
 window.onload = () => {
 
     MapHandler.applyCanvas(JH105Info, document.querySelector("#JH105"));
+    MapHandler.applyCanvas(JH103Info, document.querySelector("#JH103"));
+    MapHandler.applyCanvas(MorrisonInfo, document.querySelector("#Morrison"));
 
     const listOfPCs: HTMLCollection = document.getElementsByClassName("pc");
     const header: HTMLElement = document.getElementById("title");
@@ -12,6 +14,19 @@ window.onload = () => {
 
     // Create search handler for pc list and assign to the search bar
     SearchHandler.assignSearchHandler(searchBar, listOfPCs);
+
+    // Set up dropdown
+    const list = document.getElementsByTagNameNS("http://www.w3.org/2000/svg", "svg");
+    const dropdown = document.getElementById("labSelector") as HTMLSelectElement;
+    dropdown.addEventListener("change", () => {
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].id === dropdown.value) {
+                list[i].classList.add("visible");
+            } else {
+                list[i].classList.remove("visible");
+            }
+        }
+    });
 
 };
 
@@ -61,8 +76,7 @@ class StatusHandler {
             // @ts-ignore
             const svgPCText = lab.getElementById(id);
 
-            //todo remove
-            if (!svgPCText) continue;
+
             // Update status each PC in the table
             StatusHandler.getStatus(tablePCAddress.innerHTML)
                 .then((foundUsers) => {
@@ -71,23 +85,28 @@ class StatusHandler {
                     tablePC.classList.remove("inactive");
                     tablePC.classList.add("active");
                     tablePCUsers.innerHTML = foundUsers;
+                    this.numberOfActive++;
 
+                    //todo remove once added all svg versions
+                    if (!svgPCText) return;
                     svgPCText.classList.remove("inactive");
                     svgPCText.classList.add("active");
 
-                    this.numberOfActive++;
 
                 })
                 .catch((e) => {
+
                     // PC is inactive
                     tablePC.classList.remove("active");
                     tablePC.classList.add("inactive");
+                    this.numberOfInactive++;
+                    tablePCUsers.innerHTML = "N/A";
 
+                    //todo remove once added all svg versions
+                    if (!svgPCText) return;
                     svgPCText.classList.remove("active");
                     svgPCText.classList.add("inactive");
 
-                    this.numberOfInactive++;
-                    tablePCUsers.innerHTML = "N/A";
 
                 })
                 .finally(() => {
@@ -262,6 +281,7 @@ class MapHandler {
         roomSVG.style.color = labRoom.color;
         roomSVG.style.width = labRoom.width.toString();
         roomSVG.style.height = labRoom.height.toString();
+        roomSVG.setAttribute("name", labRoom.name);
 
         const machines: LabMachineDetails[] = labRoom.machines;
 
@@ -474,8 +494,24 @@ const JH105Machines = [
 const JH105Info = new LabRoom("white", 12 * SkinnyMachine.height, JH105Machines, "Silent Labs JH105", 9 * SkinnyMachine.width);
 
 const JH103Machines = [
-    new SkinnyMachine("pc2-144", "white", 0, SkinnyMachine.height * 3),
+    new SkinnyMachine("pc2-144-l", "white", 0, SkinnyMachine.height * 3),
 ];
-const JH103Info = new LabRoom("white", 5 * SkinnyMachine.height, JH103Machines, "Tutor Room JH103", 4 * SkinnyMachine.width);
+const JH103Info = new LabRoom("white", 5 * SkinnyMachine.height, JH103Machines, "Goldfish JH103", 4 * SkinnyMachine.width);
+
+const MorrisonMachines = [
+    new SkinnyMachine("pc2-047-l", "white", 0, 0),
+    new SkinnyMachine("pc2-069-l", "white", SkinnyMachine.width, 0),
+    new SkinnyMachine("pc2-031-l", "white", 2 * SkinnyMachine.width, 0),
+    new SkinnyMachine("pc2-086-l", "white", 3 * SkinnyMachine.width, 0),
+    new SkinnyMachine("pc2-084-l", "white", 4 * SkinnyMachine.width, 0),
+
+    new SkinnyMachine("pc2-108-l", "white", 0, SkinnyMachine.height),
+    new SkinnyMachine("pc2-120-l", "white", SkinnyMachine.width, SkinnyMachine.height),
+    new SkinnyMachine("pc2-090-l", "white", 2 * SkinnyMachine.width, SkinnyMachine.height),
+    new SkinnyMachine("pc2-003-l", "white", 3 * SkinnyMachine.width, SkinnyMachine.height),
+    new SkinnyMachine("pc2-118-l", "white", 4 * SkinnyMachine.width, SkinnyMachine.height),
+];
+const MorrisonInfo = new LabRoom("white", 2 * SkinnyMachine.height, MorrisonMachines, "Tutor Room JH103", 5 * SkinnyMachine.width);
+
 
 

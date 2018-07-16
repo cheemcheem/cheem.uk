@@ -3,7 +3,7 @@ set -e
 # The above line uses zsh because I do, you might need to change this (google 'shebang line')
 
 # Compiles files, transfers to remote, kills old server, and runs new server.
-# $1 = whether to not server
+# if $1 is present then will not restart remote server (i.e. for /public changes only)
 
 # Hints:
 # 1) You may want to run this in tmux or modify this script
@@ -20,7 +20,7 @@ remote_dir="LabChecker" # Where to send files remotely
 
 # Compile TS and copy other files into built folder like package*.json, public/*, and views/*
 # todo add "local_dir" param to npm commands
-npm run compile && npm run compile-front && npm run copy
+npm install --only-dev && npm run compile && npm run compile-front && npm run copy
 
 
 # Use rsync to transfer files
