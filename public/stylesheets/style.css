@@ -76,10 +76,14 @@ a {
 }
 
 /* SVG */
+#views {
+    /*zoom: document; todo*/
+}
 #content {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    overflow: scroll;
 }
 
 svg {

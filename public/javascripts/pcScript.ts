@@ -3,7 +3,8 @@ window.onload = () => {
     return Promise.all([
         MapHandler.applyCanvas(JH105Info, document.querySelector("#JH105")),
         MapHandler.applyCanvas(JH103Info, document.querySelector("#JH103")),
-        MapHandler.applyCanvas(MorrisonInfo, document.querySelector("#Morrison"))
+        MapHandler.applyCanvas(MorrisonInfo, document.querySelector("#Morrison")),
+        MapHandler.applyCanvas(JH110Info, document.querySelector("#JH110"))
     ]).then(() => {
         const listOfPCs: HTMLCollection = document.getElementsByClassName("pc");
         const header: HTMLElement = document.getElementById("title");
@@ -445,8 +446,8 @@ class SkinnyMachine extends LabMachineDetails {
     static readonly width: number = 80;
     static readonly height: number = 20;
 
-    constructor(name: string, color: string, x: number, y: number) {
-        super(name, SkinnyMachine.width, SkinnyMachine.height, color, x, y);
+    constructor(name: string, x: number, y: number) {
+        super(name + "-l", SkinnyMachine.width, SkinnyMachine.height, "white", x * SkinnyMachine.width, y * SkinnyMachine.height);
     }
 
 }
@@ -456,87 +457,209 @@ class ThiccMachine extends LabMachineDetails {
     static readonly width: number = 80;
     static readonly height: number = 40;
 
-    constructor(name: string, color: string, x: number, y: number) {
-        super(name, ThiccMachine.width, ThiccMachine.height, color, x, y);
+    constructor(name: string, x: number, y: number) {
+        super(name + "-l", ThiccMachine.width, ThiccMachine.height, "white", ThiccMachine.width * x, ThiccMachine.height * y);
     }
 
 }
 
 
 const JH105Machines = [
-    new SkinnyMachine("pc2-033-l", "white", 0, 0),
-    new SkinnyMachine("pc5-001-l", "white", SkinnyMachine.width, 0),
-    new SkinnyMachine("pc5-002-l", "white", SkinnyMachine.width * 2, 0),
-    new SkinnyMachine("pc5-003-l", "white", SkinnyMachine.width * 3, 0),
-    new SkinnyMachine("pc5-004-l", "white", SkinnyMachine.width * 4, 0),
-    new SkinnyMachine("pc5-005-l", "white", SkinnyMachine.width * 5, 0),
-    new SkinnyMachine("pc5-011-l", "white", SkinnyMachine.width * 6, 0),
-    new SkinnyMachine("pc5-012-l", "white", SkinnyMachine.width * 7, 0),
-    new SkinnyMachine("pc5-013-l", "white", SkinnyMachine.width * 8, 0),
+    new SkinnyMachine("pc2-033", 0, 0),
+    new SkinnyMachine("pc5-001", 1, 0),
+    new SkinnyMachine("pc5-002", 2, 0),
+    new SkinnyMachine("pc5-003", 3, 0),
+    new SkinnyMachine("pc5-004", 4, 0),
+    new SkinnyMachine("pc5-005", 5, 0),
+    new SkinnyMachine("pc5-011", 6, 0),
+    new SkinnyMachine("pc5-012", 7, 0),
+    new SkinnyMachine("pc5-013", 8, 0),
 
-    new SkinnyMachine("pc5-020-l", "white", SkinnyMachine.width * 2, SkinnyMachine.height * 3),
-    new SkinnyMachine("pc5-019-l", "white", SkinnyMachine.width * 3, SkinnyMachine.height * 3),
-    new SkinnyMachine("pc5-018-l", "white", SkinnyMachine.width * 4, SkinnyMachine.height * 3),
-    new SkinnyMachine("pc5-017-l", "white", SkinnyMachine.width * 5, SkinnyMachine.height * 3),
-    new SkinnyMachine("pc5-016-l", "white", SkinnyMachine.width * 6, SkinnyMachine.height * 3),
-    new SkinnyMachine("pc5-015-l", "white", SkinnyMachine.width * 7, SkinnyMachine.height * 3),
-    new SkinnyMachine("pc5-014-l", "white", SkinnyMachine.width * 8, SkinnyMachine.height * 3),
+    new SkinnyMachine("pc5-020", 2, 3),
+    new SkinnyMachine("pc5-019", 3, 3),
+    new SkinnyMachine("pc5-018", 4, 3),
+    new SkinnyMachine("pc5-017", 5, 3),
+    new SkinnyMachine("pc5-016", 6, 3),
+    new SkinnyMachine("pc5-015", 7, 3),
+    new SkinnyMachine("pc5-014", 8, 3),
 
-    new SkinnyMachine("pc2-015-l", "white", SkinnyMachine.width * 2, SkinnyMachine.height * 4),
-    new SkinnyMachine("pc2-010-l", "white", SkinnyMachine.width * 3, SkinnyMachine.height * 4),
-    new SkinnyMachine("pc2-147-l", "white", SkinnyMachine.width * 4, SkinnyMachine.height * 4),
-    new SkinnyMachine("pc2-083-l", "white", SkinnyMachine.width * 5, SkinnyMachine.height * 4),
-    new SkinnyMachine("pc2-041-l", "white", SkinnyMachine.width * 6, SkinnyMachine.height * 4),
-    new SkinnyMachine("pc2-044-l", "white", SkinnyMachine.width * 7, SkinnyMachine.height * 4),
-    new SkinnyMachine("pc2-021-l", "white", SkinnyMachine.width * 8, SkinnyMachine.height * 4),
+    new SkinnyMachine("pc2-015", 2, 4),
+    new SkinnyMachine("pc2-010", 3, 4),
+    new SkinnyMachine("pc2-147", 4, 4),
+    new SkinnyMachine("pc2-083", 5, 4),
+    new SkinnyMachine("pc2-041", 6, 4),
+    new SkinnyMachine("pc2-044", 7, 4),
+    new SkinnyMachine("pc2-021", 8, 4),
 
-    new SkinnyMachine("pc2-034-l", "white", SkinnyMachine.width * 2, SkinnyMachine.height * 7),
-    new SkinnyMachine("pc2-038-l", "white", SkinnyMachine.width * 3, SkinnyMachine.height * 7),
-    new SkinnyMachine("pc2-141-l", "white", SkinnyMachine.width * 4, SkinnyMachine.height * 7),
-    new SkinnyMachine("pc2-132-l", "white", SkinnyMachine.width * 5, SkinnyMachine.height * 7),
-    new SkinnyMachine("pc2-019-l", "white", SkinnyMachine.width * 6, SkinnyMachine.height * 7),
-    new SkinnyMachine("pc2-001-l", "white", SkinnyMachine.width * 7, SkinnyMachine.height * 7),
+    new SkinnyMachine("pc2-034", 2, 7),
+    new SkinnyMachine("pc2-038", 3, 7),
+    new SkinnyMachine("pc2-141", 4, 7),
+    new SkinnyMachine("pc2-132", 5, 7),
+    new SkinnyMachine("pc2-019", 6, 7),
+    new SkinnyMachine("pc2-001", 7, 7),
 
-    new SkinnyMachine("pc2-007-l", "white", SkinnyMachine.width * 2, SkinnyMachine.height * 8),
-    new SkinnyMachine("pc2-048-l", "white", SkinnyMachine.width * 3, SkinnyMachine.height * 8),
-    new SkinnyMachine("pc2-130-l", "white", SkinnyMachine.width * 4, SkinnyMachine.height * 8),
-    new SkinnyMachine("pc2-024-l", "white", SkinnyMachine.width * 5, SkinnyMachine.height * 8),
-    new SkinnyMachine("pc2-016-l", "white", SkinnyMachine.width * 6, SkinnyMachine.height * 8),
-    new SkinnyMachine("pc2-022-l", "white", SkinnyMachine.width * 7, SkinnyMachine.height * 8),
+    new SkinnyMachine("pc2-007", 2, 8),
+    new SkinnyMachine("pc2-048", 3, 8),
+    new SkinnyMachine("pc2-130", 4, 8),
+    new SkinnyMachine("pc2-024", 5, 8),
+    new SkinnyMachine("pc2-016", 6, 8),
+    new SkinnyMachine("pc2-022", 7, 8),
 
 
-    new SkinnyMachine("pc2-002-l", "white", 0, SkinnyMachine.height * 9),
+    new SkinnyMachine("pc2-002", 0, 9),
 
-    new SkinnyMachine("pc2-043-l", "white", 0, SkinnyMachine.height * 10),
+    new SkinnyMachine("pc2-043", 0, 10),
 
-    new SkinnyMachine("pc2-013-l", "white", 0, SkinnyMachine.height * 11),
-    new SkinnyMachine("pc2-051-l", "white", SkinnyMachine.width * 4, SkinnyMachine.height * 11),
-    new SkinnyMachine("pc2-077-l", "white", SkinnyMachine.width * 5, SkinnyMachine.height * 11),
-    new SkinnyMachine("pc2-008-l", "white", SkinnyMachine.width * 6, SkinnyMachine.height * 11),
-    new SkinnyMachine("pc2-030-l", "white", SkinnyMachine.width * 7, SkinnyMachine.height * 11),
+    new SkinnyMachine("pc2-013", 0, 11),
+    new SkinnyMachine("pc2-051", 4, 11),
+    new SkinnyMachine("pc2-077", 5, 11),
+    new SkinnyMachine("pc2-008", 6, 11),
+    new SkinnyMachine("pc2-030", 7, 11),
 
 ];
 const JH105Info = new LabRoom("white", 12 * SkinnyMachine.height, JH105Machines, "Silent Labs JH105", 9 * SkinnyMachine.width);
 
 const JH103Machines = [
-    new SkinnyMachine("pc2-144-l", "white", 0, SkinnyMachine.height * 3),
+    new SkinnyMachine("pc2-144", 0, 3),
 ];
 const JH103Info = new LabRoom("white", 5 * SkinnyMachine.height, JH103Machines, "Goldfish JH103", 4 * SkinnyMachine.width);
 
 const MorrisonMachines = [
-    new SkinnyMachine("pc2-047-l", "white", 0, 0),
-    new SkinnyMachine("pc2-069-l", "white", SkinnyMachine.width, 0),
-    new SkinnyMachine("pc2-031-l", "white", 2 * SkinnyMachine.width, 0),
-    new SkinnyMachine("pc2-086-l", "white", 3 * SkinnyMachine.width, 0),
-    new SkinnyMachine("pc2-084-l", "white", 4 * SkinnyMachine.width, 0),
+    new SkinnyMachine("pc2-047", 0, 0),
+    new SkinnyMachine("pc2-069", 1, 0),
+    new SkinnyMachine("pc2-031", 2, 0),
+    new SkinnyMachine("pc2-086", 3, 0),
+    new SkinnyMachine("pc2-084", 4, 0),
 
-    new SkinnyMachine("pc2-108-l", "white", 0, SkinnyMachine.height),
-    new SkinnyMachine("pc2-120-l", "white", SkinnyMachine.width, SkinnyMachine.height),
-    new SkinnyMachine("pc2-090-l", "white", 2 * SkinnyMachine.width, SkinnyMachine.height),
-    new SkinnyMachine("pc2-003-l", "white", 3 * SkinnyMachine.width, SkinnyMachine.height),
-    new SkinnyMachine("pc2-118-l", "white", 4 * SkinnyMachine.width, SkinnyMachine.height),
+    new SkinnyMachine("pc2-108", 0, 1),
+    new SkinnyMachine("pc2-120", 1, 1),
+    new SkinnyMachine("pc2-090", 2, 1),
+    new SkinnyMachine("pc2-003", 3, 1),
+    new SkinnyMachine("pc2-118", 4, 1),
 ];
-const MorrisonInfo = new LabRoom("white", 2 * SkinnyMachine.height, MorrisonMachines, "Tutor Room JH103", 5 * SkinnyMachine.width);
+const MorrisonInfo = new LabRoom("white", 2 * SkinnyMachine.height, MorrisonMachines, "Morrison", 5 * SkinnyMachine.width);
+
+
+const JH110Machines = [
+    new SkinnyMachine("pc2-072", 0, 0),
+    new SkinnyMachine("pc2-113", 2, 0),
+    new SkinnyMachine("pc2-065", 3, 0),
+    new SkinnyMachine("pc2-081", 11, 0),
+
+    new SkinnyMachine("pc2-139", 2, 1),
+    new SkinnyMachine("pc2-097", 3, 1),
+
+    new SkinnyMachine("pc2-075", 6, 3),
+    new SkinnyMachine("pc2-105", 7, 3),
+    new SkinnyMachine("pc2-025", 8, 3),
+    new SkinnyMachine("pc2-067", 9, 3),
+    new SkinnyMachine("pc2-099", 10, 3),
+    new SkinnyMachine("pc2-112", 11, 3),
+    new SkinnyMachine("pc2-064", 13, 3),
+    new SkinnyMachine("pc2-057", 14, 3),
+    new SkinnyMachine("pc2-085", 15, 3),
+    new SkinnyMachine("pc2-111", 16, 3),
+    new SkinnyMachine("pc2-063", 17, 3),
+
+    new SkinnyMachine("pc2-053", 0, 6),
+    new SkinnyMachine("pc2-027", 1, 6),
+    new SkinnyMachine("pc2-071", 2, 6),
+    new SkinnyMachine("pc2-009", 3, 6),
+    new SkinnyMachine("pc2-101", 6, 6),
+    new SkinnyMachine("pc2-106", 7, 6),
+    new SkinnyMachine("pc2-094", 8, 6),
+    new SkinnyMachine("pc2-066", 9, 6),
+    new SkinnyMachine("pc2-056", 10, 6),
+    new SkinnyMachine("pc2-020", 11, 6),
+    new SkinnyMachine("pc2-098", 13, 6),
+    new SkinnyMachine("pc2-102", 14, 6),
+    new SkinnyMachine("pc2-074", 15, 6),
+    new SkinnyMachine("pc2-059", 16, 6),
+    new SkinnyMachine("pc2-062", 17, 6),
+
+    new SkinnyMachine("pc2-089", 0, 7),
+    new SkinnyMachine("pc2-028", 1, 7),
+    new SkinnyMachine("pc2-082", 2, 7),
+    new SkinnyMachine("pc2-092", 3, 7),
+
+    new SkinnyMachine("pc2-076", 6, 9),
+    new SkinnyMachine("pc2-079", 7, 9),
+    new SkinnyMachine("pc2-070", 8, 9),
+    new SkinnyMachine("pc2-091", 9, 9),
+    new SkinnyMachine("pc2-096", 10, 9),
+    new SkinnyMachine("pc2-109", 11, 9),
+    new SkinnyMachine("pc2-080", 13, 9),
+    new SkinnyMachine("pc2-054", 14, 9),
+    new SkinnyMachine("pc2-129", 15, 9),
+    new SkinnyMachine("pc2-068", 16, 9),
+    new SkinnyMachine("pc2-123", 17, 9),
+
+    new SkinnyMachine("pc2-058", 0, 12),
+    new SkinnyMachine("pc2-133", 1, 12),
+    new SkinnyMachine("pc2-100", 2, 12),
+    new SkinnyMachine("pc2-095", 3, 12),
+
+    new SkinnyMachine("pc2-093", 0, 13),
+    new SkinnyMachine("pc2-117", 1, 13),
+    new SkinnyMachine("pc2-026", 2, 13),
+    new SkinnyMachine("pc2-040", 3, 13),
+    new SkinnyMachine("pc2-104", 6, 13),
+    new SkinnyMachine("pc2-055", 7, 13),
+    new SkinnyMachine("pc2-078", 8, 13),
+    new SkinnyMachine("pc2-049", 9, 13),
+    new SkinnyMachine("pc2-087", 13, 13),
+    new SkinnyMachine("pc2-088", 14, 13),
+    new SkinnyMachine("pc2-116", 15, 13),
+    new SkinnyMachine("pc2-121", 16, 13),
+    new SkinnyMachine("pc2-060", 17, 13),
+
+    new SkinnyMachine("pc2-052", 6, 14),
+    new SkinnyMachine("pc2-114", 7, 14),
+    new SkinnyMachine("pc2-148", 8, 14),
+    new SkinnyMachine("pc2-029", 9, 14),
+    new SkinnyMachine("pc2-143", 13, 14),
+    new SkinnyMachine("pc2-119", 14, 14),
+    new SkinnyMachine("pc2-122", 15, 14),
+    new SkinnyMachine("pc2-046", 16, 14),
+    new SkinnyMachine("pc2-050", 17, 14),
+
+    new SkinnyMachine("pc5-023", 0, 17),
+    new SkinnyMachine("pc5-022", 1, 17),
+    new SkinnyMachine("pc5-036", 2, 17),
+    new SkinnyMachine("pc5-038", 3, 17),
+    new SkinnyMachine("pc2-005", 6, 17),
+    new SkinnyMachine("pc2-138", 7, 17),
+    new SkinnyMachine("pc2-073", 8, 17),
+    new SkinnyMachine("pc2-103", 9, 17),
+    new SkinnyMachine("pc2-107", 10, 17),
+    new SkinnyMachine("pc2-036", 11, 17),
+
+    new SkinnyMachine("pc5-037", 0, 18),
+    new SkinnyMachine("pc5-033", 1, 18),
+    new SkinnyMachine("pc5-031", 2, 18),
+    new SkinnyMachine("pc5-021", 3, 18),
+    new SkinnyMachine("pc2-011", 6, 18),
+    new SkinnyMachine("pc2-039", 7, 18),
+    new SkinnyMachine("pc2-017", 8, 18),
+    new SkinnyMachine("pc2-045", 9, 18),
+    new SkinnyMachine("pc2-004", 10, 18),
+    new SkinnyMachine("pc2-014", 11, 18),
+
+    new SkinnyMachine("pc5-030", 0, 23),
+    new SkinnyMachine("pc5-034", 1, 23),
+    new SkinnyMachine("pc5-032", 2, 23),
+    new SkinnyMachine("pc5-035", 3, 23),
+    new SkinnyMachine("pc2-110", 5, 23),
+    new SkinnyMachine("pc2-150", 6, 23),
+    new SkinnyMachine("pc2-140", 7, 23),
+    new SkinnyMachine("pc2-061", 8, 23),
+    new SkinnyMachine("pc2-137", 9, 23),
+    new SkinnyMachine("pc2-134", 10, 23),
+    new SkinnyMachine("pc2-142", 11, 23),
+
+
+];
+const JH110Info = new LabRoom("white", 23 * SkinnyMachine.height, JH110Machines, "Teaching Lab JH110", 19 * SkinnyMachine.width);
 
 
 
