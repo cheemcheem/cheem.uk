@@ -4,7 +4,8 @@ window.onload = () => {
         MapHandler.applyCanvas(JH105Info, document.querySelector("#JH105")),
         MapHandler.applyCanvas(JH103Info, document.querySelector("#JH103")),
         MapHandler.applyCanvas(MorrisonInfo, document.querySelector("#Morrison")),
-        MapHandler.applyCanvas(JH110Info, document.querySelector("#JH110"))
+        MapHandler.applyCanvas(JH110Info, document.querySelector("#JH110")),
+        MapHandler.applyCanvas(JC035Info, document.querySelector("#JC035"))
     ]).then(() => {
         const listOfPCs: HTMLCollection = document.getElementsByClassName("pc");
         const header: HTMLElement = document.getElementById("title");
@@ -38,6 +39,7 @@ window.onload = () => {
         });
     });
 };
+
 
 class StatusHandler {
 
@@ -131,7 +133,7 @@ class StatusHandler {
     /**
      * Retrieve and set status of a pc.
      * @param pc {string} The address of the pc to check.
-     * @return {Promise<string | null>}
+     * @return {Promise<string>}
      */
     public static getStatus: (pc: string) => Promise<string> = (pc: string) => {
 
@@ -463,8 +465,17 @@ class ThiccMachine extends LabMachineDetails {
 
 }
 
+// todo tutor machine list
+// JC0.14 pc2-125
+// JC0.29 pc2-124
+// JC030 pc2-126
+// JC036 pc2-128
+// JC037 pc2-127
+// JC1.33A pc2-131
+// JC1.33B pc2-145
+// JH103 pc2-144
 
-const JH105Machines = [
+const JH105Machines: LabMachineDetails[] = [
     new SkinnyMachine("pc2-033", 0, 0),
     new SkinnyMachine("pc5-001", 1, 0),
     new SkinnyMachine("pc5-002", 2, 0),
@@ -519,12 +530,12 @@ const JH105Machines = [
 ];
 const JH105Info = new LabRoom("white", 12 * SkinnyMachine.height, JH105Machines, "Silent Labs JH105", 9 * SkinnyMachine.width);
 
-const JH103Machines = [
+const JH103Machines: LabMachineDetails[] = [
     new SkinnyMachine("pc2-144", 0, 3),
 ];
 const JH103Info = new LabRoom("white", 5 * SkinnyMachine.height, JH103Machines, "Goldfish JH103", 4 * SkinnyMachine.width);
 
-const MorrisonMachines = [
+const MorrisonMachines: LabMachineDetails[] = [
     new SkinnyMachine("pc2-047", 0, 0),
     new SkinnyMachine("pc2-069", 1, 0),
     new SkinnyMachine("pc2-031", 2, 0),
@@ -539,8 +550,7 @@ const MorrisonMachines = [
 ];
 const MorrisonInfo = new LabRoom("white", 2 * SkinnyMachine.height, MorrisonMachines, "Morrison", 5 * SkinnyMachine.width);
 
-
-const JH110Machines = [
+const JH110Machines: LabMachineDetails[] = [
     new SkinnyMachine("pc2-072", 0, 0),
     new SkinnyMachine("pc2-113", 2, 0),
     new SkinnyMachine("pc2-065", 3, 0),
@@ -660,6 +670,113 @@ const JH110Machines = [
 
 ];
 const JH110Info = new LabRoom("white", 23 * SkinnyMachine.height, JH110Machines, "Teaching Lab JH110", 19 * SkinnyMachine.width);
+
+const JC035Machines: LabMachineDetails[] = [
+    new ThiccMachine("pc3-026-l", 0, 0),
+    new ThiccMachine("pc3-067-l", 2, 0),
+    new ThiccMachine("pc3-036-l", 3, 0),
+    new ThiccMachine("pc3-071-l", 5, 0),
+    new ThiccMachine("pc3-027-l", 6, 0),
+    new ThiccMachine("pc5-006-l", 10, 0),
+    new ThiccMachine("pc3-019-l", 13, 0),
+    new ThiccMachine("pc3-039-l", 14, 0),
+
+    new ThiccMachine("pc3-043-l", 0, 1),
+    new ThiccMachine("pc3-033-l", 2, 1),
+    new ThiccMachine("pc3-034-l", 3, 1),
+    new ThiccMachine("pc3-021-l", 5, 1),
+    new ThiccMachine("pc3-025-l", 6, 1),
+    new ThiccMachine("pc5-007-l", 10, 1),
+    new ThiccMachine("pc3-048-l", 13, 1),
+    new ThiccMachine("pc3-041-l", 14, 1),
+
+    new ThiccMachine("pc3-047-l", 0, 2),
+    new ThiccMachine("pc3-045-l", 2, 2),
+    new ThiccMachine("pc3-072-l", 3, 2),
+    new ThiccMachine("pc3-028-l", 5, 2),
+    new ThiccMachine("pc3-070-l", 6, 2),
+    new ThiccMachine("pc5-008-l", 10, 2),
+    new ThiccMachine("pc3-042-l", 13, 2),
+    new ThiccMachine("pc3-020-l", 14, 2),
+
+    new ThiccMachine("pc3-018-l", 0, 3),
+    new ThiccMachine("pc3-024-l", 2, 3),
+    new ThiccMachine("pc3-053-l", 3, 3),
+    new ThiccMachine("pc3-068-l", 5, 3),
+    new ThiccMachine("pc3-065-l", 6, 3),
+    new ThiccMachine("pc5-009-l", 10, 3),
+
+    new ThiccMachine("pc3-069-l", 0, 4),
+    new ThiccMachine("pc3-001-l", 2, 4),
+    new ThiccMachine("pc3-064-l", 3, 4),
+    new ThiccMachine("pc3-060-l", 5, 4),
+    new ThiccMachine("pc3-058-l", 6, 4),
+    new ThiccMachine("pc5-025-l", 10, 4),
+
+    new ThiccMachine("pc3-022-l", 11, 5),
+    new ThiccMachine("pc3-046-l", 12, 5),
+    new ThiccMachine("pc3-032-l", 13, 5),
+    new ThiccMachine("pc3-035-l", 14, 5),
+
+    new ThiccMachine("pc3-038-l", 11, 6),
+    new ThiccMachine("pc3-066-l", 12, 6),
+    new ThiccMachine("pc3-030-l", 13, 6),
+    new ThiccMachine("pc3-023-l", 14, 6),
+
+    new ThiccMachine("pc2-141-l", 0, 7),
+
+    new ThiccMachine("pc5-010-l", 11, 8),
+    new ThiccMachine("pc5-028-l", 12, 8),
+    new ThiccMachine("pc5-024-l", 13, 8),
+    new ThiccMachine("pc5-026-l", 14, 8),
+    new ThiccMachine("pc5-029-l", 15, 8),
+    new ThiccMachine("pc5-027-l", 16, 8),
+    new ThiccMachine("pc5-039-l", 17, 8),
+    new ThiccMachine("pc5-054-l", 18, 8),
+
+    new ThiccMachine("pc3-063-l", 11, 9),
+    new ThiccMachine("pc3-056-l", 12, 9),
+    new ThiccMachine("pc3-029-l", 13, 9),
+    new ThiccMachine("pc3-057-l", 14, 9),
+    new ThiccMachine("pc3-061-l", 15, 9),
+    new ThiccMachine("pc3-050-l", 16, 9),
+    new ThiccMachine("pc3-059-l", 17, 9),
+    new ThiccMachine("pc3-062-l", 18, 9),
+
+    new ThiccMachine("pc2-012-l", 0, 10),
+
+    new ThiccMachine("pc3-049-l", 11, 11),
+    new ThiccMachine("pc3-031-l", 12, 11),
+    new ThiccMachine("pc3-055-l", 13, 11),
+    new ThiccMachine("pc3-037-l", 14, 11),
+    new ThiccMachine("pc3-052-l", 15, 11),
+    new ThiccMachine("pc3-044-l", 16, 11),
+    new ThiccMachine("pc3-051-l", 17, 11),
+    new ThiccMachine("pc3-040-l", 18, 11),
+
+    new ThiccMachine("pc3-007-l", 11, 12),
+    new ThiccMachine("pc3-010-l", 12, 12),
+    new ThiccMachine("pc3-013-l", 13, 12),
+    new ThiccMachine("pc3-004-l", 14, 12),
+    new ThiccMachine("pc3-008-l", 15, 12),
+    new ThiccMachine("pc3-017-l", 16, 12),
+    new ThiccMachine("pc3-009-l", 17, 12),
+    new ThiccMachine("pc3-011-l", 18, 12),
+
+    new ThiccMachine("pc2-136-l", 6, 14),
+
+    new ThiccMachine("pc3-002-l", 11, 14),
+    new ThiccMachine("pc3-012-l", 12, 14),
+    new ThiccMachine("pc3-014-l", 13, 14),
+    new ThiccMachine("pc3-003-l", 14, 14),
+    new ThiccMachine("pc3-015-l", 15, 14),
+    new ThiccMachine("pc3-005-l", 16, 14),
+    new ThiccMachine("pc3-006-l", 17, 14),
+    new ThiccMachine("pc3-016-l", 18, 14),
+
+];
+const JC035Info = new LabRoom("white", 14 * SkinnyMachine.height, JC035Machines, "Student Lab JC0.35", 18 * SkinnyMachine.width);
+
 
 
 
