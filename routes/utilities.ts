@@ -51,4 +51,6 @@ const generateListOfPCs: () => [string] = () => {
  * Used to hold a list of PC addresses which can be queried.
  * @type {[string]}
  */
-export const listOfPCs: [string] = generateListOfPCs();
+const listOfPCs: [string] = generateListOfPCs();
+
+export default listOfPCs;

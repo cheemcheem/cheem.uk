@@ -12,7 +12,7 @@ const debug = deb('labchecker:server');
 /**
  * Get port from environment and store in Express.
  */
-let port: string | number = normalizePort(process.argv[2] || '3000');
+let port: string | number = normalizePort(String(process.argv[2]) || '3000');
 app.set('port', port);
 
 /**
@@ -32,7 +32,7 @@ server.on('listening', onListening);
  * Normalize a port into a number, string, or false.
  */
 
-function normalizePort(val) {
+function normalizePort(val: any) {
     const port = parseInt(val, 10);
 
     if (isNaN(port)) {
@@ -52,7 +52,7 @@ function normalizePort(val) {
  * Event listener for HTTP server "error" event.
  */
 
-function onError(error) {
+function onError(error : any) {
     if (error.syscall !== 'listen') {
         throw error;
     }

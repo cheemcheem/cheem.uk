@@ -1,0 +1,18 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "es6",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "outDir": "../../built/public/javascripts",
+    "allowJs": false,
+    "target": "es2018",
+    "lib": [
+      "dom",
+      "es2016"
+    ]
+  }
+}

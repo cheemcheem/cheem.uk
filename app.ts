@@ -4,8 +4,10 @@ import * as express from 'express'; // Make the app run
 import * as path from 'path'; // Used to locate directory to serve static
 import * as logger from 'morgan'; // Used for pretty logging
 import * as bodyParser from 'body-parser'; // Parse incoming requests
+import {Error} from "./interfaces/types";
+
 // local middleware and routing dependencies
-import {indexRouter} from './routes';
+import indexRouter from './routes';
 
 export const app = express();
 
@@ -27,7 +29,7 @@ app.use(function(req, res, next) {
 });
 
 // Error handler
-app.use(function(err, req, res, next) {
+app.use((err: Error, req: express.Request, res: express.Response) => {
   // Set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -35,5 +37,6 @@ app.use(function(err, req, res, next) {
   // Render the error page
   res.status(err.status || 500);
   res.render('error');
+
 });
 

@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "up": "NODE_ENV=production node_modules/forever/bin/forever start ./built/bin/www.js $UID",
-    "compile": "tsc",
+    "compile": "tsc && npm run build",
+    "build": "webpack",
     "clean": "rm -r built/views || true",
-    "copy": "cp -r views/ built/views/ && cp -r public/ built/public/",
+    "copy": "cp -r views/ built/views/ && cp -r public/stylesheets built/public/stylesheets",
     "start": "npm run clean && npm run compile && npm run copy && npm run up"
   },
   "dependencies": {
@@ -24,9 +25,15 @@
     "underscore.string": "latest"
   },
   "devDependencies": {
+    "@types/debug": "^0.0.31",
     "@types/express": "^4.16.0",
+    "@types/http-errors": "^1.6.1",
+    "@types/morgan": "^1.7.35",
     "@types/node": "^10.5.2",
     "@types/sprintf-js": "^1.1.0",
-    "typescript": "^2.9.2"
+    "ts-loader": "^5.3.0",
+    "typescript": "^2.9.2",
+    "webpack": "^4.23.1",
+    "webpack-cli": "^3.1.2"
   }
 }

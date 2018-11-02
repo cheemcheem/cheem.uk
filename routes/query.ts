@@ -1,12 +1,29 @@
 import * as express from 'express';
-import {listOfPCs} from "./utilities";
+import listOfPCs from "./utilities";
 import {exec} from "child_process";
+
+const list: Map<String, PCQueryResponse> = new Map<String, PCQueryResponse>();
+
+function update() {
+    listOfPCs.forEach(value => {
+        // Create query WITHOUT ANY RECEIVED DATA
+        const user = process.env.USER;
+        const command = `ssh -o "StrictHostKeyChecking no" -o ConnectTimeout=5 -o ConnectionAttempts=1 ${user}@${value} w -h`;
+
+        // Execute query
+        exec(command, ((error, stdout) => {
+            list.set(value, parseExec(stdout, error));
+        }));
+    });
+}
+
+const x = setInterval(() => update(), 6000);
 
 /**
  * Used for response API to front end. Holds active status and list of online users per pc.
  */
 interface PCQueryResponse {
-    status: "up"| "down",
+    status: "up" | "down",
     users: [string | null]
 }
 
@@ -27,28 +44,22 @@ const createPCQueryResponse:
 
 /**
  * Handles creating a response object depending on different combinations of error and stdout.
- * @param res
  * @param stdout
  * @param error
  */
-const handleSendResponse:
-    (res: express.Response, stdout: string, error: Error) => void =
-    (res: express.Response, stdout: string, error: Error) => {
-
-        // Response is okay because pc not found is allowed
-        res.status(200);
-
+const parseExec:
+    (stdout: string, error: Error) => PCQueryResponse =
+    (stdout: string, error: Error) => {
         // If error communicating with pc then return early saying status down
         // status = down, users = []
-        if (error) return res.send(createPCQueryResponse("down", [null]));
+        if (error) return createPCQueryResponse("down", [null]);
 
         // Split grep response into each line
         let grepResponseLines = stdout.split("\n");
 
-
         // If no error communicating with pc and no users online then return early saying status active and no users
         // status = up, users = []
-        if (grepResponseLines.length == 0) return res.send(createPCQueryResponse("up", [null]));
+        if (grepResponseLines.length == 0) return createPCQueryResponse("up", [null]);
 
         // If no error communicating with pc and some users online then return early saying status active and some users
         // status = up, users = [...]
@@ -67,13 +78,13 @@ const handleSendResponse:
 
             // If last iteration then send response
             if (i == grepResponseLines.length - 1) {
-                return res.send(createPCQueryResponse("up", users));
+                return createPCQueryResponse("up", users);
 
             }
 
         }
 
-
+        return createPCQueryResponse("down", [null]);
 
 
     };
@@ -85,7 +96,7 @@ const handleSendResponse:
  * @param res {express.Response}
  * @param next {Function}
  */
-export const handleQuery:
+const handleQuery:
     (req: express.Request, res: express.Response, next: Function) => void =
     (req: express.Request, res: express.Response, next: Function) => {
 
@@ -96,14 +107,10 @@ export const handleQuery:
         // If found then execute query to see if it is online and has active users and send response with details
         if (idIndex > -1) {
 
-            // Create query WITHOUT ANY RECEIVED DATA
-            const user = process.env.USER;
-            const command = `ssh -o "StrictHostKeyChecking no" -o ConnectTimeout=10 -o ConnectionAttempts=1 ${user}@${listOfPCs[idIndex]} w -h`;
 
-            // Execute query
-            exec(command, ((error, stdout, stderr) => {
-                handleSendResponse(res, stdout, error);
-            }));
+            const listElement = list.get(listOfPCs[idIndex]);
+            res.send(listElement == null ? createPCQueryResponse("down", [null]) : listElement);
+
 
         } else {
 
@@ -116,3 +123,6 @@ export const handleQuery:
 
         }
     };
+
+
+export default handleQuery;

@@ -4,6 +4,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./built",
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
     "allowJs": true,
     "target": "es2018",
     "lib": [
@@ -12,13 +15,12 @@
     ]
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "public"
   ],
   "include": [
-    "./public/javascripts/pcScript.ts",
     "./app.ts",
     "./bin",
-    "./public",
     "./routes",
     "./test",
     "./utilities/**/*"
