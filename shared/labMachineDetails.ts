@@ -1,14 +1,14 @@
-import {LabVisualObject} from "./labVisualObject";
+import LabVisualObject from "./interfaces/labVisualObject";
 
-export abstract class LabMachineDetails implements LabVisualObject {
+export default abstract class LabMachineDetails implements LabVisualObject {
 
-    private readonly _name: string;
-    private readonly _width: number;
-    private readonly _height: number;
-    private readonly _color: string;
+    readonly _name: string;
+    readonly _width: number;
+    readonly _height: number;
+    readonly _color: string;
 
-    private readonly _x: number;
-    private readonly _y: number;
+    readonly _x: number;
+    readonly _y: number;
 
 
     protected constructor(name: string, width: number, height: number, color: string, x: number, y: number) {

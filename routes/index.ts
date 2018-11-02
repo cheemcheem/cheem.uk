@@ -1,14 +1,6 @@
 import * as express from 'express';
 import listOfPCs from "./utilities";
-import handleQuery from "./query";
 
-/**
- * Used to route "/" and "/:pc".
- * "/" Sends the index page which requires the list of PCs.
- * "/:pc" sends a json response of the pc status and users online.
- * @type {Router} express router object.
- */
-const indexRouter = express.Router();
 
 /**
  * Handles showing the index page with a list of pcs.
@@ -24,10 +16,14 @@ const handleIndex:
     };
 
 
-/* GET home page. */
+/**
+ * Used to route "/" and "/:pc".
+ * "/" Sends the index page which requires the list of PCs.
+ * "/:pc" sends a json response of the pc status and users online.
+ * @type {Router} express router object.
+ */
+const indexRouter = express.Router();
 indexRouter.get('/', handleIndex);
-
-indexRouter.get('/:pc', handleQuery);
-
+indexRouter.get('/:any', handleIndex);
 
 export default indexRouter;

@@ -1,4 +1,4 @@
-export interface LabVisualObject {
+export default interface LabVisualObject {
 
     readonly name: string;
     readonly width: number;

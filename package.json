@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "up": "NODE_ENV=production node_modules/forever/bin/forever start ./built/bin/www.js $UID",
+    "up": "NODE_ENV=production nolimit node_modules/forever/bin/forever start ./built/bin/www.js $UID",
     "compile": "tsc && npm run build",
     "build": "webpack",
     "clean": "rm -r built/views || true",

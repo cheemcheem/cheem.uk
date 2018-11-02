@@ -1,4 +1,4 @@
-import {LabMachineDetails} from "../../interfaces/labMachineDetails";
+import LabMachineDetails from "../../shared/labMachineDetails";
 
 export class SkinnyMachine extends LabMachineDetails {
 

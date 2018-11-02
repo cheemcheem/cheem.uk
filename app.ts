@@ -4,10 +4,11 @@ import * as express from 'express'; // Make the app run
 import * as path from 'path'; // Used to locate directory to serve static
 import * as logger from 'morgan'; // Used for pretty logging
 import * as bodyParser from 'body-parser'; // Parse incoming requests
-import {Error} from "./interfaces/types";
+import Error from "./shared/error";
 
 // local middleware and routing dependencies
-import indexRouter from './routes';
+import indexRouter from './routes/index';
+import queryRouter from "./routes/query";
 
 export const app = express();
 
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // Routing
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/info', queryRouter);
 app.use('/', indexRouter);
 
 // Catch 404 and forward to error handler

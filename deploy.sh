@@ -25,6 +25,7 @@ npm install --only-dev && npm run compile && npm run copy
 
 # Use rsync to transfer files
 #"--exclude=*.ts --exclude=*.js.map"
+echo "copying"
 rsync -r "--exclude=*tsconfig.json" "$PWD/$local_dir" "$CSLOC/$remote_dir"
 rsync "$PWD/package.json" "$CSLOC/$remote_dir"
 rsync "$PWD/package-lock.json" "$CSLOC/$remote_dir"
@@ -41,4 +42,4 @@ cd $remote_dir &&
 pwd &&
 tree -I node_modules &&
 npm install &&
-npm run up > log.txt 2>&1"
+npm run up &>> log.txt"

@@ -1,3 +1,5 @@
+import {PCQueryResponse} from "../../shared/pcQueryResponse";
+
 export class StatusHandler {
 
     private readonly header: HTMLElement;
@@ -48,7 +50,7 @@ export class StatusHandler {
                     // PC is active
                     tablePC.classList.remove("inactive");
                     tablePC.classList.add("active");
-                    tablePCUsers.innerHTML = foundUsers;
+                    tablePCUsers.innerHTML = String(foundUsers);
                     this.numberOfActive++;
 
                     //todo remove once added all svg versions
@@ -90,9 +92,9 @@ export class StatusHandler {
     /**
      * Retrieve and set status of a pc.
      * @param pc {string} The address of the pc to check.
-     * @return {Promise<string>}
+     * @return {Promise<[string|null]>}
      */
-    public static getStatus: (pc: string) => Promise<string> = (pc: string) => {
+    public static getStatus: (pc: string) => Promise<[string | null]> = (pc: string) => {
 
         return new Promise((resolve, reject) => {
 
@@ -104,7 +106,7 @@ export class StatusHandler {
              */
             const onResponseLoad = () => {
                 try {
-                    const json = JSON.parse(req.responseText);
+                    const json: PCQueryResponse = JSON.parse(req.responseText);
                     if ("up" === json.status) {
                         resolve(json.users);
 
@@ -126,7 +128,7 @@ export class StatusHandler {
             req.addEventListener("error", onResponseLoad); //todo change this as indicates connection issue to server not pc
 
             // Send GET to url asynchronously so all can be sent at once
-            req.open("GET", pc, true);
+            req.open("GET", `info/${pc}`, true);
             req.send(pc);
 
         });

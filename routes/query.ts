@@ -1,6 +1,9 @@
 import * as express from 'express';
 import listOfPCs from "./utilities";
 import {exec} from "child_process";
+import roomStoreImpl from "../shared/roomStoreImpl";
+import {createPCQueryResponse, PCQueryResponse} from "../shared/pcQueryResponse";
+
 
 const list: Map<String, PCQueryResponse> = new Map<String, PCQueryResponse>();
 
@@ -8,7 +11,7 @@ function update() {
     listOfPCs.forEach(value => {
         // Create query WITHOUT ANY RECEIVED DATA
         const user = process.env.USER;
-        const command = `ssh -o "StrictHostKeyChecking no" -o ConnectTimeout=5 -o ConnectionAttempts=1 ${user}@${value} w -h`;
+        const command = `ssh -o "StrictHostKeyChecking no" -o ConnectTimeout=25 -o ConnectionAttempts=1 ${user}@${value} w -h`;
 
         // Execute query
         exec(command, ((error, stdout) => {
@@ -17,30 +20,7 @@ function update() {
     });
 }
 
-const x = setInterval(() => update(), 6000);
-
-/**
- * Used for response API to front end. Holds active status and list of online users per pc.
- */
-interface PCQueryResponse {
-    status: "up" | "down",
-    users: [string | null]
-}
-
-/**
- * Create a json object to send back to as defined in API.
- * @param statusString
- * @param userArray
- * @return {PCQueryResponse}
- */
-const createPCQueryResponse:
-    (statusString: "up" | "down", userArray: [string | null]) => PCQueryResponse =
-    (statusString: "up" | "down", userArray: [string | null]) => {
-        return {
-            status: statusString,
-            users: userArray
-        };
-    };
+setInterval(() => update(), 30000);
 
 /**
  * Handles creating a response object depending on different combinations of error and stdout.
@@ -52,7 +32,7 @@ const parseExec:
     (stdout: string, error: Error) => {
         // If error communicating with pc then return early saying status down
         // status = down, users = []
-        if (error) return createPCQueryResponse("down", [null]);
+        if (error) return createPCQueryResponse("down", [String(error)]);
 
         // Split grep response into each line
         let grepResponseLines = stdout.split("\n");
@@ -84,7 +64,7 @@ const parseExec:
 
         }
 
-        return createPCQueryResponse("down", [null]);
+        return createPCQueryResponse("down", ["actually"]);
 
 
     };
@@ -107,9 +87,8 @@ const handleQuery:
         // If found then execute query to see if it is online and has active users and send response with details
         if (idIndex > -1) {
 
-
             const listElement = list.get(listOfPCs[idIndex]);
-            res.send(listElement == null ? createPCQueryResponse("down", [null]) : listElement);
+            res.send(listElement == null ? createPCQueryResponse("down", ["not found"]) : listElement);
 
 
         } else {
@@ -125,4 +104,16 @@ const handleQuery:
     };
 
 
-export default handleQuery;
+const handleEntireQuery:
+    (req: express.Request, res: express.Response, next: Function) => void =
+    (req: express.Request, res: express.Response, next: Function) => {
+        res.send(roomStoreImpl);
+    };
+
+
+
+const queryRouter = express.Router();
+queryRouter.get('/all', handleEntireQuery);
+queryRouter.get('/:pc', handleQuery);
+
+export default queryRouter;

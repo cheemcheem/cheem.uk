@@ -1,12 +1,12 @@
-import {Lab} from "../../interfaces/lab";
-import {LabMachineDetails} from "../../interfaces/labMachineDetails";
+import Lab from "../../shared/interfaces/lab";
+import LabMachineDetails from "../../shared/labMachineDetails";
 
 export class LabRoom implements Lab {
-    private readonly _color: string;
-    private readonly _height: number;
-    private readonly _machines: LabMachineDetails[];
-    private readonly _name: string;
-    private readonly _width: number;
+    readonly _color: string;
+    readonly _height: number;
+    readonly _machines: LabMachineDetails[];
+    readonly _name: string;
+    readonly _width: number;
 
     constructor(color: string, height: number, machines: LabMachineDetails[], name: string, width: number) {
         this._color = color;
@@ -15,7 +15,6 @@ export class LabRoom implements Lab {
         this._name = name;
         this._width = width;
     }
-
 
     get color(): string {
         return this._color;
