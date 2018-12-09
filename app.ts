@@ -6,15 +6,16 @@ import * as createError from 'http-errors';
 import Error from './shared/error';
 
 import bodyParser = require("body-parser");
-import indexRouter from "./routes";
-
+import indexRouter from "./routes/index";
 import queryRouter from "./routes/query";
+import gradeRouter from './routes/grade';
+
 
 const app = express();
 
 if (cluster.isMaster) {
 
-    console.log("aaaa2")
+    console.log("Starting router.")
 // view engine setup
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'pug');
@@ -24,11 +25,11 @@ if (cluster.isMaster) {
     app.use(bodyParser.urlencoded({extended: false}));
 
 // Routing
-    console.log("aaaa3")
+    console.log("Setting routing preferences.")
     app.use(express.static(path.join(__dirname, 'public')));
-    app.use('/info', queryRouter);
-    app.use('/', indexRouter);
-    console.log("aaaa4")
+    // app.use('/info', queryRouter);
+    app.use('/grades', gradeRouter);
+    // app.use('/', indexRouter);
 
 // Catch 404 and forward to error handler
     app.use(function (req, res, next) {
@@ -46,6 +47,7 @@ if (cluster.isMaster) {
         res.render('error');
 
     });
+    console.log("Set up router.");
 }
 
 

@@ -1,0 +1,19 @@
+extends layout
+
+block content
+        h3 Usage
+        p Send POST to /grades with body = 
+            pre
+                code 
+                    |{
+                    |    "values" : [
+                    |        { "grade" : number, "credits" : number, "achieved": boolean|undefined }
+                    |    ]
+                    |}.
+        h3 Example cURL
+        p 
+            pre 
+                code curl -X POST -H "Content-Type: application/json" -d @grades.json https://kc67.host.cs.st-andrews.ac.uk/grades
+            
+
+

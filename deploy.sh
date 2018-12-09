@@ -20,7 +20,7 @@ remote_dir="LabChecker" # Where to send files remotely
 
 # Compile TS and copy other files into built folder like package*.json, public/*, and views/*
 # todo add "local_dir" param to npm commands
-npm install --only-dev && npm run compile && npm run copy
+npm install --only-dev && tsc && npm run build && npm run copy
 
 
 # Use rsync to transfer files
