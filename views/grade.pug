@@ -1,19 +1,53 @@
 extends layout
 
 block content
-        h3 Usage
-        p Send POST to /grades with body = 
-            pre
-                code 
-                    |{
-                    |    "values" : [
-                    |        { "grade" : number, "credits" : number, "achieved": boolean|undefined }
-                    |    ]
-                    |}.
-        h3 Example cURL
+        h3 What this is
         p 
-            pre 
-                code curl -X POST -H "Content-Type: application/json" -d @grades.json https://kc67.host.cs.st-andrews.ac.uk/grades
-            
+            span Use this tool as an API version of 
+            a(href="https://grades.lukasa.co.uk") https://grades.lukasa.co.uk
+            span  if you prefer to estimate your degree based on current and estimated grades.
+        p 
+            span In the following example, 
+            code grade
+            span  is your grade from 0-20 for a module, 
+            code credits
+            span  is how many credits from 15-120 the module is worth, and 
+            code achieved
+            span  is whether this is a current achieved grade (true or absent) or a predicted grade (false).
+
+        h3 Usage
+        p Send POST request to /grades with body = 
+        pre
+            code 
+                |{
+                |    "values" : [
+                |        { "grade" : number, "credits" : number, "achieved": boolean|undefined }
+                |    ]
+                |}
+        h3 Example cURL
+        pre 
+            a.tooltip(href="#" data-tip="cURL is a tool to make requests to servers.") curl 
+            a.tooltip(href="#" data-tip="This sets the RESTFUL request method to be POST.") -X POST 
+            a.tooltip(href="#" data-tip="This specifies the type of the data payload you send is JSON.") -H "Content-Type: application/json" 
+            a.tooltip(href="#" data-tip="This adds the contents of \"./grades.json\" to the data payload.") -d @grades.json 
+            a.tooltip(href="#" data-tip="This is the end point that will accept the data and send back the results.") https://kc67.host.cs.st-andrews.ac.uk/grades
+        h3 Example Response
+        pre
+            code
+                |{
+                |   "achieved": {
+                |       "mean": "15.2",
+                |       "median": "15.2",
+                |       "class": "Upper Second Class Honours (II.1)"
+                |   },
+                |   "will_achieve": {
+                |       "mean": "16.1",
+                |       "median": "17.0",
+                |       "class": "First Class Honours"
+                |   }
+                |}
+
+        link(rel="stylesheet", href="/stylesheets/grades.css")
+
 
 

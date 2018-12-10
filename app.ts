@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as cluster from "cluster";
+import * as deb from 'debug';
 import * as logger from 'morgan';
 import * as path from "path";
 import * as createError from 'http-errors';
@@ -14,9 +15,10 @@ import gradeRouter from './routes/grade';
 const app = express();
 
 if (cluster.isMaster) {
+    const debug = deb('server:app');
+    debug("Starting router.")
 
-    console.log("Starting router.")
-// view engine setup
+    // view engine setup
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'pug');
 
@@ -24,19 +26,19 @@ if (cluster.isMaster) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: false}));
 
-// Routing
-    console.log("Setting routing preferences.")
+    // Routing
+    debug("Setting routing preferences.")
     app.use(express.static(path.join(__dirname, 'public')));
-    // app.use('/info', queryRouter);
+    app.use('/info', queryRouter);
     app.use('/grades', gradeRouter);
-    // app.use('/', indexRouter);
+    app.use('/', indexRouter);
 
-// Catch 404 and forward to error handler
+    // Catch 404 and forward to error handler
     app.use(function (req, res, next) {
         next(createError(404));
     });
 
-// Error handler
+    // Error handler
     app.use((err: Error, req: express.Request, res: express.Response) => {
         // Set locals, only providing error in development
         res.locals.message = err.message;
@@ -47,7 +49,7 @@ if (cluster.isMaster) {
         res.render('error');
 
     });
-    console.log("Set up router.");
+    debug("Set up router.");
 }
 
 

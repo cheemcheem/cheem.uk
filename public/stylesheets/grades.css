@@ -1,0 +1,46 @@
+:root {
+    --main-bg-color: aqua;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px!important;
+}
+code:hover {
+    background-color: var(--main-bg-color);
+}
+
+a.tooltip {
+    color: #000;
+    font-family: monospace;
+}
+
+a.tooltip:hover {
+    background-color: var(--main-bg-color);
+}
+
+a.tooltip::before {
+    content: attr(data-tip) ;   
+     
+    font-size: 20px;
+    position:absolute;
+    z-index: 999;
+    white-space:nowrap;
+    bottom:9999px;
+    left: 50%;
+    background:#000;
+    color:#e0e0e0;
+    padding:5px 7px;
+    line-height: 24px;
+    height: 38px;
+    
+    opacity: 0;  
+    transition:opacity 0.4s ease-out; 
+}
+     
+a.tooltip:hover::before {
+    top:570px;
+    opacity: 1;
+    left: unset;
+    bottom:unset;
+}
+   

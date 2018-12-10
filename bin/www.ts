@@ -9,7 +9,7 @@ import * as http from 'http';
 import * as cluster from "cluster";
 
 if (cluster.isMaster) {
-    const debug = deb('labchecker:server');
+    const debug = deb('server:start');
 
     /**
      * Get port from environment and store in Express.

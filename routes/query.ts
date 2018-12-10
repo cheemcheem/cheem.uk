@@ -1,10 +1,14 @@
 import * as express from 'express';
+import * as deb from 'debug';
+import * as cluster from "cluster";
+
 import listOfPCs from "./utilities";
 import {execSync} from "child_process";
 import roomStoreImpl from "../shared/roomStoreImpl";
 import {createPCQueryResponse, PCQueryResponse} from "../shared/pcQueryResponse";
-import * as cluster from "cluster";
 
+const debugW = deb('worker:query');
+const debugM = deb('master:master');
 const queryRouter = express.Router();
 export default queryRouter;
 
@@ -90,7 +94,6 @@ if (cluster.isMaster) {
         (req: express.Request, res: express.Response, next: Function) => void =
         (req: express.Request, res: express.Response, next: Function) => {
 
-            console.log(cluster.isMaster);
             // Set up id variable
             let id = req.params.pc;
             let idIndex = listOfPCs.indexOf(id);
@@ -99,10 +102,7 @@ if (cluster.isMaster) {
             if (idIndex > -1) {
 
                 const string = listOfPCs[idIndex];
-                console.log(`finding ${string}`);
                 const listElement = list.get(string);
-                console.log(`found ${JSON.stringify(listElement)}`);
-                console.log(JSON.stringify(list));
                 res.send(listElement == null ? createPCQueryResponse("down", ["not found"]) : listElement);
 
 
@@ -143,22 +143,16 @@ if (cluster.isMaster) {
     });
 
     cluster.on('exit', (worker, code, signal) => {
-        console.log(`worker ${worker.process.pid} died with code ${code} and signal ${signal}`);
+        debugM(`Worker ${worker.process.pid} died with code ${code} and signal ${signal}.`);
     });
 
 }
 
 if (cluster.isWorker) {
-
-    console.table(Error.captureStackTrace(this));
     process.on("message", (message) => {
-
-        // console.log(`received ${JSON.stringify(message)}`);
 
         const lower = message.lowerIndex;
         const upper = message.upperIndex;
-
-        // console.log(`range = ${lower} - ${upper}`);
 
         function update() {
             for (let i = lower; i < upper; i++) {
@@ -174,17 +168,17 @@ if (cluster.isWorker) {
                     const stdout = String(execSync(command));
                     const parsed = parseExec(stdout, null);
                     process.send({key: pcName, value: parsed});
-                    // console.log(`connected with ${stdout} and ${JSON.stringify(parsed)}`);
-                    // console.log(`connected to ${pcName}`);
                 } catch (e) {
                     process.send({key: pcName, value: parseExec("", e)});
-                    // console.log(`not connected, reason: ${e}`);
                 }
             }
         }
 
-        setInterval(() => update(), 30000);
-        console.log(`Worker ${process.pid} started`);
+        // only run this in production
+        if (process.env.NODE_ENV === "production") {
+            setInterval(() => update(), 30000);
+        }
+        debugW(`Worker ${process.pid} started.`);
 
     });
 
