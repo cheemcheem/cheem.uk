@@ -1,0 +1,10 @@
+{
+    "values": [
+        {"grade": 17.0, "credits": 60, "achieved": true},
+        {"grade": 13.0, "credits": 60, "achieved": true},
+        {"grade": 17.0, "credits": 30, "achieved": false},
+        {"grade": 15.0, "credits": 30, "achieved": false},
+        {"grade": 18.0, "credits": 60, "achieved": false}
+    ]
+ }
+ 

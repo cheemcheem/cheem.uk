@@ -8,7 +8,7 @@
     "compile": "tsc && npm run build",
     "build": "webpack",
     "clean": "rm -r built/views || true",
-    "copy": "cp -r views/ built/views/ && cp -r public/stylesheets/ built/public/stylesheets/",
+    "copy": "cp -r views/ built/views/ && cp -r public/stylesheets/ built/public/stylesheets/ && cp public/*.* built/public/",
     "start": "npm run clean && npm run compile && npm run copy && npm run up"
   },
   "dependencies": {
