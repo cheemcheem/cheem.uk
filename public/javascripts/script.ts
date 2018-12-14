@@ -36,12 +36,18 @@ const getData: () => Promise<RoomStore | Error> = () => {
 };
 
 const loadRoomsToDOM: (roomStore: RoomStore) => Promise<{}> = (roomStore: RoomStore) => {
+
+    const currentPc = document.getElementById("current-pc");
+    const currentUsers = document.getElementById("current-users");
+    const listOfPCs: HTMLCollection = document.getElementsByClassName("pc");
+
+    
     return Promise.all([
-        MapHandler.applyCanvas(roomStore.JH105Info, document.querySelector("#JH105")),
-        MapHandler.applyCanvas(roomStore.JH103Info, document.querySelector("#JH103")),
-        MapHandler.applyCanvas(roomStore.MorrisonInfo, document.querySelector("#Morrison")),
-        MapHandler.applyCanvas(roomStore.JH110Info, document.querySelector("#JH110")),
-        MapHandler.applyCanvas(roomStore.JC035Info, document.querySelector("#JC035"))
+        MapHandler.applyCanvas(roomStore.JH105Info, document.querySelector("#JH105"), currentPc, currentUsers, listOfPCs),
+        MapHandler.applyCanvas(roomStore.JH103Info, document.querySelector("#JH103"), currentPc, currentUsers, listOfPCs),
+        MapHandler.applyCanvas(roomStore.MorrisonInfo, document.querySelector("#Morrison"), currentPc, currentUsers, listOfPCs),
+        MapHandler.applyCanvas(roomStore.JH110Info, document.querySelector("#JH110"), currentPc, currentUsers, listOfPCs),
+        MapHandler.applyCanvas(roomStore.JC035Info, document.querySelector("#JC035"), currentPc, currentUsers, listOfPCs)
     ]);
 };
 
@@ -95,7 +101,6 @@ getData()
             const selectedRoomName = dropdown.value;
             showOption(selectedRoomName);
         });
-
 
 
     })

@@ -77,16 +77,35 @@ a {
 
 /* SVG */
 #views {
-    /*zoom: document; todo*/
-}
-#content {
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
     overflow: scroll;
+    padding: 10px;
 }
 
 svg {
-    border: 5px solid black;
+    outline: 5px solid black;
+}
+#current {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: center;
 }
 
+.current-info {
+    display: flex;
+    flex-direction: column;
+    justify-items: left;
+    justify-content: center;
+}
+.current-info {
+    margin: 20px
+}

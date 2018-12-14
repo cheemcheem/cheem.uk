@@ -1,8 +1,8 @@
 import LabMachineDetails from "./labMachineDetails";
-import {SkinnyMachine} from "../public/javascripts/skinnyMachine";
-import {LabRoom} from "../public/javascripts/labRoom";
-import {ThiccMachine} from "../public/javascripts/thiccMachine";
-import {RoomStore} from "./interfaces/roomStore";
+import { SkinnyMachine } from "../public/javascripts/skinnyMachine";
+import { LabRoom } from "../public/javascripts/labRoom";
+import { ThiccMachine } from "../public/javascripts/thiccMachine";
+import { RoomStore } from "./interfaces/roomStore";
 
 
 // todo tutor machine list
@@ -71,9 +71,19 @@ const JH105Machines: LabMachineDetails[] = [
 const JH105Info = new LabRoom("white", 12 * SkinnyMachine.height, JH105Machines, "Silent Labs JH105", 9 * SkinnyMachine.width);
 
 const JH103Machines: LabMachineDetails[] = [
-    new SkinnyMachine("pc2-144", 0, 3),
+    new SkinnyMachine("pc2-144", 4, 2),
+    new SkinnyMachine("pc2-118", 4, 0),
+    new SkinnyMachine("pc2-120", 3, 0),
+    new SkinnyMachine("pc2-069", 0, 0),
+    new SkinnyMachine("pc2-090", 0, 1),
+    new SkinnyMachine("pc2-047", 0, 2),
+    new SkinnyMachine("pc2-084", 0, 3),
+    new SkinnyMachine("pc2-108", 0, 4),
+    new SkinnyMachine("pc2-031", 2, 4),
+    new SkinnyMachine("pc2-003", 3, 4),
+    new SkinnyMachine("pc2-086", 4, 4),
 ];
-const JH103Info = new LabRoom("white", 5 * SkinnyMachine.height, JH103Machines, "Goldfish JH103", 4 * SkinnyMachine.width);
+const JH103Info = new LabRoom("white", 5 * SkinnyMachine.height, JH103Machines, "Goldfish JH103", 5 * SkinnyMachine.width);
 
 const MorrisonMachines: LabMachineDetails[] = [
     new SkinnyMachine("pc2-047", 0, 0),
@@ -317,5 +327,5 @@ const JC035Machines: LabMachineDetails[] = [
 ];
 const JC035Info = new LabRoom("white", 15 * ThiccMachine.height, JC035Machines, "Student Lab JC0.35", 19 * ThiccMachine.width);
 
-const roomStoreImpl: RoomStore = {JH105Info, JH103Info, MorrisonInfo, JH110Info, JC035Info};
+const roomStoreImpl: RoomStore = { JH105Info, JH103Info, MorrisonInfo, JH110Info, JC035Info };
 export default roomStoreImpl;

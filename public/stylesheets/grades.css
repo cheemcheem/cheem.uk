@@ -86,7 +86,7 @@ a.tooltip{
         opacity: 0;  
         transition:opacity 0.4s ease-out; 
     }
-        
+
     .tooltip:hover::before {
         top: -38px;
         opacity: 1;
@@ -94,7 +94,7 @@ a.tooltip{
         bottom:unset;
     }
     
-
+    
     .tooltip.values::before {
         content: "An array of grade objects.";
     }

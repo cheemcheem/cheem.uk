@@ -16,7 +16,8 @@
   },
   "exclude": [
     "node_modules",
-    "public"
+    "public",
+    "built"
   ],
   "include": [
     "./app.ts",

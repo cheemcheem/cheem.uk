@@ -1,4 +1,4 @@
-import {LabRoom} from "./labRoom";
+import { LabRoom } from "./labRoom";
 import LabMachineDetails from "../../shared/labMachineDetails";
 import Lab from "../../shared/interfaces/lab";
 
@@ -9,7 +9,7 @@ export class MapHandler {
      * @param labRoom {Lab} Lab Room with Lab Machines.
      * @param roomSVG {SVGElement} SVG element to customise.
      */
-    static applyCanvas: (labRoom: Lab, roomSVG: SVGElement) => Promise<{}> = (labRoom: LabRoom, roomSVG: SVGElement) => {
+    static applyCanvas: (labRoom: Lab, roomSVG: SVGElement, currentPc: HTMLElement, currentUsers: HTMLElement, listOfPCs: HTMLCollection) => Promise<{}> = (labRoom: LabRoom, roomSVG: SVGElement, currentPc: HTMLElement, currentUsers: HTMLElement, listOfPCs: HTMLCollection) => {
         return new Promise((resolve, reject) => {
             const svgNS = "http://www.w3.org/2000/svg";
 
@@ -34,6 +34,24 @@ export class MapHandler {
                 rect.setAttributeNS(null, 'stroke-linecap', "square");
                 rect.setAttributeNS(null, 'stroke-opacity', "1");
                 rect.setAttributeNS(null, 'fill-opacity', "0.7");
+                let users: Element;
+                // Loop through each lab machine in the PC list
+                for (let i = 0; i < listOfPCs.length; i++) {
+
+                    // Get current table row info
+                    const tablePC = listOfPCs[i];
+                    const tablePCAddress = tablePC.children[0];
+                    const tablePCAddressInner = tablePCAddress.innerHTML;
+                    if (tablePCAddressInner === machine._name) {
+                        const tablePCUsers = tablePC.children[1];
+                        users = tablePCUsers;
+                    }
+                }
+                rect.onclick = () => {
+                    currentUsers.innerHTML = users.innerHTML;
+                    currentPc.innerHTML = machine._name;
+                };
+
 
                 const font: SVGTextElement = document.createElementNS(svgNS, "text");
                 font.setAttributeNS(null, 'x', String(machine._x + machine._width / 2));
@@ -43,7 +61,10 @@ export class MapHandler {
                 font.style.font = "10px sans-serif";
                 font.innerHTML = machine._name;
                 font.id = "svg-" + machine._name;
-
+                font.onclick = () => {
+                    currentUsers.innerHTML = users.innerHTML;
+                    currentPc.innerHTML = machine._name;
+                };
                 roomSVG.appendChild(rect);
                 roomSVG.appendChild(font);
 

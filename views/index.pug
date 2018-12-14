@@ -3,6 +3,13 @@ extends layout
 block content
     div#header
         h2#title List of PCS
+        #current
+            .current-info
+                h3 Selected PC Name 
+                span#current-pc N/A
+            .current-info
+                h3 Selected PC Users
+                span#current-users N/A
         div#filter
             input#search(placeholder="  Search by pc or user name")
             select#labSelector
