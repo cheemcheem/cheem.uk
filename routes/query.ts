@@ -3,9 +3,9 @@ import * as deb from 'debug';
 import * as cluster from "cluster";
 
 import listOfPCs from "./utilities";
-import {execSync} from "child_process";
+import { execSync } from "child_process";
 import roomStoreImpl from "../shared/roomStoreImpl";
-import {createPCQueryResponse, PCQueryResponse} from "../shared/pcQueryResponse";
+import { createPCQueryResponse, PCQueryResponse } from "../shared/pcQueryResponse";
 
 const debugW = deb('worker:query');
 const debugM = deb('master:master');
@@ -117,9 +117,21 @@ if (cluster.isMaster) {
 
             }
         };
-
+    const handleUserQuery:
+        (req: express.Request, res: express.Response, next: Function) => void =
+        (req: express.Request, res: express.Response, next: Function) => {
+            const user = req.params.user;
+            const users: string[] = [];
+            list.forEach((pcDetails, pcName) => {
+                if (pcDetails.users.includes(user)) {
+                    users.push(pcName.toString());
+                }
+            })
+            res.send(users);
+        };
     queryRouter.get('/all', handleEntireQuery);
-    queryRouter.get('/:pc', handleQuery);
+    queryRouter.get('/user/:user', handleUserQuery);
+    queryRouter.get('/pc/:pc', handleQuery);
 
     const increment = listOfPCs.length / numberOfProcesses;
 
@@ -167,9 +179,9 @@ if (cluster.isWorker) {
                 try {
                     const stdout = String(execSync(command));
                     const parsed = parseExec(stdout, null);
-                    process.send({key: pcName, value: parsed});
+                    process.send({ key: pcName, value: parsed });
                 } catch (e) {
-                    process.send({key: pcName, value: parseExec("", e)});
+                    process.send({ key: pcName, value: parseExec("", e) });
                 }
             }
         }

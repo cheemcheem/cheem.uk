@@ -128,7 +128,7 @@ export class StatusHandler {
             req.addEventListener("error", onResponseLoad); //todo change this as indicates connection issue to server not pc
 
             // Send GET to url asynchronously so all can be sent at once
-            req.open("GET", `info/${pc}`, true);
+            req.open("GET", `info/pc/${pc}`, true);
             req.send(pc);
 
         });

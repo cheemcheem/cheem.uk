@@ -41,4 +41,5 @@ ssh "$CSADDR" \
 cd $remote_dir &&
 pwd &&
 tree -I node_modules &&
-npm run up &>> log.txt"
+npm run up &>> log.txt && 
+exit 0"
