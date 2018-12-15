@@ -1,174 +1,171 @@
 extends layout
 
 block append head
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    link(async rel="stylesheet", href="/stylesheets/grades.css")
+    link(rel="stylesheet", href="/stylesheets/grades.css")
     script(src="/javascripts/grades.js")
-
+block prepend header
+    .row 
+        .col-12
+            h1 Degree Class Calculator API
+        .col-12
+            p for University of St Andrews students.
 block content
-    .container
-        .row 
-            .col-12
-                h1 Degree Class Calculator API
-            .col-12
-                p for University of St Andrews students.
+    .row
+        .col-12
+            h2 What this is
+        .col-12
+            p 
+                span Use this tool as an API version of 
+                a(href="https://grades.lukasa.co.uk") https://grades.lukasa.co.uk
+                span . It can provide a degree classification based on your current grades and based on your predicted grades.
+        .col-12
+            p 
+                span In the following example, 
+                ul
+                    li
+                        code grade
+                        span  is your grade from 0-20 for a module.
+                    li
+                        code credits
+                        span  is how many credits from 15-120 the module is worth. 
+                    li
+                        code achieved
+                        span  is whether this is a current achieved grade (true or absent) or a predicted grade (false).
 
-        .row
-            .col-12
-                h2 What this is
-            .col-12
-                p 
-                    span Use this tool as an API version of 
-                    a(href="https://grades.lukasa.co.uk") https://grades.lukasa.co.uk
-                    span . It can provide a degree classification based on your current grades and based on your predicted grades.
-            .col-12
-                p 
-                    span In the following example, 
-                    ul
-                        li
-                            code.tooltip.grade grade
-                            span  is your grade from 0-20 for a module.
-                        li
-                            code.tooltip.credits credits
-                            span  is how many credits from 15-120 the module is worth. 
-                        li
-                            code.tooltip.achieved achieved
-                            span  is whether this is a current achieved grade (true or absent) or a predicted grade (false).
+    .row
+        .col-12
+            h4 Usage
+    .row
+        .col-12
+            p 
+                span Send 
+                code POST
+                span  request to 
+                code /grades
+                span  with a body that conforms to the following schema:
+    .row
+        .col-12
+            pre
+                code {
+                    |
+                    |    
+                code.my-tooltip.values "values"
+                code : [
+                    |
+                    |        { 
+                    |           
+                code.my-tooltip.grade "grade"
+                code : number, 
+                    |
+                    |           
+                code.my-tooltip.credits "credits"
+                code : number, 
+                    |
+                    |           
+                code.my-tooltip.achieved "achieved"
+                code : boolean|undefined 
+                    |
+                    |        }
+                    |    ]
+                    |}
+    .row
+        .col-12
+            h2 Examples
+    .row
+        .col-12
+            h4 
+                span Example grades.json 
+        .col-12
+            p
+                span Available here: 
+                a(href="http://kc67.host.cs.st-andrews.ac.uk/example_grades.json") example_grades.json
+                span
+        .col-12
+            pre
+                code {
+                    |
+                    |   
+                code.my-tooltip.values "values"
+                code : [
+                    |
+                    |        {
+                code.my-tooltip.grade "grade"
+                code : 17.0, 
+                code.my-tooltip.credits "credits"
+                code : 60, 
+                code.my-tooltip.achieved "achieved"
+                code : true},
+                    |
+                    |        {
+                code.my-tooltip.grade "grade"
+                code : 13.0, 
+                code.my-tooltip.credits "credits"
+                code : 60, 
+                code.my-tooltip.achieved "achieved"
+                code : true},
+                    |
+                    |        {
+                code.my-tooltip.grade "grade"
+                code : 17.0, 
+                code.my-tooltip.credits "credits"
+                code : 30, 
+                code.my-tooltip.achieved "achieved"
+                code : false},
+                    |
+                    |        {
+                code.my-tooltip.grade "grade"
+                code : 15.0, 
+                code.my-tooltip.credits "credits"
+                code : 30, 
+                code.my-tooltip.achieved "achieved"
+                code : false},
+                    |
+                    |        {
+                code.my-tooltip.grade "grade"
+                code : 18.0, 
+                code.my-tooltip.credits "credits"
+                code : 60, 
+                code.my-tooltip.achieved "achieved"
+                code : false}
+                    |
+                    |    ]
+                    |}
+        .col-12
+            h4 Example cURL
+        .col-12
+            pre.long
+                span
+                    code.my-tooltip(data-tip="cURL is a tool to make requests to servers.") curl
+                    span  \
+                span
+                    code.my-tooltip(data-tip="This sets the RESTFUL request method to be POST.") -X POST
+                    span  \
+                span
+                    code.my-tooltip(data-tip="This specifies the type of the data payload you send is JSON.") -H "Content-Type: application/json"
+                    span  \
+                span
+                    code.my-tooltip(data-tip="This adds the contents of \"./grades.json\" to the data payload.") -d @grades.json
+                    span  \
+                span
+                    code.my-tooltip(data-tip="This is the end point that will accept the data and send back the results.") https://kc67.host.cs.st-andrews.ac.uk/grades
 
-        .row
-            .col-12
-                h4 Usage
-        .row
-            .col-12
-                p 
-                    span Send 
-                    code POST
-                    span  request to 
-                    code /grades
-                    span  with a body that conforms to the following schema:
-        .row
-            .col-12
-                pre
-                    code {
-                        |
-                        |    
-                    code.tooltip.values "values"
-                    code : [
-                        |
-                        |        { 
-                        |           
-                    code.tooltip.grade "grade"
-                    code : number, 
-                        |
-                        |           
-                    code.tooltip.credits "credits"
-                    code : number, 
-                        |
-                        |           
-                    code.tooltip.achieved "achieved"
-                    code : boolean|undefined 
-                        |
-                        |        }
-                        |    ]
-                        |}
-        .row
-            .col-12
-                h2 Examples
-        .row
-            .col-12
-                h4 
-                    span Example grades.json 
-            .col-12
-                p
-                    span Available here: 
-                    a(href="http://kc67.host.cs.st-andrews.ac.uk/example_grades.json") example_grades.json
-                    span
-            .col-12
-                pre
-                    code {
-                        |
-                        |   
-                    code.tooltip.values "values"
-                    code : [
-                        |
-                        |        {
-                    code.tooltip.grade "grade"
-                    code : 17.0, 
-                    code.tooltip.credits "credits"
-                    code : 60, 
-                    code.tooltip.achieved "achieved"
-                    code : true},
-                        |
-                        |        {
-                    code.tooltip.grade "grade"
-                    code : 13.0, 
-                    code.tooltip.credits "credits"
-                    code : 60, 
-                    code.tooltip.achieved "achieved"
-                    code : true},
-                        |
-                        |        {
-                    code.tooltip.grade "grade"
-                    code : 17.0, 
-                    code.tooltip.credits "credits"
-                    code : 30, 
-                    code.tooltip.achieved "achieved"
-                    code : false},
-                        |
-                        |        {
-                    code.tooltip.grade "grade"
-                    code : 15.0, 
-                    code.tooltip.credits "credits"
-                    code : 30, 
-                    code.tooltip.achieved "achieved"
-                    code : false},
-                        |
-                        |        {
-                    code.tooltip.grade "grade"
-                    code : 18.0, 
-                    code.tooltip.credits "credits"
-                    code : 60, 
-                    code.tooltip.achieved "achieved"
-                    code : false}
-                        |
-                        |    ]
-                        |}
-            .col-12
-                h4 Example cURL
-            .col-12
-                pre.long
-                    span
-                        code.tooltip(data-tip="cURL is a tool to make requests to servers.") curl
-                        span  \
-                    span
-                        code.tooltip(data-tip="This sets the RESTFUL request method to be POST.") -X POST
-                        span  \
-                    span
-                        code.tooltip(data-tip="This specifies the type of the data payload you send is JSON.") -H "Content-Type: application/json"
-                        span  \
-                    span
-                        code.tooltip(data-tip="This adds the contents of \"./grades.json\" to the data payload.") -d @grades.json
-                        span  \
-                    span
-                        code.tooltip(data-tip="This is the end point that will accept the data and send back the results.") https://kc67.host.cs.st-andrews.ac.uk/grades
-
-            .col-12
-                h4 Example Response
-            .col-12
-                pre
-                    code {
-                        |
-                        |   "achieved": {
-                        |       "mean": "15.0",
-                        |       "median": "15.0",
-                        |       "class": "Upper Second Class Honours (II.1)"
-                        |   },
-                        |   "will_achieve": {
-                        |       "mean": "16.0",
-                        |       "median": "17.0",
-                        |       "class": "First Class Honours"
-                        |   }
-                        |}
+        .col-12
+            h4 Example Response
+        .col-12
+            pre
+                code {
+                    |
+                    |   "achieved": {
+                    |       "mean": "15.0",
+                    |       "median": "15.0",
+                    |       "class": "Upper Second Class Honours (II.1)"
+                    |   },
+                    |   "will_achieve": {
+                    |       "mean": "16.0",
+                    |       "median": "17.0",
+                    |       "class": "First Class Honours"
+                    |   }
+                    |}
 
 
 

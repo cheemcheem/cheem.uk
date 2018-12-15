@@ -7,9 +7,10 @@ import * as createError from 'http-errors';
 import Error from './shared/error';
 
 import bodyParser = require("body-parser");
-import indexRouter from "./routes/index";
+import labsRouter from "./routes/labs";
 import queryRouter from "./routes/query";
 import gradeRouter from './routes/grade';
+import indexRouter from './routes/index';
 
 
 const app = express();
@@ -31,6 +32,7 @@ if (cluster.isMaster) {
     app.use(express.static(path.join(__dirname, 'public')));
     app.use('/info', queryRouter);
     app.use('/grades', gradeRouter);
+    app.use('/labs', labsRouter);
     app.use('/', indexRouter);
 
     // Catch 404 and forward to error handler

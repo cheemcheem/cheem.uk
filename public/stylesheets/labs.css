@@ -1,0 +1,98 @@
+a {
+    color: #00B7FF;
+}
+
+/* Status */
+
+.active {
+    color: green;
+    fill: green;
+}
+
+.inactive {
+    color: red;
+    fill: red;
+}
+
+/* Search */
+
+#views.searchMode > table > tbody > .pc {
+    display: none;
+}
+
+#views.searchMode > table > tbody > .pc.matches {
+    display: table-row;
+}
+
+#views.searchMode > svg > text {
+    fill-opacity: 0.2;
+}
+
+#views.searchMode > svg > text.matches {
+    fill-opacity: 1;
+}
+
+/* Drop Down Selection Control*/
+
+#views > .visible {
+    display: unset;
+}
+
+#views > * {
+    width: 100%;
+    height: auto;
+    display: none;
+}
+
+/* Header, Drop Down, and Search Input */
+#header {
+    border-bottom: 5px solid black;
+    margin-bottom: 15px;
+}
+
+#filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    margin: 15px 0 15px 0;
+}
+
+#search, #labSelector, #labSelector > * {
+    width: 100%;
+    padding: 5px 0 5px 0;
+    border: 0;
+    margin: 0;
+}
+
+#search {
+    margin-right: 5px;
+}
+
+/* SVG */
+#views {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    overflow: scroll;
+    padding: 10px;
+}
+
+svg {
+    outline: 5px solid black;
+}
+#current {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: center;
+}
+.current-info {
+    margin: 20px
+}

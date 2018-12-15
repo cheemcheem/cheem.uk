@@ -1,74 +1,42 @@
-:root {
-    --main-bg-color: aqua;
-    --main-font-size: 24px;
-}
-
-body {
-    background: darkslategrey;
-    color: lightsteelblue;
-
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: var(--main-font-size)!important;
-}
-
-h1, h2, h4 {
-    color: whitesmoke;
-}
-
 pre {
     border-radius: 5px;
     padding: 20px;
     padding-left: 40px;
-    background: lightsteelblue;
-    color: black;
+    background: var(--dark-color);
+    color: var(--text-color);
     overflow-x: scroll;
 }
 pre.long {
     display: flex;
     flex-direction: column;
 }
-p > code.tooltip, li > code.tooltip {
+p > code.my-tooltip, li > code.my-tooltip {
     color: wheat
 }
-code.tooltip {
-    color: blue
+code {
+    color: var(--red-color)
 }
-code.tooltip:hover {
+code.my-tooltip {
+    color: var(--red-color)
+}
+
+code.my-tooltip:hover {
     background-color: var(--main-bg-color);
-    color: darkslategrey;
 }
 
-a.tooltip{
-    color: #000;
-}
 
-.tooltip {
+.my-tooltip {
     position: relative;
     font-family: monospace;
 }
 
-.tooltip:hover {
+.my-tooltip:hover {
     background-color: var(--main-bg-color);
 }
-@media screen and (max-width: 768px) {
-    body {
-        padding: 0;
-    }
-    .row > *, .row > * > * {
-        font-size: large
-    }
-    .row > * > h1 {
-        font-size: x-large
-    }
-    
-    .row > * > h2 {
-        font-size: larger
-    }
 
-}
 @media screen and (min-width: 768px) {
 
-    .tooltip::before {
+    .my-tooltip::before {
         content: attr(data-tip) ;   
         
         font-size: var(--main-font-size);
@@ -77,17 +45,19 @@ a.tooltip{
         white-space:nowrap;
         bottom:9999px;
         left: 50%;
-        background:#000;
-        color:#e0e0e0;
-        padding:5px 7px;
+        background: var(--dark-color);
+        color:var(--text-color);
+        padding:2px 7px;
         line-height: 28px;
-        height: 38px;
+        height: 34px;
+        outline: 4px solid var(--text-color);
+        
         
         opacity: 0;  
         transition:opacity 0.4s ease-out; 
     }
 
-    .tooltip:hover::before {
+    .my-tooltip:hover::before {
         top: -38px;
         opacity: 1;
         left: unset;
@@ -95,19 +65,19 @@ a.tooltip{
     }
     
     
-    .tooltip.values::before {
+    .my-tooltip.values::before {
         content: "An array of grade objects.";
     }
 
-    .tooltip.grade::before {
+    .my-tooltip.grade::before {
         content: "Your grade from 0-20 for a module.";
     }
 
-    .tooltip.credits::before {
+    .my-tooltip.credits::before {
         content: "How many credits from 15-120 the module is worth.";
     }
 
-    .tooltip.achieved::before {
+    .my-tooltip.achieved::before {
         content: "Whether this is a current achieved grade (true or absent) or a predicted grade (false).";
     }
 

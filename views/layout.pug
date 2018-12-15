@@ -3,8 +3,8 @@ html
   head
     block head
       title= title
-      link(async rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap-grid.min.css", integrity="sha256-vl+0p/Z28RcVvC+cofUiIeYusGdOc4CXk/taqgQ2/XU=", crossorigin="anonymous")
-      link(async rel='stylesheet', href='/stylesheets/style.css')
+      link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" crossorigin="anonymous")
+      link(rel="stylesheet", href="/stylesheets/style.css")
       link(rel="apple-touch-icon", sizes="180x180", href="/apple-touch-icon.png")
       link(rel="icon", type="image/png", sizes="32x32", href="/favicon-32x32.png")
       link(rel="icon", type="image/png", sizes="16x16", href="/favicon-16x16.png")
@@ -12,6 +12,28 @@ html
       link(rel="mask-icon", href="/safari-pinned-tab.svg", color="#2f4f4f")
       meta(name="msapplication-TileColor", content="#2d89ef")
       meta(name="theme-color", content="#ffffff")
+      meta(name="viewport" content="width=device-width, initial-scale=1.0")
   body
-    block content
+    .container
+      header
+        block header
+          ul.nav.nav-pills.nav-fill
+            li.nav-item
+              a(href="/").nav-link.site Home
+            li.nav-item
+              a(href="/labs").nav-link.site Labs
+            li.nav-item
+              a(href="/grades").nav-link.site Grades
+          script 
+            | window.onload = () => {
+            |   const tabs = document.getElementsByClassName("site");
+            |   if (window.location.pathname === "/") {
+            |     tabs.item(0).classList.add("active");
+            |   } else if (window.location.pathname === "/labs") {
+            |     tabs.item(1).classList.add("active");
+            |   } else if (window.location.pathname === "/grades") {
+            |     tabs.item(2).classList.add("active");
+            |   }
+            |}
+      block content
 
