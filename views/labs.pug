@@ -1,7 +1,6 @@
 extends layout
 block append head
     link(rel="stylesheet", href="/stylesheets/labs.css")
-    script(src="javascripts/script.js")
 block prepend header
     .row
         .col-12
@@ -10,6 +9,8 @@ block prepend header
         .col-12
             p See who's online (Facebook v2?)
 block append header
+    script(src="javascripts/script.js")   
+block content
     .row.justify-content-center
         .col-3
             h3 Selected PC Name
@@ -20,7 +21,6 @@ block append header
             span#current-pc N/A
         .col-3
             span#current-users N/A
-            h3 Selected PC Users
     .row.justify-content-center
         .col-3
             input#search(placeholder="Search by pc or user name")
@@ -35,8 +35,7 @@ block append header
                     option(value="JC035") JC035 Main
                 optgroup(label="List")
                     option(value="List") List of PCs
-block content
-    div#content
+    div#content.row
         div#views
             svg.map#JC035
             svg.map#JH105.visible

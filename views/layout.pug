@@ -14,26 +14,26 @@ html
       meta(name="theme-color", content="#ffffff")
       meta(name="viewport" content="width=device-width, initial-scale=1.0")
   body
+    header.container
+      block header
+        ul.nav.nav-pills.nav-justified
+          li.nav-item
+            a(href="/").nav-link.site Home
+          li.nav-item
+            a(href="/labs").nav-link.site Labs
+          li.nav-item
+            a(href="/grades").nav-link.site Grades
+        script 
+          | 
+          |const tabs = document.getElementsByClassName("site");
+          |if (window.location.pathname === "/") {
+          |  tabs.item(0).classList.add("active");
+          |} else if (window.location.pathname === "/labs") {
+          |  tabs.item(1).classList.add("active");
+          |} else if (window.location.pathname === "/grades") {
+          |  tabs.item(2).classList.add("active");
+          |}
+          |
     .container
-      header
-        block header
-          ul.nav.nav-pills.nav-fill
-            li.nav-item
-              a(href="/").nav-link.site Home
-            li.nav-item
-              a(href="/labs").nav-link.site Labs
-            li.nav-item
-              a(href="/grades").nav-link.site Grades
-          script 
-            | window.onload = () => {
-            |   const tabs = document.getElementsByClassName("site");
-            |   if (window.location.pathname === "/") {
-            |     tabs.item(0).classList.add("active");
-            |   } else if (window.location.pathname === "/labs") {
-            |     tabs.item(1).classList.add("active");
-            |   } else if (window.location.pathname === "/grades") {
-            |     tabs.item(2).classList.add("active");
-            |   }
-            |}
       block content
 
