@@ -5,11 +5,6 @@
   "scripts": {
     "up": "DEBUG=server:* NODE_ENV=production nolimit \"node_modules/forever/bin/forever -o out.log -e err.log -a ./built/bin/www.js $UID\" &>> /dev/null &",
     "ts": "DEBUG=server:* NODE_ENV=debug ts-node bin/www.ts",
-    "compile": "tsc && npm run build && npm run buildgrades",
-    "buildgrades": "cd public/javascripts && tsc --outfile \"../../built/public/javascripts/grades.js\" grades.ts",
-    "build": "webpack",
-    "clean": "rm -r built/views || true",
-    "copy": "cp -r views/ built/views/ && cp -r public/stylesheets/ built/public/stylesheets/ && cp public/*.* built/public/",
     "start": "npm run clean && npm run compile && npm run copy && npm run up"
   },
   "dependencies": {
