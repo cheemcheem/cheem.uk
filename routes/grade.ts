@@ -35,11 +35,9 @@ const gradesHelp:
         const isCurl: boolean = String(req.get("User-Agent")).startsWith("curl");
 
         if (isCurl) {
-            console.log("curling");
             res.set("Content-Type", "text/plain; charset=utf-8")
             res.send(`Usage - send POST to /grades with body = \n{\n  values : [\n    { "grade" : number, "credits" : number, "achieved": boolean|undefined}\n  ]\n}. \nExample curl: 'curl -X POST -H "Content-Type: application/json" -d @grades.json https://kc67.host.cs.st-andrews.ac.uk/grades'`);
         } else {
-            console.log("browsering");
             res.render('grade', {title: "Grades Help"});
         }
     };

@@ -177,7 +177,7 @@ if (cluster.isWorker) {
 
                 // Execute query
                 try {
-                    const stdout = String(execSync(command));
+                    const stdout = String(execSync(command,));
                     const parsed = parseExec(stdout, null);
                     process.send({ key: pcName, value: parsed });
                 } catch (e) {

@@ -14,7 +14,9 @@ import indexRouter from './routes/index';
 
 
 const app = express();
-
+logger.token('agent', (req: express.Request, res: express.Response) => {
+    return String(req.get("User-Agent")).startsWith("curl") ? "[ curl ]" : "[browser]"
+})
 if (cluster.isMaster) {
     const debug = deb('server:app');
     debug("Starting router.")
@@ -23,7 +25,7 @@ if (cluster.isMaster) {
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'pug');
 
-    app.use(logger('dev'));
+    app.use(logger(':date[clf] :agent :req[X-Real-IP] :method :url :status :response-time ms'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: false}));
 

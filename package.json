@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "private": true,
   "scripts": {
-    "up": "DEBUG=server:* NODE_ENV=production nolimit \"node_modules/forever/bin/forever -o out.log -e err.log -a ./built/bin/www.js $UID\" &>> /dev/null &",
+    "up": "DEBUG=server:* NODE_ENV=production nolimit \"node_modules/forever/bin/forever -l start.log -o out.log -e err.log -a ./built/bin/www.js $UID\" &>> /dev/null &",
     "ts": "DEBUG=server:* NODE_ENV=debug ts-node bin/www.ts",
     "start": "npm run clean && npm run compile && npm run copy && npm run up"
   },

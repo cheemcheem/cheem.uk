@@ -58,7 +58,7 @@ else
 fi
 
 if [ "$should_copy" = true ]; then
-    echo "[INFO] [2/5] Copying PUG."
+    echo "[INFO] [2/5] Copying views/."
     cp -r views/ built/views/
 
     echo "[INFO] [3/5] Copying public/."
@@ -84,12 +84,7 @@ fi
 if [ "$should_deploy" = true ]; then
     echo "[INFO] [5/5] Restarting remote instance."
     # Kill old server and start server (change port in bin/www.ts to own port!)
-    ssh "$CSADDR 
-    killall node ;
-    cd $remote_dir &&
-    pwd &&
-    tree -I node_modules &&
-    (nolimit npm run up &)" -q -p test 2> /dev/null 
+    ssh $CSADDR "killall node ; cd $remote_dir ; nolimit npm run up"
 else
     echo "[INFO] [5/5] [Skipping] Restarting remote instance."
 fi
