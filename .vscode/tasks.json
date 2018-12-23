@@ -7,18 +7,25 @@
             "label": "deploy all",
             "type": "shell",
             "command": "./deploy.sh",
-            "isBackground":true,
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "isBackground": true,
+            "group": "build"
         },
         {
             "label": "deploy front",
             "type": "shell",
             "command": "./deploy.sh",
             "isBackground": true,
-            "args": ["a"]
+            "args": [
+                "a"
+            ]
+        },
+        {
+            "type": "npm",
+            "script": "ts",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

@@ -12,7 +12,7 @@ set -e
 
 # Global Vars Required
 # $CSADDR should be $USER@<url> ie user@address to connect to via ssh
-# $CSLOC should be $CSADDR/cs/home/$USER ie user@address:/path to find home directory
+# $CSLOC should be $CSADDR:/cs/home/$USER ie user@address:/path to find home directory
 # (or any you have permissions for)
 
 local_dir="built" # Where to find TS compiled files and
@@ -73,9 +73,11 @@ if [ "$should_push" = true ]; then
     # Use rsync to transfer files
     #"--exclude=*.ts --exclude=*.js.map"
     echo "[INFO] [4/5] Pushing to remote."
-    rsync -r "--exclude=*tsconfig.json" "$PWD/$local_dir" "$CSLOC/$remote_dir"
-    rsync "$PWD/package.json" "$CSLOC/$remote_dir"
-    rsync "$PWD/package-lock.json" "$CSLOC/$remote_dir"
+    rsync -r "--exclude=*tsconfig.json" "$PWD/$local_dir" "$CSUSER@$CSLOC/$remote_dir"
+    rsync "$PWD/package.json" "$CSUSER@$CSLOC/$remote_dir"
+    rsync "$PWD/package-lock.json" "$CSUSER@$CSLOC/$remote_dir"
+    rsync "$PWD/run.sh" "$CSUSER@$CSLOC/$remote_dir"
+    rsync "$PWD/start.sh" "$CSUSER@$CSLOC/$remote_dir"
 else
     echo "[INFO] [4/5] [Skipping] Pushing to remote."
 fi
@@ -84,7 +86,7 @@ fi
 if [ "$should_deploy" = true ]; then
     echo "[INFO] [5/5] Restarting remote instance."
     # Kill old server and start server (change port in bin/www.ts to own port!)
-    ssh $CSADDR "killall node ; cd $remote_dir ; nolimit npm run up"
+    ssh $CSUSER@$CSADDR "killall node ; cd $remote_dir ; chmod +x run.sh ; chmod +x start.sh ; ./run.sh"
 else
     echo "[INFO] [5/5] [Skipping] Restarting remote instance."
 fi

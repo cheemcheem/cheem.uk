@@ -1,0 +1,2 @@
+# DEBUG=server:* NODE_ENV=debug npx forever --minUptime 1000 --spinSleepTime 60000 -l start.log -o out.log -e err.log -a ./built/bin/www.js $UID
+DEBUG=server:* NODE_ENV=debug nolimit node ./built/bin/www.js $UID
