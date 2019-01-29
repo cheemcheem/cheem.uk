@@ -1,6 +1,6 @@
 {
   "name": "cheem.co.uk",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "ts": "DEBUG=server:* NODE_ENV=debug ts-node bin/www.ts",

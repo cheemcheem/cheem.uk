@@ -1,7 +1,4 @@
-#!/usr/bin/env zsh
-# Exit on error
-set -e
-# The above line uses zsh because I do, you might need to change this (google 'shebang line')
+#!/usr/bin/env bash
 
 # Compiles files, transfers to remote, kills old server, and runs new server.
 # if $1 is present then will not restart remote server (i.e. for /public changes only)
@@ -10,6 +7,9 @@ set -e
 # 1) You may want to run this in tmux or modify this script
 # 2) This runs "killall node" which may be an issue
 # 3) Check you have all global variables ready
+
+# Exit on error
+set -e
 
 # Global Vars Required
 # $remote_address should be $USER@<url> ie user@address to connect to via ssh

@@ -1,9 +1,9 @@
-## Lab Checker v1
-Use this to check online status of the CS Lab Machines and the users logged into them.
+## cheem.co.uk
+Use this as an endpoint to verify your degree class. (API version of [https://grades.lukasa.co.uk](https://grades.lukasa.co.uk))
 
 Check it out here: 
 
-https://kc67.host.cs.st-andrews.ac.uk/
+[cheem.co.uk/](http://cheem.co.uk "My Website")
 
 
 ### Running yourself:
