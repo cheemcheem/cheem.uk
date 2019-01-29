@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
+import * as cluster from "cluster";
+import * as deb from 'debug';
+import * as http from 'http';
 /**
  * Module dependencies.
  */
 import app from '../app';
-import * as deb from 'debug';
-import * as http from 'http';
-import * as cluster from "cluster";
+
 const debug = deb('server:start');
 
 try {
@@ -15,7 +16,7 @@ try {
         /**
          * Get port from environment and store in Express.
          */
-        let port: string | number = normalizePort(String(process.argv[2] || '3000'));
+        let port: string | number = normalizePort('80');
         app.set('port', port);
 
         /**

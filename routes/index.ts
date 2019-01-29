@@ -1,4 +1,4 @@
-import * as express from 'express';
+import * as express from "express";
 
 /**
  * Handles showing the index page with a list of pcs.
@@ -8,11 +8,10 @@ import * as express from 'express';
  * @param next {Function}
  */
 const handleIndex:
-    (req: express.Request, res: express.Response, next: Function) => void =
-    (req: express.Request, res: express.Response, next: Function) => {
-        res.render('index');
+    (req: express.Request, res: express.Response, next: express.NextFunction) => void =
+    (req: express.Request, res: express.Response, next: express.NextFunction) => {
+        res.render("index");
     };
-
 
 /**
  * Used to route "/".
@@ -21,6 +20,6 @@ const handleIndex:
  * @type {Router} express router object.
  */
 const indexRouter = express.Router();
-indexRouter.get('/', handleIndex);
+indexRouter.get("/", handleIndex);
 
 export default indexRouter;

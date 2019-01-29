@@ -1,4 +1,4 @@
-import * as express from 'express';
+import * as express from "express";
 
 /**
  * Handles calculating grades.
@@ -8,18 +8,18 @@ import * as express from 'express';
  * @param next {Function}
  */
 const grades:
-    (req: express.Request, res: express.Response, next: Function) => void =
-    (req: express.Request, res: express.Response, next: Function) => {
+    (req: express.Request, res: express.Response, next: express.NextFunction) => void =
+    (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
         const body = req.body;
         calculate(body.values)
-            .then(result => {
-                res.set('Content-Type', 'application/json; charset=utf-8');
+            .then((result) => {
+                res.set("Content-Type", "application/json; charset=utf-8");
                 res.send(JSON.stringify(result));
             }).catch((e) => {
-                e.status = 400;
-                next(e);
-            });
+            e.status = 400;
+            next(e);
+        });
     };
 
 /**
@@ -30,18 +30,23 @@ const grades:
  * @param next {Function}
  */
 const gradesHelp:
-    (req: express.Request, res: express.Response, next: Function) => void =
-    (req: express.Request, res: express.Response, next: Function) => {
+    (req: express.Request, res: express.Response, next: express.NextFunction) => void =
+    (req: express.Request, res: express.Response, next: express.NextFunction) => {
         const isCurl: boolean = String(req.get("User-Agent")).startsWith("curl");
 
         if (isCurl) {
-            res.set("Content-Type", "text/plain; charset=utf-8")
-            res.send(`Usage - send POST to /grades with body = \n{\n  values : [\n    { "grade" : number, "credits" : number, "achieved": boolean|undefined}\n  ]\n}. \nExample curl: 'curl -X POST -H "Content-Type: application/json" -d @grades.json https://kc67.host.cs.st-andrews.ac.uk/grades'`);
+            res.set("Content-Type", "text/plain; charset=utf-8");
+            res.send(`Usage - send POST to /grades with body =
+{
+  values : [
+    { "grade" : number, "credits" : number, "achieved": boolean|undefined}
+  ]
+}.
+Example curl: 'curl -X POST -H "Content-Type: application/json" -d @grades.json https://cheem.co.uk/grades'`);
         } else {
-            res.render('grade', {title: "Grades Help"});
+            res.render("grade", {title: "Grades Help"});
         }
     };
-
 
 /**
  * Used to route "/grades"
@@ -49,104 +54,134 @@ const gradesHelp:
  * @type {Router} express router object.
  */
 const gradeRouter = express.Router();
-gradeRouter.post('/', grades);
-gradeRouter.get('/', gradesHelp);
+gradeRouter.post("/", grades);
+gradeRouter.get("/", gradesHelp);
 
 export default gradeRouter;
 
-function calculate(e: [rowString]) {
-    return new Promise<results>((resolve, reject) => {
-        const t: rowNumber[] = [];
+function calculate(e: [IRowString]) {
+    return new Promise<IResults>((resolve, reject) => {
+        const t: IRowNumber[] = [];
         let n = !0;
-        e.forEach(eo => {
-            let grade = parseFloat(eo.grade);
-            let credits = parseInt(eo.credits);
-            let achieved = eo.achieved !== false;
+        e.forEach((eo) => {
+            const grade = parseFloat(eo.grade);
+            const credits = parseInt(eo.credits);
+            const achieved = eo.achieved !== false;
             if (validateRow(grade, credits)) {
                 t.push({
-                    grade: grade,
-                    credits: credits,
-                    achieved: achieved
+                    achieved,
+                    credits,
+                    grade,
                 });
             } else {
                 n = !1;
             }
         });
         if (n) {
-            console.log(t);
-            const achieved = calculateResult(t.filter(r => r.achieved));
-            const will_achieve = calculateResult(t);
-            resolve({achieved: achieved, will_achieve: will_achieve});
+            const achieved = calculateResult(t.filter((r) => r.achieved));
+            const willAchieve = calculateResult(t);
+            resolve({achieved, will_achieve: willAchieve});
         } else {
             reject();
         }
-    })
+    });
 }
 
-function calculateResult(t: rowNumber[]) {
+function calculateResult(t: IRowNumber[]) {
     const meanVal = CWM(t);
     const medianVal = CWMedian(t);
     const mean: string = oneDecimalPlace(meanVal);
     const median: string = oneDecimalPlace(medianVal);
     const degreeClass: string = classificationFromGrades(meanVal, medianVal);
-    return { mean: mean, median: median, class: degreeClass};
+    return {mean, median, class: degreeClass};
 }
-interface results {
-    achieved: result;
-    will_achieve: result | undefined
+
+interface IResults {
+    achieved: IResult;
+    will_achieve: IResult | undefined;
 }
-interface result {
+
+interface IResult {
     mean: string;
     median: string;
     class: string;
 }
 
-interface rowString {
+interface IRowString {
     grade: string;
     credits: string;
-    achieved: boolean|undefined;
+    achieved: boolean | undefined;
 }
 
-interface rowNumber {
+interface IRowNumber {
     grade: number;
     credits: number;
     achieved: boolean;
 }
+
 function validateRow(grade: number, credits: number) {
-    return isNaN(grade) || 0 > grade || grade > 20 || isNaN(credits) || 0 > credits || credits > 120 || !isInt(credits) ? !1 : !0
+    return isNaN(grade)
+    || 0 > grade
+    || grade > 20
+    || isNaN(credits)
+    || 0 > credits
+    || credits > 120
+    || !isInt(credits) ? !1 : !0;
 }
+
 function isInt(e: any) {
-    return parseFloat(e) != parseInt(e, 10) || isNaN(e) ? !1 : !0
+    return parseFloat(e) !== parseInt(e, 10) || isNaN(e) ? !1 : !0;
 }
+
 function oneDecimalPlace(e: number) {
-    var t = Math.round(10 * e) / 10;
-    return t.toFixed(1)
+    const t = Math.round(10 * e) / 10;
+    return t.toFixed(1);
 }
-function CWM(e: rowNumber[]) {
-    for (var t = 0, n = 0, o = 0; o < e.length; o++)
-        t += e[o].grade * e[o].credits, n += e[o].credits;
-    return t / n
+
+function CWM(e: IRowNumber[]) {
+    let t = 0;
+    let n = 0;
+    for (let o = 0; o < e.length; o++) {
+        t += e[o].grade * e[o].credits;
+        n += e[o].credits;
+    }
+    return t / n;
 }
-function CWMedian(e: rowNumber[]) {
-    e.sort(function (e, t) {
-        return e.grade - t.grade
-    });
-    for (var t = 0, n = 0; n < e.length; n++)
+
+function CWMedian(e: IRowNumber[]) {
+    e.sort((e0, t0) => e0.grade - t0.grade);
+    let t = 0;
+    let n = 0;
+    for (; n < e.length; n++) {
         t += e[n].credits;
-    var o = (t + 1) / 2;
+    }
+    const o = (t + 1) / 2;
     if (isInt(o)) {
-        for (t = 0, n = 0; n < e.length; n++)
-            if (t += e[n].credits, t >= o)
-                return e[n].grade
-    } else
         for (t = 0, n = 0; n < e.length; n++) {
-            if (t += e[n].credits, o - .5 == t && o + .5 > t)
-                return (e[n + 1].grade + e[n].grade) / 2;
-            if (t > o)
-                return e[n].grade
+            if (t += e[n].credits, t >= o) {
+                return e[n].grade;
+            }
         }
+    } else {
+        for (t = 0, n = 0; n < e.length; n++) {
+            if (t += e[n].credits, o - .5 === t && o + .5 > t) {
+                return (e[n + 1].grade + e[n].grade) / 2;
+            }
+            if (t > o) {
+                return e[n].grade;
+            }
+        }
+    }
 }
 
 function classificationFromGrades(mean: number, median: number) {
-    return mean >= 16.5 ? "First Class Honours" : mean >= 16 && median >= 16.5 ? "First Class Honours" : mean >= 13.5 ? "Upper Second Class Honours (II.1)" : mean >= 13 && median >= 13.5 ? "Upper Second Class Honours (II.1)" : mean >= 10.5 ? "Lower Second Class Honours (II.2)" : mean >= 10 && median >= 10.5 ? "Lower Second Class Honours (II.2)" : mean >= 7.5 ? "Third Class Honours" : mean >= 7 && median >= 7.5 ? "Third Class Honours" : 'a degree "Not of Honours Standard"'
+    return mean >= 16.5 ? "First Class Honours" :
+        mean >= 16 && median >= 16.5 ? "First Class Honours" :
+            mean >= 13.5 ? "Upper Second Class Honours (II.1)" :
+                mean >= 13 && median >= 13.5 ? "Upper Second Class Honours (II.1)" :
+                    mean >= 10.5 ? "Lower Second Class Honours (II.2)" :
+                        mean >= 10 && median >= 10.5 ? "Lower Second Class Honours (II.2)" :
+                            mean >= 7.5 ? "Third Class Honours" :
+                                mean >= 7 && median >= 7.5 ? "Third Class Honours" :
+                                    'a degree "Not of Honours Standard"';
 }

@@ -21,16 +21,12 @@ html
           li.nav-item
             a(href="/").nav-link.site Home
           li.nav-item
-            a(href="/labs").nav-link.site Labs
-          li.nav-item
             a(href="/grades").nav-link.site Grades
         script 
           | 
           |const tabs = document.getElementsByClassName("site");
           |if (window.location.pathname === "/") {
           |  tabs.item(0).classList.add("active");
-          |} else if (window.location.pathname === "/labs") {
-          |  tabs.item(1).classList.add("active");
           |} else if (window.location.pathname === "/grades") {
           |  tabs.item(2).classList.add("active");
           |}
