@@ -39,6 +39,10 @@ function print_error_message() {
     echo -e "${r}${b}[ERROR]${n} Previous step returned non zero exit code! See ${PWD}/${log_file} for details."
     exit 1
 }
+function print_invalid_arg_message() {
+    echo -e "${r}${b}[ERROR]${n} Invalid argument '${1}'."
+    exit 1
+}
 
 function print_fatal_message() {
     echo -e "${r}${b}[ERROR]${n} Something terrible has gone wrong and this script could not start!"
@@ -69,36 +73,16 @@ if [[ $1 == --help ]] || [[ $1 == -h ]] ; then
 fi
 
 
-function get_options() {
-    while test $# -gt 0
-    do
-        case "$1" in
-            --no-cleam) should_clean=false
-                ;;
-            --no-compile) should_compile=false
-                ;;
-            --no-copy) should_copy=false
-                ;;
-            --no-push) should_push=false
-                ;;
-            --no-deploy) should_deploy=false
-                ;;
-            --install-remote) should_install_remote=true
-                ;;
-            --classic-deploy) should_classic_deploy=true
-                ;;
-        esac
-        shift
-    done
-}
+
+
 
 function new_log_entry() {
     echo "$(date +"%T") ---------------------------------------" >> ${log_file} 2>&1
-    echo -e "${b}[INFO]${n} ${u}Deploy Script ${b}3.0${n}"
+    echo -e "${b}[INFO]${n} ${u}Deploy Script ${b}3.1${n}"
 }
 
 function clean() {
-    if [[ "$should_compile" = true ]]; then
+    if [[ "$should_clean" = true ]]; then
        echo -e "${b}[INFO]${n} ${u}[1/6]${n} Cleaning old build files."
        (rm -rf built/ || exit 1)
     else
@@ -108,24 +92,24 @@ function clean() {
 
 function compile() {
     if [[ "$should_compile" = true ]]; then
-        echo "${b}[INFO]${n} ${u}[2/6]${n} Building new project."
+        echo -e "${b}[INFO]${n} ${u}[2/6]${n} Building new project."
         (tsc  >> ${log_file} 2>&1 || exit 1)
 #        (npx webpack >> ${log_file} 2>&1)
     else
-        echo "${b}[${y}INFO${d}]${n} ${u}[2/6]${n} ${b}[${y}SKIPPING${d}]${n} Building new project."
+        echo -e "${b}[${y}INFO${d}]${n} ${u}[2/6]${n} ${b}[${y}SKIPPING${d}]${n} Building new project."
     fi
 }
 
 function copy() {
     if [[ "$should_copy" = true ]]; then
-        echo "${b}[INFO]${n} ${u}[3/6]${n} Copying frontend files."
+        echo -e "${b}[INFO]${n} ${u}[3/6]${n} Copying frontend files."
         (mkdir -p built/views/) >> ${log_file} 2>&1 || exit 1
         (mkdir -p built/public/stylesheets/) >> ${log_file} 2>&1 || exit 1
         (cp -r views/ built/views/) >> ${log_file} 2>&1 || exit 1
         (cp -r public/stylesheets/ built/public/stylesheets/) >> ${log_file} 2>&1 || exit 1
         (cp public/*.* built/public/) >> ${log_file} 2>&1 || exit 1
     else
-        echo "${b}[${y}INFO${d}]${n} ${u}[3/6]${n} ${b}[${y}SKIPPING${d}]${n} Copying frontend files."
+        echo -e "${b}[${y}INFO${d}]${n} ${u}[3/6]${n} ${b}[${y}SKIPPING${d}]${n} Copying frontend files."
     fi
 }
 
@@ -133,23 +117,23 @@ function push() {
     if [[ "$should_push" = true ]]; then
         # Use rsync to transfer files
         #"--exclude=*.ts --exclude=*.js.map"
-        echo "${b}[INFO]${n} ${u}[4/6]${n} Pushing built files to remote."
+        echo -e "${b}[INFO]${n} ${u}[4/6]${n} Pushing built files to remote."
         rsync -r "--exclude=*tsconfig.json" "$PWD/$local_dir" "$remote_directory_address/$remote_dir" >> ${log_file} 2>&1 || exit 1
         rsync "$PWD/package.json" "$remote_directory_address/$remote_dir" >> ${log_file} 2>&1 || exit 1
         rsync "$PWD/package-lock.json" "$remote_directory_address/$remote_dir" >> ${log_file} 2>&1 || exit 1
         rsync "$PWD/start.sh" "$remote_directory_address/$remote_dir" >> ${log_file} 2>&1 || exit 1
     else
-        echo "${b}[${y}INFO${d}]${n} ${u}[4/6]${n} ${b}[${y}SKIPPING${d}]${n} Pushing built files to remote."
+        echo -e "${b}[${y}INFO${d}]${n} ${u}[4/6]${n} ${b}[${y}SKIPPING${d}]${n} Pushing built files to remote."
     fi
 }
 
 function install() {
     if [[ "$should_install_remote" = true ]]; then
-        echo "${b}[INFO]${n} ${u}[5/6]${n} Running npm install on remote."
+        echo -e "${b}[INFO]${n} ${u}[5/6]${n} Running npm install on remote."
         # Kill old server and start server (change port in bin/www.ts to own port!)
         ssh ${remote_address} "cd $remote_dir ; npm install" >> ${log_file} 2>&1 || exit 1
     else
-        echo "${b}[${y}INFO${d}]${n} ${u}[5/6]${n} ${b}[${y}SKIPPING${d}]${n} Running npm install on remote."
+        echo -e "${b}[${y}INFO${d}]${n} ${u}[5/6]${n} ${b}[${y}SKIPPING${d}]${n} Running npm install on remote."
     fi
 }
 
@@ -157,26 +141,49 @@ function deploy() {
     if [[ "$should_deploy" = true ]]; then
         # Kill old server and start server (change port in bin/www.ts to own port!)
         if [[ "$should_classic_deploy" = true ]]; then
-            echo "${b}[INFO]${n} ${u}[6/6]${n} Starting remote instance via script."
+            echo -e "${b}[INFO]${n} ${u}[6/6]${n} Starting remote instance via script."
             ssh ${remote_address} "killall node ; cd $remote_dir ; chmod +x start.sh ; ./start.sh" >> ${log_file} 2>&1 || exit 1
         else
-            echo "${b}[INFO]${n} ${u}[6/6]${n} Starting remote instance via systemd."
+            echo -e "${b}[INFO]${n} ${u}[6/6]${n} Starting remote instance via systemd."
             # Hopefully remote has the "run.sh" script systemd'd to restart always.
             ssh ${remote_address} "cd $remote_dir ; chmod +x start.sh ; killall node" >> ${log_file} 2>&1 || exit 1
         fi
     else
-        echo "${b}[${y}INFO${d}]${n} ${u}[6/6]${n} ${b}[${y}SKIPPING${d}]${n} Starting remote instance."
+        echo -e "${b}[${y}INFO${d}]${n} ${u}[6/6]${n} ${b}[${y}SKIPPING${d}]${n} Starting remote instance."
     fi
-    echo "${b}[INFO]${n} Finished."
+    echo -e "${b}[INFO]${n} Finished."
 }
 
 # Main Section
 
-(new_log_entry  || print_fatal_message)
-(get_options    || print_error_message)
-(clean          || print_error_message)
-(compile        || print_error_message)
-(copy           || print_error_message)
-(push           || print_error_message)
-(install        || print_error_message)
-(deploy         || print_error_message)
+(new_log_entry      || print_fatal_message)
+
+while test $# -gt 0
+do
+    case "$1" in
+        --no-clean) should_clean=false
+            ;;
+        --no-compile) should_compile=false
+            ;;
+        --no-copy) should_copy=false
+            ;;
+        --no-push) should_push=false
+            ;;
+        --no-deploy) should_deploy=false
+            ;;
+        --install-remote) should_install_remote=true
+            ;;
+        --classic-deploy) should_classic_deploy=true
+            ;;
+        *) print_invalid_arg_message $1
+            ;;
+    esac
+    shift
+done
+
+(clean              || print_error_message)
+(compile            || print_error_message)
+(copy               || print_error_message)
+(push               || print_error_message)
+(install            || print_error_message)
+(deploy             || print_error_message)

@@ -1,5 +1,7 @@
+import * as deb from "debug";
 import * as express from "express";
 
+const debug = deb("cheem:app:index");
 /**
  * Handles showing the index page with a list of pcs.
  * Works as middleware for an express router.
@@ -7,11 +9,10 @@ import * as express from "express";
  * @param res {express.Response}
  * @param next {Function}
  */
-const handleIndex:
-    (req: express.Request, res: express.Response, next: express.NextFunction) => void =
-    (req: express.Request, res: express.Response, next: express.NextFunction) => {
-        res.render("index");
-    };
+const handleIndex: express.RequestHandler = (req, res) => {
+    debug("Rendering Index.");
+    res.render("index");
+};
 
 /**
  * Used to route "/".

@@ -1,5 +1,7 @@
+import * as deb from "debug";
 import * as express from "express";
 
+const debug = deb("cheem:app:grade");
 /**
  * Handles calculating grades.
  * Works as middleware for an express router.
@@ -7,46 +9,47 @@ import * as express from "express";
  * @param res {express.Response}
  * @param next {Function}
  */
-const grades:
-    (req: express.Request, res: express.Response, next: express.NextFunction) => void =
-    (req: express.Request, res: express.Response, next: express.NextFunction) => {
-
-        const body = req.body;
-        calculate(body.values)
-            .then((result) => {
-                res.set("Content-Type", "application/json; charset=utf-8");
-                res.send(JSON.stringify(result));
-            }).catch((e) => {
+const grades: express.RequestHandler = (req, res, next) => {
+    const body = req.body;
+    debug(`Calculating grades for ${JSON.stringify(body)}.`);
+    calculate(body.values)
+        .then((result) => {
+            const resultString = JSON.stringify(result);
+            debug(`Successfully calculated ${resultString}.`);
+            res.set("Content-Type", "application/json; charset=utf-8");
+            res.send(resultString);
+        })
+        .catch((e) => {
+            debug(`Unsuccessfully calculated result. Reason: ${JSON.stringify(e)}.`);
             e.status = 400;
             next(e);
         });
-    };
+};
 
 /**
  * Handles help section for grades.
  * Works as middleware for an express router.
  * @param req {express.Request}
  * @param res {express.Response}
- * @param next {Function}
  */
-const gradesHelp:
-    (req: express.Request, res: express.Response, next: express.NextFunction) => void =
-    (req: express.Request, res: express.Response, next: express.NextFunction) => {
-        const isCurl: boolean = String(req.get("User-Agent")).startsWith("curl");
+const gradesHelp: express.RequestHandler = (req, res) => {
+    const isCurl: boolean = String(req.get("User-Agent")).startsWith("curl");
 
-        if (isCurl) {
-            res.set("Content-Type", "text/plain; charset=utf-8");
-            res.send(`Usage - send POST to /grades with body =
+    if (isCurl) {
+        debug("Sending cURL Grades Info.");
+        res.set("Content-Type", "text/plain; charset=utf-8");
+        res.send(`Usage - send POST to /grades with body =
 {
   values : [
     { "grade" : number, "credits" : number, "achieved": boolean|undefined}
   ]
 }.
-Example curl: 'curl -X POST -H "Content-Type: application/json" -d @grades.json https://cheem.co.uk/grades'`);
-        } else {
-            res.render("grade", {title: "Grades Help"});
-        }
-    };
+Example curl: 'curl -X POST -H "Content-Type: application/json" -d @grades.json http://cheem.co.uk/grades'`);
+    } else {
+        debug("Rendering Grades.");
+        res.render("grade", {title: "Grades Help"});
+    }
+};
 
 /**
  * Used to route "/grades"
@@ -65,7 +68,7 @@ function calculate(e: [IRowString]) {
         let n = !0;
         e.forEach((eo) => {
             const grade = parseFloat(eo.grade);
-            const credits = parseInt(eo.credits);
+            const credits = parseInt(eo.credits, 10);
             const achieved = eo.achieved !== false;
             if (validateRow(grade, credits)) {
                 t.push({

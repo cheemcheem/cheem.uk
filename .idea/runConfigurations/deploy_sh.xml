@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="deploy.sh" type="BashConfigurationType" factoryName="Bash" singleton="true">
-    <module name="LabChecker" />
+    <module name="cheem.co.uk" />
     <option name="INTERPRETER_OPTIONS" value="zsh" />
     <option name="INTERPRETER_PATH" value="/usr/bin/env" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
