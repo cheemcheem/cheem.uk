@@ -155,18 +155,36 @@ small {
 	margin-bottom : 75px;
 }
 
+html {
+	display         : flex;
+	flex-direction  : row;
+	justify-content : center;
+}
+
 header {
 	padding-bottom : 15px;
 	padding-top    : 15px;
 }
 
-@media screen and (max-width : 1200px) {
+@media screen and (min-width : 1100px) {
+	body {
+		width : 1100px;
+	}
+}
+
+@media screen and (max-width : 1099px) {
 	.card {
 		min-width : 600px;
 	}
 }
 
-@media screen and (max-width : 768px) and (min-width : 267px) {
+@media screen and (max-width : 768px) and (min-width : 600px) {
+	.card {
+		min-width : 500px;
+	}
+}
+
+@media screen and (max-width : 599px) and (min-width : 267px) {
 	.card {
 		min-width : 267px;
 	}
