@@ -2,7 +2,6 @@
 	--main-bg-color      : #0a100d;
 	--dark-color         : #2d3142;
 	--header-color       : #f6bd60;
-
 	--red-color          : #e55934;
 	--text-color         : wheat;
 
@@ -25,7 +24,7 @@ body {
 	font-family : Arial, Helvetica, sans-serif !important;
 	font-size   : var(--main-font-size);
 	font-weight : normal;
-	padding     : 15px;
+	padding     : 0 15px;
 }
 
 h1, h2, h3, h4, h5, h6 {

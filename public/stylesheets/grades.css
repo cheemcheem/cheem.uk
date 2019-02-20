@@ -16,10 +16,14 @@ p > code.my-tooltip, li > code.my-tooltip {
 }
 code {
     max-width: 100%;
-    color: var(--red-color)
 }
+
+code.info {
+    background : var(--dark-color)
+}
+
 code.my-tooltip {
-    color: var(--red-color)
+    color : var(--red-color)
 }
 
 code.my-tooltip:hover {
