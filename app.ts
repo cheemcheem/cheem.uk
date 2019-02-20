@@ -7,10 +7,11 @@ import * as logger from "morgan";
 import * as path from "path";
 import gradeRouter from "./routes/grade";
 import indexRouter from "./routes/index";
+import personalRouter from "./routes/personal";
 import bodyParser = require("body-parser");
 
 const app = express();
-logger.token("agent", (req: express.Request, res: express.Response) => {
+logger.token("agent", (req: express.Request) => {
     return String(req.get("User-Agent")).startsWith("curl") ? "[ curl ]" : "[browser]";
 });
 const debug = deb("cheem:app:setup");
@@ -29,6 +30,7 @@ app.use(cors({origin: true}));
 // Routing
 debug("Setting routing preferences.");
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/personal", personalRouter);
 app.use("/grades", gradeRouter);
 app.use("/", indexRouter);
 

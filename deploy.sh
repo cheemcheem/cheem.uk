@@ -8,8 +8,10 @@
 # 2) This runs "killall node" which may be an issue
 # 3) Check you have all global variables ready
 
+
 # Exit on error
 set -e
+
 
 # Global Vars Required
 # $remote_address should be $USER@<url> ie user@address to connect to via ssh
@@ -19,39 +21,26 @@ remote_user="root"
 remote_address="$remote_user@cheem.co.uk"
 remote_directory_address="$remote_address:/$remote_user"
 
+
 # Directories
 local_dir="built"                   # Where to find TS compiled files and
 remote_dir="LabChecker"             # Where to send files remotely
 
 
 # Formatting options
-b="\033[1m"     # bold
-r="\033[31m"    # red
-y="\033[33m"    # yellow
-d="\033[39m"    # default colour
-u="\033[4m"     # underline
-n="\033[0m"     # reset all to normal
+b="\033[1m"                         # bold
+r="\033[31m"                        # red
+y="\033[33m"                        # yellow
+d="\033[39m"                        # default colour
+u="\033[4m"                         # underline
+n="\033[0m"                         # reset all to normal
+
 
 # Where to store log from outputs.
 log_file="run.log"
 
-function print_error_message() {
-    echo -e "${r}${b}[ERROR]${n} Previous step returned non zero exit code! See ${PWD}/${log_file} for details."
-    exit 1
-}
-function print_invalid_arg_message() {
-    echo -e "${r}${b}[ERROR]${n} Invalid argument '${1}'."
-    exit 1
-}
 
-function print_fatal_message() {
-    echo -e "${r}${b}[ERROR]${n} Something terrible has gone wrong and this script could not start!"
-    echo -e "See ${PWD}/${log_file} for details."
-    exit 1
-}
-
-# Compile TS and copy other files into built folder like package*.json, public/*, and views/*
-# todo add "local_dir" p aram to npm commands
+# Default flags
 should_clean=true
 should_compile=true
 should_copy=true
@@ -60,6 +49,8 @@ should_deploy=true
 should_classic_deploy=false
 should_install_remote=false
 
+
+# Help section if requested
 if [[ $1 == --help ]] || [[ $1 == -h ]] ; then
     echo "Usage: ./deploy.sh [options]"
     echo "--no-clean        Do not delete old built files."
@@ -73,8 +64,7 @@ if [[ $1 == --help ]] || [[ $1 == -h ]] ; then
 fi
 
 
-
-
+# Function definitions
 
 function new_log_entry() {
     echo "$(date +"%T") ---------------------------------------" >> ${log_file} 2>&1
@@ -153,6 +143,23 @@ function deploy() {
     fi
     echo -e "${b}[INFO]${n} Finished."
 }
+
+function print_error_message() {
+    echo -e "${r}${b}[ERROR]${n} Previous step returned non zero exit code! See ${PWD}/${log_file} for details."
+    exit 1
+}
+
+function print_invalid_arg_message() {
+    echo -e "${r}${b}[ERROR]${n} Invalid argument '${1}'."
+    exit 1
+}
+
+function print_fatal_message() {
+    echo -e "${r}${b}[ERROR]${n} Something terrible has gone wrong and this script could not start!"
+    echo -e "See ${PWD}/${log_file} for details."
+    exit 1
+}
+
 
 # Main Section
 

@@ -1,0 +1,7 @@
+mixin dark_card(abbr, modName, code, link)
+    .card.mb-3.onclick(onclick=`window.location="${link}"`)
+        .card-body
+            h2.card-title=abbr
+            h4.card-subtitle=modName
+        .card-body
+            h6.text-right.card-subtitle=code
