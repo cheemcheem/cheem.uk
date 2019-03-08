@@ -53,7 +53,7 @@ function normalizePort(val: any) {
  */
 
 function onError(error: any) {
-    debug(`HTTP server error. Reason: ${JSON.stringify(error)}.`);
+    debug(`HTTP server error. Reason: ${JSON.stringify(error, null, 4)}.`);
     if (error.syscall !== "listen") {
         throw error;
     }

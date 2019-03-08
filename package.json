@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "ts": "DEBUG=server:* NODE_ENV=debug ts-node bin/www.ts",
+    "ts": "DEBUG=* NODE_ENV=debug ts-node bin/www.ts",
     "start": "./start.sh"
   },
   "dependencies": {

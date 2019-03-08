@@ -3,7 +3,7 @@ Use this as an endpoint to verify your degree class. (API version of [https://gr
 
 Check it out here: 
 
-[cheem.co.uk/](http://cheem.co.uk "My Website")
+[cheem.co.uk/grades](https://cheem.co.uk/grades "My Website")
 
 
 ### Running yourself:
