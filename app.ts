@@ -8,6 +8,7 @@ import * as path from "path";
 import gradeRouter from "./routes/grade";
 import indexRouter from "./routes/index";
 import personalRouter from "./routes/personal";
+import weatherRouter from "./routes/weather";
 import bodyParser = require("body-parser");
 
 const app = express();
@@ -32,6 +33,7 @@ debug("Setting routing preferences.");
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/personal", personalRouter);
 app.use("/grades", gradeRouter);
+app.use("/weather", weatherRouter);
 app.use("/", indexRouter);
 
 // Catch 404 and forward to error handler

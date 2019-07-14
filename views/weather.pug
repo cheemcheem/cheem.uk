@@ -1,0 +1,36 @@
+extends layout
+
+block append head
+    link(rel="stylesheet", href="/stylesheets/grades.css")
+block prepend header
+    .row 
+        .col-12
+            h1 Degree Class Calculator API
+        .col-12
+            p for University of St Andrews students.
+block content
+    .row
+        .col-12
+            h2 What this is
+        .col-12
+            p 
+                span Use this tool as an API version of 
+                a(href="https://grades.lukasa.co.uk") https://grades.lukasa.co.uk
+                span . It can provide a degree classification based on your current grades and based on your predicted grades.
+        .col-12
+            p 
+                span In the following example, 
+                ul
+                    li
+                        code.info grade
+                        span  is your grade from 0-20 for a module.
+                    li
+                        code.info credits
+                        span  is how many credits from 15-120 the module is worth.
+                    li
+                        code.info achieved
+                        span  is whether this is a current achieved grade (true or absent) or a predicted grade (false).
+
+    .row
+        .col-12
+            h4 Usage
