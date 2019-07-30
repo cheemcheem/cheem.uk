@@ -1,15 +1,14 @@
 extends layout
-
 block append head
     link(rel="stylesheet", href="/stylesheets/grades.css")
 block prepend header
     .row 
         .col-12
-            h1 Degree Class Calculator API
+            h1 Grades API
         .col-12
             p for University of St Andrews students.
 block content
-    .row
+    .row.mb-3
         .col-12
             h2 What this is
         .col-12
@@ -41,10 +40,10 @@ block content
                         code.info achieved
                         span  is whether this is a current achieved grade (true or absent) or a predicted grade (false).
 
-    .row
+    .row.mb-3
         .col-12
             h4 Usage
-    .row
+    .row.mb-3
         .col-12
             p
                 span="Send "
@@ -52,8 +51,8 @@ block content
                 span=" request to "
                 code.info /grades
                 span=" with a body that conforms to the following schema:"
-    .row
-        .col-12
+    .row.mb-3
+        .col-12.contains-pre
             pre
                 code {
                     |
@@ -77,10 +76,10 @@ block content
                     |        }
                     |    ]
                     |}
-    .row
+    .row.mb-3
         .col-12
             h2 Examples
-    .row
+    .row.mb-3
         .col-12
             h4 
                 span Example grades.json 
@@ -89,7 +88,7 @@ block content
                 span Available here: 
                 a(href="http://cheem.co.uk/example_grades.json") example_grades.json
                 span
-        .col-12
+        .col-12.contains-pre
             pre
                 code {
                     |
@@ -141,7 +140,7 @@ block content
                     |}
         .col-12
             h4 Example cURL
-        .col-12
+        .col-12.contains-pre
             pre.long
                 span
                     code.my-tooltip(data-tip="cURL is a tool to make requests to servers.") curl
@@ -160,7 +159,7 @@ block content
 
         .col-12
             h4 Example Response
-        .col-12
+        .col-12.contains-pre
             pre
                 code {
                     |

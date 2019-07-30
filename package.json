@@ -21,6 +21,7 @@
     "morgan": "^1.9.1",
     "pug": "2.0.3",
     "sprintf-js": "latest",
+    "treantjs": "github:fperucic/treant-js",
     "underscore.string": "latest"
   },
   "devDependencies": {

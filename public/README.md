@@ -14,8 +14,10 @@ Insert the following code in the `head` section of your pages:
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2f4f4f">
-    <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="theme-color" content="#ffffff">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0a100d">
+    <meta name="apple-mobile-web-app-title" content="Kathan Cheema">
+    <meta name="application-name" content="Kathan Cheema">
+    <meta name="msapplication-TileColor" content="#0a100d">
+    <meta name="theme-color" content="#0a100d">
 
 *Optional* - Check your favicon with the [favicon checker](https://realfavicongenerator.net/favicon_checker)

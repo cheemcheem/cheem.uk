@@ -1,9 +1,6 @@
 extends layout
 include indexCards
 
-block append head
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    link(rel="stylesheet", href="/stylesheets/index.css")
 block prepend header
     .row
         .col-12
@@ -17,7 +14,7 @@ block content
                 .card.mb-3(style="background: var(--main-bg-color); outline: 4px solid var(--dark-color);")
                     .card-header
                         h2.card-title What this is.
-                        h3.card-subtitle These are links relevant to the classes I am taking.
+                        h3.card-subtitle This is a website showcasing my portfolio.
                     .card-footer.text-right(style="border-color: var(--dark-color);")
                         small.text-muted(style="color: var(--text-color)!important;")
                             span="Recruiters "
@@ -26,6 +23,6 @@ block content
     .row.mb-3
         .col
             .card-deck
-                +dark_card("SEP", "Software Engineering Project", "CS5031", "https://studres.cs.st-andrews.ac.uk/CS5031/").
-                +dark_card("CP", "Constraint Programming", "CS4402", "https://studres.cs.st-andrews.ac.uk/CS4402/")
-                +dark_card("DEP", "Data Ethics and Privacy", "CS5055", "https://studres.cs.st-andrews.ac.uk/CS5055/")
+                +dark_card("LinkedIn", "View my profile", "@kathancheema", "https://www.linkedin.com/in/kathancheema/").
+                +dark_card("GitHub", "See my repos", "@cheemcheem", "https://github.com/cheemcheem")
+                +dark_card("Email", "Contact me ", "kathan@cheem.uk", "mailto:kathan@cheem.uk")
