@@ -1,7 +1,5 @@
-import debug0 = require("debug");
 import express = require("express");
 
-const debug = debug0("cheem:app:grade");
 
 /**
  * Handles calculating grades.
@@ -12,16 +10,15 @@ const debug = debug0("cheem:app:grade");
  */
 export const grades: express.RequestHandler = (req, res, next) => {
     const body = req.body;
-    debug(`Calculating grades for ${JSON.stringify(body)}.`);
+
     calculate(body.values)
         .then((result) => {
             const resultString = JSON.stringify(result);
-            debug(`Successfully calculated ${resultString}.`);
+
             res.set("Content-Type", "application/json; charset=utf-8");
             res.send(resultString);
         })
         .catch((e) => {
-            debug(`Unsuccessfully calculated result. Reason: ${JSON.stringify(e)}.`);
             e.status = 400;
             next(e);
         });
@@ -37,17 +34,16 @@ export const gradesHelp: express.RequestHandler = (req, res) => {
     const isCurl: boolean = String(req.get("User-Agent")).startsWith("curl");
 
     if (isCurl) {
-        debug("Sending cURL Grades Info.");
         res.set("Content-Type", "text/plain; charset=utf-8");
         res.send(`Usage - send POST to /grades with body =
 {
   values : [
-    { "grade" : number, "credits" : number, "achieved": boolean|undefined}
+    { "grade" : number, "credits" : number, "achieved": boolean|undefined }
   ]
 }.
 Example curl: 'curl -X POST -H "Content-Type: application/json" -d @grades.json http://cheem.co.uk/grades'`);
     } else {
-        debug("Rendering Grades.");
+
         res.render("grade", {title: "Kathan Cheema - Grades"});
     }
 };

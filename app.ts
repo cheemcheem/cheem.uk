@@ -21,7 +21,10 @@ debug("Starting router.");
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
+// Log the datetime, user-agent, source IP address, RESTful method, target URL, response status, and response time
+// of each request
 app.use(logger(":date[clf] :agent :req[X-Real-IP] :method :url :status :response-time ms"));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(helmet({hsts: false}));
