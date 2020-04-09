@@ -1,21 +1,28 @@
-pre {
-    border-radius: 5px;
-    padding: 20px;
-    padding-left: 40px;
+.col-12.contains-pre {
+    padding: 20px 20px 0 20px;
     background: var(--dark-color);
     color: var(--text-color);
-    overflow-x: scroll;
-    max-width: 100%;
 }
+
+pre {
+    border-radius: 5px;
+    overflow-x: scroll;
+    width: 80%;
+    max-width: 80%;
+    white-space: pre-wrap;
+}
+
 pre.long {
     display: flex;
     flex-direction: column;
 }
+
 p > code.my-tooltip, li > code.my-tooltip {
     color: wheat
 }
 code {
-    max-width: 100%;
+    width: 80%;
+    max-width: 80%;
 }
 
 code.info {
@@ -31,7 +38,6 @@ code.my-tooltip:hover {
 }
 
 .my-tooltip {
-    position: relative;
     font-family: monospace;
 }
 
@@ -41,14 +47,18 @@ code.my-tooltip:hover {
 
 @media screen and (min-width: 768px) {
 
+    .my-tooltip {
+        position: relative;
+    }
+
     .my-tooltip::before {
-        content: attr(data-tip) ;   
-        
+        content: attr(data-tip);
+
         font-size: var(--main-font-size);
-        position:absolute;
+        position: absolute;
         z-index: 999;
-        white-space:nowrap;
-        bottom:9999px;
+        white-space: nowrap;
+        bottom: 9999px;
         left: 50%;
         background: var(--dark-color);
         color:var(--text-color);
