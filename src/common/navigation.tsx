@@ -1,20 +1,15 @@
 import React from "react";
+import {NavigationProps} from "./types";
 
-type NavigationProps = {
-    targetLocation: string,
-    location: string,
-    setLocation: (location: string) => void
-}
-
-function Navigation(props: NavigationProps) {
+function Navigation<T extends string>(props: NavigationProps<T>) {
     const setLocationOnClick = () => props.setLocation(props.targetLocation);
 
     return <>
-        <div className={"nav-item"} style={{cursor: "pointer"}} onClick={setLocationOnClick}>
+        <li className={"nav-item"} style={{cursor: "pointer"}} onClick={setLocationOnClick}>
             <span className={`nav-link site ${props.location === props.targetLocation ? "active" : ""}`}>
-            {props.targetLocation}
-        </span>
-        </div>
+                {props.targetLocation}
+            </span>
+        </li>
     </>
 }
 

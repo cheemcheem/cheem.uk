@@ -131,25 +131,34 @@ small {
 }
 
 .nav-pills, .card {
-	border                : none;
-	-moz-border-radius    : 0;
-	-webkit-border-radius : 0;
-	border-radius         : 0;
-	outline               : 4px solid var(--dark-color);
+	border: none;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0;
+	outline: 4px solid var(--dark-color);
 }
 
 .card-deck {
-	display        : flex;
-	flex-direction : row;
-	flex-wrap      : wrap;
-	margin         : -15px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.card-deck-horizontal {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+.flex {
+	align-content: stretch;
 }
 
 .card {
-	flex      : 1 1 300px;
-	margin    : 15px;
-	min-width : 300px;
-	padding   : 15px;
+	flex: 1 1 300px;
+	margin: 15px;
+	min-width: 300px;
+	padding: 15px;
 }
 
 .card-body {
