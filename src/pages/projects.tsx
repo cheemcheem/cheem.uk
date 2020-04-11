@@ -31,7 +31,7 @@ function Projects() {
                 if (child.id === project) {
                     window.scrollTo({
                         behavior: "smooth",
-                        top: (child.children.item(0)!.children.item(0)! as HTMLElement).offsetTop - 90
+                        top: (child.children.item(0)!.children.item(0)! as HTMLElement).offsetTop - 100
                     })
                     break;
                 }
