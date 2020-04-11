@@ -29,8 +29,10 @@ function Projects() {
             for (let childIndex = 0; childIndex < projects.current!.children.length; childIndex++) {
                 const child = projects.current!.children.item(childIndex)!;
                 if (child.id === project) {
-                    window.scrollTo({top: (child.children.item(0)!.children.item(0)! as HTMLElement).offsetTop - 90})
-                    // child.children.item(0)!.children.item(0)!.scrollIntoView({behavior: "smooth"});
+                    window.scrollTo({
+                        behavior: "smooth",
+                        top: (child.children.item(0)!.children.item(0)! as HTMLElement).offsetTop - 90
+                    })
                     break;
                 }
             }
@@ -38,7 +40,6 @@ function Projects() {
     };
     useEffect(() => {
         window.addEventListener("scroll", onscroll, true);
-
         return () => window.removeEventListener("scroll", onscroll, true);
     });
 

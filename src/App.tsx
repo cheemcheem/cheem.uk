@@ -12,17 +12,14 @@ function App() {
 
     return (
         <div>
-            <br/>
             <div className={"top-nav-container"}>
-                <nav className={"nav nav-pills nav-justified"}
-                     style={{display: "flex", flexDirection: "row", width: "60%", justifyContent: "space-around"}}>
+                <nav className={"nav nav-pills nav-justified"}>
                     <Navigation location={page} setLocation={setPage} targetLocation={"Home"}/>
                     <Navigation location={page} setLocation={setPage} targetLocation={"Projects"}/>
                     <Navigation location={page} setLocation={setPage} targetLocation={"About Me"}/>
                 </nav>
             </div>
             <main style={{width: "100%"}}>
-                <br/>
                 <Page location={page} setLocation={setPage} targetLocation={"Projects"}>
                     <Projects/>
                 </Page>

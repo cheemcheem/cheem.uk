@@ -163,10 +163,19 @@ small {
 }
 
 .top-nav-container {
+    margin-top: 15px;
+    margin-bottom: 15px;
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: center;
+}
+
+.top-nav-container > nav.nav.nav-pills {
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    justify-content: space-around
 }
 
 .card-deck {
@@ -268,6 +277,7 @@ header {
         background: var(--main-bg-color);
         margin-top: 0;
         height: auto;
+        border-bottom: 4px solid var(--dark-color);
 
     }
 
@@ -276,6 +286,15 @@ header {
         flex-direction: column;
         justify-content: center;
     }
+
+    .top-nav-container {
+        margin-top: 0;
+    }
+
+    .top-nav-container > nav.nav.nav-pills {
+        width: 100%;
+    }
+
 
     .card {
         min-width: 267px;
