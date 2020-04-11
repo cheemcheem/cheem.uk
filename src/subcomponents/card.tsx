@@ -9,7 +9,7 @@ type CardProps = {
 function Card(props: CardProps) {
     return <div id={props.headerTitle} className={"card-deck"}>
         <div className={"card mb-3"}>
-            <div className={"card-header"}>
+            <div className={"card-header mb-1"}>
                 <h1 className={"card-title"}>{props.headerTitle}</h1>
                 <h2 className={"card-subtitle"}>{props.headerSubtitle}</h2>
             </div>

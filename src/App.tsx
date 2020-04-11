@@ -5,6 +5,7 @@ import Page from "./common/page";
 import {Page as PageType, Project} from "./common/types";
 import Card from "./subcomponents/card";
 import NavigationDropDown from "./common/navigationDropDown";
+import RepoLink from "./subcomponents/RepoLink";
 
 function App() {
     const pageKey = "pageKey";
@@ -84,18 +85,17 @@ function App() {
                     <div className={"projects"}>
                         <div ref={projects} className={"card-deck-horizontal"}>
                             <Card headerTitle={"Rubik's Cube Solver"}
-                                  headerSubtitle={<a href={"https://github.com/cheemcheem/rubiks-cube-solver"}>GitHub
-                                      repo</a>}
+                                  headerSubtitle={<div className={"card-deck flex"}><RepoLink
+                                      link={"https://github.com/cheemcheem/rubiks-cube-solver"}/><a
+                                      href={"https://cube.cheem.uk"}>Live</a></div>}
                                   footer={<iframe title={"cube"} src={"https://cube.cheem.uk"} width={"100%"}
                                                   height={500}
                                                   frameBorder={0}/>}/>
                             <Card headerTitle={"Energy Usage Tracker"}
-                                  headerSubtitle={<a href={"https://github.com/cheemcheem/energy-usage"}>GitHub
-                                      repo</a>}
+                                  headerSubtitle={<RepoLink link={"https://github.com/cheemcheem/energy-usage"}/>}
                                   footer={<div style={{height: 700}}>example</div>}/>
                             <Card headerTitle={"VCS Visualiser"}
-                                  headerSubtitle={<a href={"https://github.com/cheemcheem/vcs-history"}>GitHub
-                                      repo</a>}
+                                  headerSubtitle={<RepoLink link={"https://github.com/cheemcheem/vcs-history"}/>}
                                   footer={<div style={{height: 1000}}>example</div>}/>
                         </div>
                     </div>

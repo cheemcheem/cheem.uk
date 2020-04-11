@@ -6,8 +6,6 @@ export type NavigationProps<T> = {
     setLocation: (location: T) => void
 }
 export type PageProps = NavigationProps<Page> & HasChildren;
-export type NavigationDropDownProps = {
-    visible: boolean;
-} & HasChildren;
-
+export type NavigationDropDownProps = { visible: boolean; } & HasChildren;
 export type HasChildren = { children: any };
+export type RepoLinkProps = { link: string }
