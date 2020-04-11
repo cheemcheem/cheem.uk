@@ -1,7 +1,6 @@
 import React from "react";
-import {NavigationProps, Page as PageType} from "./types";
+import {PageProps} from "./types";
 
-type PageProps = NavigationProps<PageType> & { children: any }
 
 function Page(props: PageProps) {
     if (props.targetLocation === props.location) {

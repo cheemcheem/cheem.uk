@@ -1,7 +1,7 @@
 import React from "react";
 import {NavigationProps} from "./types";
 
-function Navigation<T extends string>(props: NavigationProps<T>) {
+function Navigation<T>(props: NavigationProps<T>) {
     const setLocationOnClick = () => props.setLocation(props.targetLocation);
 
     return <>
