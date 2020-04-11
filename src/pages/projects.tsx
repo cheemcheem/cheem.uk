@@ -55,7 +55,7 @@ function Projects() {
                                          targetLocation={"VCS Visualiser"}/>
                 </ul>
             </nav>
-            <div style={{width: "60%", display: "flex", flexDirection: "column", alignContent: "center"}}>
+            <div className={"projects"}>
                 <div ref={projects} className={"card-deck-horizontal"}>
                     <Card headerTitle={"Rubik's Cube Solver"}
                           headerSubtitle={<a href={"https://github.com/cheemcheem/rubiks-cube-solver"}>GitHub repo</a>}

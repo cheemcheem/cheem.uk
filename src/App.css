@@ -178,6 +178,13 @@ small {
     justify-content: space-around
 }
 
+.projects {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-content: center
+}
+
 .card-deck {
     display: flex;
     flex-direction: row;
@@ -295,6 +302,9 @@ header {
         width: 100%;
     }
 
+    .projects {
+        width: 100%;
+    }
 
     .card {
         min-width: 267px;
