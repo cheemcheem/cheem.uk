@@ -342,6 +342,12 @@ header {
 
 }
 
+@media screen and (max-width: 299px) {
+    body {
+        width: auto;
+    }
+}
+
 @media screen and (max-width: 266px) {
     .card {
         font-size: small;
