@@ -1,9 +1,10 @@
 .App:root {
-    --main-bg-color: #0a100d;
-    --dark-color: #2d3142;
-    --header-color: #f6bd60;
+    --main-bg-color: #1B1B3A;
+    --dark-color: #2D3142;
+    --text-background-color: #353A4F;
+    --header-color: #6A8D73;
     --red-color: #e55934;
-    --text-color: wheat;
+    --text-color: #f6bd60;
 
     --big-font-size: 28px;
     --bigger-font-size: 32px;
@@ -18,9 +19,10 @@
     :root {
         --main-bg-color: #9FA4A9;
         --dark-color: #746F72;
+        --text-background-color: #353A4F;
         --header-color: #F6D5A5;
         --red-color: #CECEB1;
-        --text-color: #262730;
+        --text-color: #9FA4A9;
     }
 }
 
@@ -28,6 +30,7 @@
     :root {
         --main-bg-color: #1B1B3A;
         --dark-color: #2D3142;
+        --text-background-color: #353A4F;
         --header-color: #6A8D73;
         --red-color: #e55934;
         --text-color: #f6bd60;
@@ -109,7 +112,7 @@ small {
 .nav-item {
     display: flex;
     padding: 5px;
-    background: #353A4F;
+    background: var(--text-background-color);
     /*flex: 1 1 33%;*/
     /*width: max-content;*/
 }
@@ -234,7 +237,7 @@ ul > ul:last-of-type {
 }
 
 .card-header, .card-footer {
-    background: #353A4F;
+    background: var(--text-background-color);
     padding: 15px;
 }
 

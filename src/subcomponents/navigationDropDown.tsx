@@ -1,4 +1,4 @@
-import {NavigationDropDownProps} from "./types";
+import {NavigationDropDownProps} from "../common/types";
 import React from "react";
 
 function NavigationDropDown(props: NavigationDropDownProps) {

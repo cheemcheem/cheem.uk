@@ -1,16 +1,16 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import './App.css';
-import Navigation from "./common/navigation";
-import Page from "./common/page";
-import {Page as PageType, Project} from "./common/types";
+import Navigation from "./subcomponents/navigation";
+import Page from "./subcomponents/page";
+import {PageType, ProjectType} from "./common/types";
 import Card from "./subcomponents/card";
-import NavigationDropDown from "./common/navigationDropDown";
-import RepoLink from "./subcomponents/RepoLink";
+import NavigationDropDown from "./subcomponents/navigationDropDown";
+import RepoLink from "./subcomponents/repoLink";
 
 function App() {
     const pageKey = "pageKey";
     const [page, setPage] = useState(() => localStorage.getItem(pageKey) as PageType || "Home");
-    const [project, setProject] = useState("Rubik's Cube Solver" as Project);
+    const [project, setProject] = useState("Rubik's Cube Solver" as ProjectType);
 
     const projects: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
     const sideNav: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
@@ -26,7 +26,7 @@ function App() {
             const offsetTop = child.offsetTop - height - 20;
             const offsetHeight = child.offsetHeight;
             if (offsetTop <= fromTop && offsetTop + offsetHeight >= fromTop) {
-                setProject(child.id as Project);
+                setProject(child.id as ProjectType);
                 return;
             }
         }
@@ -39,7 +39,7 @@ function App() {
         return () => window.removeEventListener("scroll", onscrollCallback(), true);
     }, [page, onscrollCallback]);
 
-    const setProjectViaNav = (project: Project) => {
+    const setProjectViaNav = (project: ProjectType) => {
         if (!projects.current || !sideNav.current) return;
 
         const height = window.innerWidth <= 750 ? sideNav.current!.getBoundingClientRect().height : 0;
@@ -70,12 +70,12 @@ function App() {
                     <Navigation<PageType> location={page} setLocation={setPageViaNav} targetLocation={"Home"}/>
                     <Navigation<PageType> location={page} setLocation={setPageViaNav} targetLocation={"Projects"}/>
                     <NavigationDropDown visible={page === "Projects"}>
-                        <Navigation<Project> location={project} setLocation={setProjectViaNav}
-                                             targetLocation={"Rubik's Cube Solver"}/>
-                        <Navigation<Project> location={project} setLocation={setProjectViaNav}
-                                             targetLocation={"Energy Usage Tracker"}/>
-                        <Navigation<Project> location={project} setLocation={setProjectViaNav}
-                                             targetLocation={"VCS Visualiser"}/>
+                        <Navigation<ProjectType> location={project} setLocation={setProjectViaNav}
+                                                 targetLocation={"Rubik's Cube Solver"}/>
+                        <Navigation<ProjectType> location={project} setLocation={setProjectViaNav}
+                                                 targetLocation={"Energy Usage Tracker"}/>
+                        <Navigation<ProjectType> location={project} setLocation={setProjectViaNav}
+                                                 targetLocation={"VCS Visualiser"}/>
                     </NavigationDropDown>
                     <Navigation<PageType> location={page} setLocation={setPageViaNav} targetLocation={"About Me"}/>
                 </ul>
