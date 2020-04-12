@@ -315,6 +315,20 @@ small {
 
     .side-nav > ul {
         margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .side-nav > ul.contains-non-active {
+        margin-top: 10px;
+        margin-bottom: 0;
+    }
+
+    .side-nav > ul > ul > li.non-active {
+        display: none;
+    }
+
+    .side-nav > ul > li.non-active {
+        display: none;
     }
 
     .top-nav-container {

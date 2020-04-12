@@ -14,11 +14,49 @@ export default function App() {
 
     const projects: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
     const sideNav: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
+    const ticking: React.MutableRefObject<boolean> = useRef(false);
 
-    const height = () => (window.innerWidth <= 750 ? sideNav.current!.getBoundingClientRect().height : 0);
+    const getNavHeight = () => 30 + (window.innerWidth <= 750 ? sideNav.current!.getBoundingClientRect().height : 0);
 
-    let ticking = useRef(false);
-    const checkActive = useCallback(() => {
+    const lastScrollTop = useRef(0);
+    const lastNavHeight = useRef(0);
+    const deltaForNavScroll = 5;
+    const setNavMode = useCallback(() => {
+
+        const currentNavHeight = getNavHeight();
+        const fromTop = window.scrollY;
+
+        const sideNavCreated = sideNav.current;
+        const navTypeNotChanged = currentNavHeight === lastNavHeight.current;
+        const scrolledEnough = Math.abs(lastScrollTop.current - fromTop) >= deltaForNavScroll;
+
+        const shouldRun = sideNavCreated && navTypeNotChanged && scrolledEnough;
+
+        if (shouldRun) {
+            const sideNavUL = sideNav.current!.children.item(0)!;
+            const navItems = sideNavUL.children;
+            const scrolledDownwards = fromTop > lastScrollTop.current && fromTop > currentNavHeight;
+
+            if (scrolledDownwards) {
+                sideNavUL.classList.add("contains-non-active");
+                for (let i = 0; i < navItems.length; i++) {
+                    navItems.item(i)!.classList.add("non-active");
+                }
+            } else {
+                const canScrollUp = fromTop + window.innerHeight < document.body.clientHeight;
+                if (canScrollUp) {
+                    sideNavUL.classList.remove("contains-non-active");
+                    for (let i = 0; i < navItems.length; i++) {
+                        navItems.item(i)!.classList.remove("non-active");
+                    }
+                }
+            }
+        }
+        lastNavHeight.current = currentNavHeight;
+        lastScrollTop.current = fromTop;
+
+    }, []);
+    const setActiveProject = useCallback(() => {
         if (!projects.current || ticking.current) return;
 
         ticking.current = true;
@@ -29,7 +67,7 @@ export default function App() {
             let newProject = project;
             for (let childIndex = 0; childIndex < projects.current!.children.length; childIndex++) {
                 const child = projects.current!.children.item(childIndex)! as HTMLElement;
-                const offsetTop = child.offsetTop - height();
+                const offsetTop = child.offsetTop - getNavHeight();
                 const offsetHeight = child.offsetHeight;
                 if (offsetTop <= fromTop && offsetTop + offsetHeight >= fromTop) {
                     newProject = child.id as ProjectType;
@@ -38,15 +76,21 @@ export default function App() {
             }
             setProject(newProject);
             ticking.current = false;
-
         });
+
     }, [project]);
+    const handleScroll = useCallback(() => {
+        setNavMode();
+        setActiveProject();
+    }, [setActiveProject, setNavMode]);
 
     useEffect(() => {
         localStorage.setItem(pageKey, page);
-        window.addEventListener("scroll", () => checkActive(), true);
-        return () => window.removeEventListener("scroll", () => checkActive(), true);
-    }, [checkActive, page]);
+        window.addEventListener("scroll", () => handleScroll(), true);
+        return () => {
+            window.removeEventListener("scroll", () => handleScroll(), true);
+        }
+    }, [handleScroll, page]);
 
     const setProjectViaNav = (project: ProjectType) => {
         if (!projects.current) return;
@@ -55,7 +99,7 @@ export default function App() {
             const child = projects.current!.children.item(childIndex)!;
             if (child.id === project) {
                 const childChild = child.children.item(0)!.children.item(0)! as HTMLElement;
-                window.scrollTo({behavior: "smooth", top: (childChild).offsetTop - height()});
+                window.scrollTo({behavior: "smooth", top: (childChild).offsetTop - getNavHeight()});
                 break;
             }
         }
@@ -63,7 +107,8 @@ export default function App() {
 
     const setPageViaNav = (page: PageType) => {
         if (page === "Projects") {
-            checkActive();
+            ticking.current = false;
+            setProject("Rubik's Cube Solver");
         }
         setPage(page);
     };
