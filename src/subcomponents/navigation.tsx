@@ -1,7 +1,7 @@
 import React from "react";
 import {NavigationProps} from "../common/types";
 
-function Navigation<T>(props: NavigationProps<T>) {
+export default function Navigation<T>(props: NavigationProps<T>) {
     const setLocationOnClick = () => props.setLocation(props.targetLocation);
 
     return <>
@@ -12,5 +12,3 @@ function Navigation<T>(props: NavigationProps<T>) {
         </li>
     </>
 }
-
-export default Navigation;

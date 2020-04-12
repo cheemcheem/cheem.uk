@@ -2,7 +2,7 @@ import React from "react";
 import {PageProps} from "../common/types";
 
 
-function Page(props: PageProps) {
+export default function Page(props: PageProps) {
     if (props.targetLocation === props.location) {
         return props.children;
     }
@@ -10,4 +10,3 @@ function Page(props: PageProps) {
     return <></>
 }
 
-export default Page;

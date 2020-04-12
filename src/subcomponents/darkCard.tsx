@@ -7,8 +7,7 @@ type DarkCardProps = {
     link: string
 }
 
-//<DarkCard headerTitle={"GitHub"} headerSubtitle={"rubiks-cube-solver"} footer={"React/BabylonJS/TypeScript"} link={"https://github.com/cheemcheem/rubiks-cube-solver"}/>
-function DarkCard(props: DarkCardProps) {
+export default function DarkCard(props: DarkCardProps) {
     return <div>
         <div className={"card onclick"} onClick={() => window.location.href = props.link}>
             <div className={"card-deck flex"}>
@@ -23,5 +22,3 @@ function DarkCard(props: DarkCardProps) {
         </div>
     </div>
 }
-
-export default DarkCard;

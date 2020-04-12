@@ -1,7 +1,7 @@
 import {NavigationDropDownProps} from "../common/types";
 import React from "react";
 
-function NavigationDropDown(props: NavigationDropDownProps) {
+export default function NavigationDropDown(props: NavigationDropDownProps) {
     if (props.visible) {
         return <>
             <ul>
@@ -13,5 +13,3 @@ function NavigationDropDown(props: NavigationDropDownProps) {
     return <>
     </>
 }
-
-export default NavigationDropDown;

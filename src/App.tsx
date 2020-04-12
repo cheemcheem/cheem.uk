@@ -7,7 +7,7 @@ import Card from "./subcomponents/card";
 import NavigationDropDown from "./subcomponents/navigationDropDown";
 import RepoLink from "./subcomponents/repoLink";
 
-function App() {
+export default function App() {
     const pageKey = "pageKey";
     const [page, setPage] = useState(() => localStorage.getItem(pageKey) as PageType || "Home");
     const [project, setProject] = useState("Rubik's Cube Solver" as ProjectType);
@@ -104,5 +104,3 @@ function App() {
         </div>
     );
 }
-
-export default App;

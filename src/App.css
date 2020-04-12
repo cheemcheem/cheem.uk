@@ -113,8 +113,6 @@ small {
     display: flex;
     padding: 5px;
     background: var(--text-background-color);
-    /*flex: 1 1 33%;*/
-    /*width: max-content;*/
 }
 
 .center-column {
@@ -183,28 +181,15 @@ small {
     font-weight: normal;
 }
 
-ul {
-    margin-top: 0;
-    padding-left: 0;
+.side-nav > ul > ul {
+    padding-left: 15px;
 }
 
-ul > li {
+.side-nav ul > li {
     margin-right: 5px;
     margin-left: 5px;
     margin-bottom: 10px;
     padding-left: 15px;
-}
-
-ul > ul {
-    padding-left: 15px;
-}
-
-ul > ul > li {
-    /*padding-bottom: 5px;*/
-}
-
-ul > ul:last-of-type {
-    /*padding-bottom: 10px;*/
 }
 
 .top-nav-container {
@@ -220,14 +205,14 @@ ul > ul:last-of-type {
     display: flex;
     flex-direction: row;
     width: 60%;
-    justify-content: space-around
+    justify-content: space-around;
 }
 
 .projects {
     width: fit-content;
     display: flex;
     flex-direction: column;
-    align-content: center
+    align-content: center;
 }
 
 .card-deck {
@@ -266,11 +251,6 @@ ul > ul:last-of-type {
     padding: 15px;
 }
 
-
-.text-right {
-    text-align: right;
-}
-
 .card.onclick {
     background: var(--dark-color);
     color: var(--text-color);
@@ -294,34 +274,13 @@ ul > ul:last-of-type {
     margin-bottom: 30px;
 }
 
-.mb-5 {
-    margin-bottom: 75px;
-}
-
-html {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-header {
-    padding-bottom: 15px;
-    padding-top: 15px;
-}
-
 @media screen and (min-width: 1100px) {
-    /*.container {*/
-    /*    width: 1100px;*/
-    /*}*/
     .card {
         min-width: 800px;
     }
 }
 
 @media screen and (max-width: 1099px) {
-    /*.container {*/
-    /*    width: 800px;*/
-    /*}*/
     .card {
         min-width: 600px;
     }
@@ -349,17 +308,14 @@ header {
         position: sticky;
         top: 0;
         opacity: 1;
-        /*background: var(--main-bg-color);*/
         margin-top: 0;
         height: auto;
         border-bottom: 4px solid var(--dark-color);
-
     }
 
     .side-nav > ul {
         margin-top: 15px;
     }
-
 
     .top-nav-container {
         margin-top: 0;
@@ -371,6 +327,10 @@ header {
 
     .projects {
         width: 100%;
+    }
+
+    .card-deck > .card:first-of-type {
+        margin-top: 15px;
     }
 
     .card {
@@ -389,7 +349,6 @@ header {
         font-size: var(--small-font-size);
     }
 
-
     h1 {
         font-size: var(--bigger-font-size);
     }
@@ -405,14 +364,6 @@ header {
     small {
         font-size: var(--smaller-font-size);
     }
-
-
-}
-
-@media screen and (max-width: 299px) {
-    /*body {*/
-    /*    width: auto;*/
-    /*}*/
 }
 
 @media screen and (max-width: 266px) {
