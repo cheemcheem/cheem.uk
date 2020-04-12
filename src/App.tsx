@@ -15,15 +15,16 @@ export default function App() {
     const projects: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
     const sideNav: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
 
-    const onscrollCallback = useCallback(() => () => {
-        if (!projects.current || !sideNav.current) return;
+    const height = () => (window.innerWidth <= 750 ? sideNav.current!.getBoundingClientRect().height : 0);
+
+    const checkActive = useCallback(() => {
+        if (!projects.current) return;
 
         const fromTop = window.scrollY;
-        const height = window.innerWidth <= 750 ? sideNav.current!.getBoundingClientRect().height : 0;
 
         for (let childIndex = 0; childIndex < projects.current!.children.length; childIndex++) {
             const child = projects.current!.children.item(childIndex)! as HTMLElement;
-            const offsetTop = child.offsetTop - height - 20;
+            const offsetTop = child.offsetTop - height();
             const offsetHeight = child.offsetHeight;
             if (offsetTop <= fromTop && offsetTop + offsetHeight >= fromTop) {
                 setProject(child.id as ProjectType);
@@ -31,34 +32,30 @@ export default function App() {
             }
         }
         setProject(project);
-    }, [projects, setProject, project]);
+    }, [project]);
 
     useEffect(() => {
         localStorage.setItem(pageKey, page);
-        window.addEventListener("scroll", onscrollCallback(), true);
-        return () => window.removeEventListener("scroll", onscrollCallback(), true);
-    }, [page, onscrollCallback]);
+        window.addEventListener("scroll", () => checkActive(), true);
+        return () => window.removeEventListener("scroll", () => checkActive(), true);
+    }, [checkActive, page]);
 
     const setProjectViaNav = (project: ProjectType) => {
-        if (!projects.current || !sideNav.current) return;
+        if (!projects.current) return;
 
-        const height = window.innerWidth <= 750 ? sideNav.current!.getBoundingClientRect().height : 0;
         for (let childIndex = 0; childIndex < projects.current!.children.length; childIndex++) {
             const child = projects.current!.children.item(childIndex)!;
             if (child.id === project) {
                 const childChild = child.children.item(0)!.children.item(0)! as HTMLElement;
-                window.scrollTo({
-                    behavior: "smooth",
-                    top: (childChild).offsetTop - height - 20
-                })
+                window.scrollTo({behavior: "smooth", top: (childChild).offsetTop - height()});
                 break;
             }
         }
-
     };
+
     const setPageViaNav = (page: PageType) => {
         if (page === "Projects") {
-            setProject("Rubik's Cube Solver");
+            checkActive();
         }
         setPage(page);
     };
