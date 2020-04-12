@@ -17,21 +17,29 @@ export default function App() {
 
     const height = () => (window.innerWidth <= 750 ? sideNav.current!.getBoundingClientRect().height : 0);
 
+    let ticking = useRef(false);
     const checkActive = useCallback(() => {
-        if (!projects.current) return;
+        if (!projects.current || ticking.current) return;
 
-        const fromTop = window.scrollY;
+        ticking.current = true;
 
-        for (let childIndex = 0; childIndex < projects.current!.children.length; childIndex++) {
-            const child = projects.current!.children.item(childIndex)! as HTMLElement;
-            const offsetTop = child.offsetTop - height();
-            const offsetHeight = child.offsetHeight;
-            if (offsetTop <= fromTop && offsetTop + offsetHeight >= fromTop) {
-                setProject(child.id as ProjectType);
-                return;
+        window.requestAnimationFrame(() => {
+            const fromTop = window.scrollY;
+
+            let newProject = project;
+            for (let childIndex = 0; childIndex < projects.current!.children.length; childIndex++) {
+                const child = projects.current!.children.item(childIndex)! as HTMLElement;
+                const offsetTop = child.offsetTop - height();
+                const offsetHeight = child.offsetHeight;
+                if (offsetTop <= fromTop && offsetTop + offsetHeight >= fromTop) {
+                    newProject = child.id as ProjectType;
+                    break;
+                }
             }
-        }
-        setProject(project);
+            setProject(newProject);
+            ticking.current = false;
+
+        });
     }, [project]);
 
     useEffect(() => {
