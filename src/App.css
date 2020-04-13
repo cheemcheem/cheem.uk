@@ -323,6 +323,10 @@ small {
         margin-bottom: 0;
     }
 
+    .side-nav > ul.contains-non-active > ul {
+        padding-left: 0;
+    }
+
     .side-nav > ul > ul > li.non-active {
         display: none;
     }
