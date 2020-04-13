@@ -15,6 +15,9 @@
     --smallest-font-size: 12px;
 }
 
+iframe {
+    pointer-events: stroke;
+}
 @media (prefers-color-scheme: light) {
     :root {
         --main-bg-color: #9FA4A9;
