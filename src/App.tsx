@@ -1,11 +1,11 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {Suspense, useCallback, useEffect, useRef, useState} from 'react';
 import './App.css';
 import Navigation from "./subcomponents/navigation";
 import Page from "./subcomponents/page";
 import {PageType, ProjectType} from "./common/types";
-import Card from "./subcomponents/card";
 import NavigationDropDown from "./subcomponents/navigationDropDown";
-import RepoLink from "./subcomponents/repoLink";
+
+const Projects = React.lazy(() => import("./pages/projects"));
 
 export default function App() {
     const pageKey = "pageKey";
@@ -132,23 +132,7 @@ export default function App() {
             </nav>
             <main>
                 <Page location={page} setLocation={setPage} targetLocation={"Projects"}>
-                    <div className={"projects"}>
-                        <div ref={projects} className={"card-deck-horizontal"}>
-                            <Card headerTitle={"Rubik's Cube Solver"}
-                                  headerSubtitle={<div className={"card-deck flex"}><RepoLink
-                                      link={"https://github.com/cheemcheem/rubiks-cube-solver"}/><a
-                                      href={"https://cube.cheem.uk"}>Live</a></div>}
-                                  footer={<iframe title={"cube"} src={"https://cube.cheem.uk"} width={"100%"}
-                                                  height={500}
-                                                  frameBorder={0}/>}/>
-                            <Card headerTitle={"Energy Usage Tracker"}
-                                  headerSubtitle={<RepoLink link={"https://github.com/cheemcheem/energy-usage"}/>}
-                                  footer={<div style={{height: 700}}>example</div>}/>
-                            <Card headerTitle={"VCS Visualiser"}
-                                  headerSubtitle={<RepoLink link={"https://github.com/cheemcheem/vcs-history"}/>}
-                                  footer={<div style={{height: 1000}}>example</div>}/>
-                        </div>
-                    </div>
+                    <Suspense fallback={<></>}><Projects projectsRef={projects}/></Suspense>
                 </Page>
             </main>
         </div>
