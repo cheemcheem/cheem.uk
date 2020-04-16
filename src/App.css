@@ -101,6 +101,10 @@ small {
     font-size: var(--small-font-size);
 }
 
+#variableDiv {
+    display: none;
+}
+
 .nav.nav-pills.nav-justified {
     align-content: center;
     align-items: center;
@@ -302,6 +306,10 @@ small {
 @media screen and (max-width: 750px) {
     main {
         flex: 1;
+    }
+
+    #variableDiv {
+        display: block;
     }
 
     .side-nav {

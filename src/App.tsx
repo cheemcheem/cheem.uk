@@ -16,46 +16,69 @@ export default function App() {
     const sideNav: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
     const ticking: React.MutableRefObject<boolean> = useRef(false);
 
-    const getNavHeight = () => 30 + (window.innerWidth <= 750 ? sideNav.current!.getBoundingClientRect().height : 0);
+    const navOffset = 30;
+    const getNavHeight = () => (window.innerWidth <= 750 ? sideNav.current!.getBoundingClientRect().height : 0);
 
     const lastScrollTop = useRef(0);
     const lastNavHeight = useRef(0);
     const deltaForNavScroll = 5;
-    const setNavMode = useCallback(() => {
+    const setNavModeOnScroll = useCallback(() => {
 
+        // pre nav change values
         const currentNavHeight = getNavHeight();
         const fromTop = window.scrollY;
 
+        // conditions to check before making nav changes
         const sideNavCreated = sideNav.current;
-        const navTypeNotChanged = currentNavHeight === lastNavHeight.current;
-        const scrolledEnough = Math.abs(lastScrollTop.current - fromTop) >= deltaForNavScroll;
+        const navHeightNotJustChanged = currentNavHeight === lastNavHeight.current;
+        const windowScrolledEnough = Math.abs(lastScrollTop.current - fromTop) >= deltaForNavScroll;
 
-        const shouldRun = sideNavCreated && navTypeNotChanged && scrolledEnough;
+        const shouldRun = sideNavCreated && navHeightNotJustChanged && windowScrolledEnough;
 
         if (shouldRun) {
             const sideNavUL = sideNav.current!.children.item(0)!;
             const navItems = sideNavUL.children;
             const scrolledDownwards = fromTop > lastScrollTop.current && fromTop > currentNavHeight;
+            const variableDiv = projects.current!.children.item(0)! as HTMLDivElement;
 
             if (scrolledDownwards) {
+                // hide non-essential nav items to make room on screen
                 sideNavUL.classList.add("contains-non-active");
                 for (let i = 0; i < navItems.length; i++) {
                     navItems.item(i)!.classList.add("non-active");
                 }
+
+                // calculate height of adjusting div to stop scroll jumping
+                const diffNavHeight = currentNavHeight - getNavHeight();
+                if (diffNavHeight > 0) {
+                    variableDiv.style.height = `${diffNavHeight}px`;
+                }
             } else {
+                // ensure not at the top of the page
                 const canScrollUp = fromTop + window.innerHeight < document.body.clientHeight;
                 if (canScrollUp) {
+                    // show all nav items
                     sideNavUL.classList.remove("contains-non-active");
                     for (let i = 0; i < navItems.length; i++) {
                         navItems.item(i)!.classList.remove("non-active");
                     }
+
+                    // calculate height of adjusting div to stop scroll jumping
+                    const diffNavHeight = currentNavHeight - getNavHeight();
+                    if (diffNavHeight < 0) {
+                        variableDiv.style.height = `0`;
+                    }
                 }
+
+
             }
         }
+        // set values for use next time
         lastNavHeight.current = currentNavHeight;
         lastScrollTop.current = fromTop;
 
     }, []);
+
     const setActiveProject = useCallback(() => {
         if (!projects.current || ticking.current) return;
 
@@ -67,7 +90,7 @@ export default function App() {
             let newProject = project;
             for (let childIndex = 0; childIndex < projects.current!.children.length; childIndex++) {
                 const child = projects.current!.children.item(childIndex)! as HTMLElement;
-                const offsetTop = child.offsetTop - getNavHeight();
+                const offsetTop = child.offsetTop - (getNavHeight() + navOffset);
                 const offsetHeight = child.offsetHeight;
                 if (offsetTop <= fromTop && offsetTop + offsetHeight >= fromTop) {
                     newProject = child.id as ProjectType;
@@ -79,16 +102,19 @@ export default function App() {
         });
 
     }, [project]);
+
     const handleScroll = useCallback(() => {
-        setNavMode();
+        setNavModeOnScroll();
         setActiveProject();
-    }, [setActiveProject, setNavMode]);
+    }, [setActiveProject, setNavModeOnScroll]);
 
     useEffect(() => {
         localStorage.setItem(pageKey, page);
-        window.addEventListener("scroll", () => handleScroll(), true);
+        window.addEventListener("scroll", handleScroll, true);
+        window.addEventListener("resize", handleScroll, true);
         return () => {
-            window.removeEventListener("scroll", () => handleScroll(), true);
+            window.removeEventListener("scroll", handleScroll, true);
+            window.removeEventListener("resize", handleScroll, true);
         }
     }, [handleScroll, page]);
 
@@ -99,7 +125,7 @@ export default function App() {
             const child = projects.current!.children.item(childIndex)!;
             if (child.id === project) {
                 const childChild = child.children.item(0)!.children.item(0)! as HTMLElement;
-                window.scrollTo({behavior: "smooth", top: (childChild).offsetTop - getNavHeight()});
+                window.scrollTo({behavior: "smooth", top: (childChild).offsetTop - (getNavHeight() + navOffset)});
                 break;
             }
         }
