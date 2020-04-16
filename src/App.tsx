@@ -23,6 +23,7 @@ export default function App() {
     const lastNavHeight = useRef(0);
     const deltaForNavScroll = 5;
     const setNavModeOnScroll = useCallback(() => {
+        const variableDiv = document.getElementById("variableDiv") as HTMLDivElement;
 
         // pre nav change values
         const currentNavHeight = getNavHeight();
@@ -32,14 +33,14 @@ export default function App() {
         const sideNavCreated = sideNav.current;
         const navHeightNotJustChanged = currentNavHeight === lastNavHeight.current;
         const windowScrolledEnough = Math.abs(lastScrollTop.current - fromTop) >= deltaForNavScroll;
+        const isSmallScreenMode = window.innerWidth <= 750;
 
-        const shouldRun = sideNavCreated && navHeightNotJustChanged && windowScrolledEnough;
+        const shouldRun = sideNavCreated && navHeightNotJustChanged && windowScrolledEnough && isSmallScreenMode;
 
         if (shouldRun) {
             const sideNavUL = sideNav.current!.children.item(0)!;
             const navItems = sideNavUL.children;
             const scrolledDownwards = fromTop > lastScrollTop.current && fromTop > currentNavHeight;
-            const variableDiv = projects.current!.children.item(0)! as HTMLDivElement;
 
             if (scrolledDownwards) {
                 // hide non-essential nav items to make room on screen
@@ -66,16 +67,22 @@ export default function App() {
                     // calculate height of adjusting div to stop scroll jumping
                     const diffNavHeight = currentNavHeight - getNavHeight();
                     if (diffNavHeight < 0) {
-                        variableDiv.style.height = `0`;
+                        variableDiv.style.height = '0';
                     }
                 }
-
-
             }
         }
-        // set values for use next time
-        lastNavHeight.current = currentNavHeight;
-        lastScrollTop.current = fromTop;
+
+        const shouldRecordLastValues = sideNavCreated && isSmallScreenMode;
+        if (shouldRecordLastValues) {
+            // set values for use next time
+            lastNavHeight.current = currentNavHeight;
+            lastScrollTop.current = fromTop;
+        } else {
+            lastNavHeight.current = 0;
+            lastScrollTop.current = 0;
+            variableDiv.style.height = '0';
+        }
 
     }, []);
 
@@ -118,12 +125,12 @@ export default function App() {
         }
     }, [handleScroll, page]);
 
-    const setProjectViaNav = (project: ProjectType) => {
+    const setProjectViaNav = (targetProject: ProjectType) => {
         if (!projects.current) return;
 
         for (let childIndex = 0; childIndex < projects.current!.children.length; childIndex++) {
             const child = projects.current!.children.item(childIndex)!;
-            if (child.id === project) {
+            if (child.id === targetProject) {
                 const childChild = child.children.item(0)!.children.item(0)! as HTMLElement;
                 window.scrollTo({behavior: "smooth", top: (childChild).offsetTop - (getNavHeight() + navOffset)});
                 break;
