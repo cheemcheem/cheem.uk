@@ -14,7 +14,9 @@ export default function App() {
 
     const projects: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
     const sideNav: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
+    const variableDiv: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
     const ticking: React.MutableRefObject<boolean> = useRef(false);
+    const navScrolling: React.MutableRefObject<boolean> = useRef(false);
 
     const navOffset = 30;
     const getNavHeight = () => (window.innerWidth <= 750 ? sideNav.current!.getBoundingClientRect().height : 0);
@@ -23,19 +25,23 @@ export default function App() {
     const lastNavHeight = useRef(0);
     const deltaForNavScroll = 5;
     const setNavModeOnScroll = useCallback(() => {
-        const variableDiv = document.getElementById("variableDiv") as HTMLDivElement;
-
         // pre nav change values
         const currentNavHeight = getNavHeight();
         const fromTop = window.scrollY;
 
         // conditions to check before making nav changes
         const sideNavCreated = sideNav.current;
+        const variableDivCreated = variableDiv.current;
         const navHeightNotJustChanged = currentNavHeight === lastNavHeight.current;
         const windowScrolledEnough = Math.abs(lastScrollTop.current - fromTop) >= deltaForNavScroll;
         const isSmallScreenMode = window.innerWidth <= 750;
 
-        const shouldRun = sideNavCreated && navHeightNotJustChanged && windowScrolledEnough && isSmallScreenMode;
+        const shouldRun = sideNavCreated
+            && variableDivCreated
+            && navHeightNotJustChanged
+            && windowScrolledEnough
+            && isSmallScreenMode
+            && !navScrolling.current;
 
         if (shouldRun) {
             const sideNavUL = sideNav.current!.children.item(0)!;
@@ -52,7 +58,7 @@ export default function App() {
                 // calculate height of adjusting div to stop scroll jumping
                 const diffNavHeight = currentNavHeight - getNavHeight();
                 if (diffNavHeight > 0) {
-                    variableDiv.style.height = `${diffNavHeight}px`;
+                    variableDiv.current!.style.height = `${diffNavHeight}px`;
                 }
             } else {
                 // ensure not at the top of the page
@@ -67,7 +73,7 @@ export default function App() {
                     // calculate height of adjusting div to stop scroll jumping
                     const diffNavHeight = currentNavHeight - getNavHeight();
                     if (diffNavHeight < 0) {
-                        variableDiv.style.height = '0';
+                        variableDiv.current!.style.height = '0';
                     }
                 }
             }
@@ -79,9 +85,12 @@ export default function App() {
             lastNavHeight.current = currentNavHeight;
             lastScrollTop.current = fromTop;
         } else {
+            // reset values to defaults (prevents issues when resizing screen)
             lastNavHeight.current = 0;
             lastScrollTop.current = 0;
-            variableDiv.style.height = '0';
+            if (variableDivCreated) {
+                variableDiv.current!.style.height = '0';
+            }
         }
 
     }, []);
@@ -126,13 +135,19 @@ export default function App() {
     }, [handleScroll, page]);
 
     const setProjectViaNav = (targetProject: ProjectType) => {
-        if (!projects.current) return;
+        if (!projects.current || !variableDiv.current) return;
+
+        navScrolling.current = true;
 
         for (let childIndex = 0; childIndex < projects.current!.children.length; childIndex++) {
             const child = projects.current!.children.item(childIndex)!;
             if (child.id === targetProject) {
                 const childChild = child.children.item(0)!.children.item(0)! as HTMLElement;
-                window.scrollTo({behavior: "smooth", top: (childChild).offsetTop - (getNavHeight() + navOffset)});
+                window.scrollTo({behavior: "auto", top: (childChild).offsetTop - (getNavHeight() + navOffset)});
+
+                // nav scrolling as false prevents the nav from changing size when buttons are clicked
+                // only works if scroll behaviour is not smooth otherwise it will take too long to scroll
+                window.requestAnimationFrame(() => navScrolling.current = false);
                 break;
             }
         }
@@ -165,7 +180,9 @@ export default function App() {
             </nav>
             <main>
                 <Page location={page} setLocation={setPage} targetLocation={"Projects"}>
-                    <Suspense fallback={<></>}><Projects projectsRef={projects}/></Suspense>
+                    <Suspense fallback={<></>}>
+                        <Projects projectsRef={projects} variableDivRef={variableDiv}/>
+                    </Suspense>
                 </Page>
             </main>
         </div>

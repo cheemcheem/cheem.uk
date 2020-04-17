@@ -7,7 +7,7 @@ export default function Projects(props: ProjectsProps) {
     return <>
         <div className={"projects"}>
             <div ref={props.projectsRef} className={"card-deck-horizontal"}>
-                <div id={"variableDiv"}/>
+                <div ref={props.variableDivRef} id={"variableDiv"}/>
                 <Card headerTitle={"Rubik's Cube Solver"}
                       headerSubtitle={
                           <div className={"card-deck flex"}>
