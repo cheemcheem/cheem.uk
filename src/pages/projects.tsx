@@ -10,7 +10,7 @@ export default function Projects(props: ProjectsProps) {
                 <div ref={props.variableDivRef} id={"variableDiv"}/>
                 <Card headerTitle={"Rubik's Cube Solver"}
                       headerSubtitle={
-                          <div className={"card-deck flex"}>
+                          <div className={"card-deck space-between"}>
                               <RepoLink link={"https://github.com/cheemcheem/rubiks-cube-solver"}/>
                               <a href={"https://cube.cheem.uk"}>Live</a>
                           </div>

@@ -4,6 +4,7 @@ import Navigation from "./subcomponents/navigation";
 import Page from "./subcomponents/page";
 import {PageType, ProjectType} from "./common/types";
 import NavigationDropDown from "./subcomponents/navigationDropDown";
+import Links from "./pages/links";
 
 const Projects = React.lazy(() => import("./pages/projects"));
 
@@ -162,7 +163,7 @@ export default function App() {
     };
 
     return (
-        <div className={"card-deck flex container"}>
+        <div className={"card-deck space-between container"}>
             <nav ref={sideNav} className={"side-nav"}>
                 <ul>
                     <Navigation<PageType> location={page} setLocation={setPageViaNav} targetLocation={"Home"}/>
@@ -175,13 +176,18 @@ export default function App() {
                         <Navigation<ProjectType> location={project} setLocation={setProjectViaNav}
                                                  targetLocation={"VCS Visualiser"}/>
                     </NavigationDropDown>
-                    <Navigation<PageType> location={page} setLocation={setPageViaNav} targetLocation={"About Me"}/>
+                    <Navigation<PageType> location={page} setLocation={setPageViaNav} targetLocation={"Links"}/>
                 </ul>
             </nav>
             <main>
                 <Page location={page} setLocation={setPage} targetLocation={"Projects"}>
                     <Suspense fallback={<></>}>
                         <Projects projectsRef={projects} variableDivRef={variableDiv}/>
+                    </Suspense>
+                </Page>
+                <Page location={page} setLocation={setPage} targetLocation={"Links"}>
+                    <Suspense fallback={<></>}>
+                        <Links/>
                     </Suspense>
                 </Page>
             </main>

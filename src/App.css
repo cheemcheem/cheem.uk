@@ -1,15 +1,15 @@
-.App:root {
+:root {
     --main-bg-color: #1B1B3A;
     --dark-color: #2D3142;
     --text-background-color: #353A4F;
-    --header-color: #6A8D73;
+    --header-color: #A0B6A5;
     --red-color: #e55934;
     --text-color: #f6bd60;
 
     --big-font-size: 28px;
-    --bigger-font-size: 32px;
-    --biggest-font-size: 36px;
-    --main-font-size: 24px;
+    --bigger-font-size: 30px;
+    --biggest-font-size: 32px;
+    --main-font-size: 20px;
     --small-font-size: 18px;
     --smaller-font-size: 14px;
     --smallest-font-size: 12px;
@@ -18,6 +18,8 @@
 iframe {
     pointer-events: stroke;
 }
+
+
 @media (prefers-color-scheme: light) {
     :root {
         --main-bg-color: #9FA4A9;
@@ -34,7 +36,7 @@ iframe {
         --main-bg-color: #1B1B3A;
         --dark-color: #2D3142;
         --text-background-color: #353A4F;
-        --header-color: #6A8D73;
+        --header-color: #A0B6A5;
         --red-color: #e55934;
         --text-color: #f6bd60;
     }
@@ -103,6 +105,13 @@ small {
 
 #variableDiv {
     display: none;
+}
+
+div.card-deck.space-between.mb-1.mono {
+    font-family: monospace;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
 }
 
 .nav.nav-pills.nav-justified {
@@ -181,10 +190,11 @@ small {
     padding-left: 5px;
     padding-right: 5px;
     margin-top: 45px;
+    font-size: var(--small-font-size);
 }
 
 .side-nav > ul > ul > li {
-    font-size: 14px;
+    font-size: var(--smaller-font-size);
     font-weight: normal;
 }
 
@@ -239,9 +249,13 @@ small {
     flex-wrap: wrap;
 }
 
-.flex {
+.space-between {
     align-content: space-between;
     justify-content: space-between;
+}
+
+.card-deck-half {
+    width: 50%;
 }
 
 .card-deck > .card:first-of-type {
@@ -362,6 +376,10 @@ small {
         margin-top: 15px;
     }
 
+    .card-deck-half {
+        width: unset;
+    }
+
     .card {
         min-width: 267px;
     }
@@ -374,8 +392,12 @@ small {
         margin-bottom: 45px;
     }
 
+    .hidden-mobile {
+        display: none;
+    }
+
     body {
-        font-size: var(--small-font-size);
+        font-size: var(--smaller-font-size);
     }
 
     h1 {
@@ -387,11 +409,11 @@ small {
     }
 
     h3 {
-        font-size: var(--main-bg-color);
+        font-size: var(--main-font-size);
     }
 
     small {
-        font-size: var(--smaller-font-size);
+        font-size: var(--smallest-font-size);
     }
 }
 

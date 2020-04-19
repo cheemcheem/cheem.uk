@@ -7,9 +7,7 @@ export default function Navigation<T>(props: NavigationProps<T>) {
     return <>
         <li className={`nav-item ${props.location === props.targetLocation ? "active" : ""}`}
             style={{cursor: "pointer"}} onClick={setLocationOnClick}>
-            <span className={`nav-link site`}>
-                {props.targetLocation}
-            </span>
+            <span className={`nav-link site`}>{props.targetLocation}</span>
         </li>
     </>
 }

@@ -10,7 +10,7 @@ type DarkCardProps = {
 export default function DarkCard(props: DarkCardProps) {
     return <div>
         <div className={"card onclick"} onClick={() => window.location.href = props.link}>
-            <div className={"card-deck flex"}>
+            <div className={"card-deck space-between"}>
                 <div className={"card-deck-horizontal"}>
                     <h1 className={"card-title"}>{props.headerTitle}</h1>
                     <h2 className={"card-subtitle"}>{props.headerSubtitle}</h2>
