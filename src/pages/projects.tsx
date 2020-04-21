@@ -5,7 +5,7 @@ import {ProjectsProps} from "../common/types";
 
 export default function Projects(props: ProjectsProps) {
     return <>
-        <div className={"projects"}>
+        <div className={"parent"}>
             <div ref={props.projectsRef} className={"card-deck-horizontal"}>
                 <div ref={props.variableDivRef} id={"variableDiv"}/>
                 <Card headerTitle={"Rubik's Cube Solver"}

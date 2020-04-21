@@ -225,7 +225,7 @@ div.card-deck.space-between.mb-1.mono {
     justify-content: space-around;
 }
 
-.projects {
+.parent {
     width: fit-content;
     display: flex;
     flex-direction: column;
@@ -368,7 +368,7 @@ div.card-deck.space-between.mb-1.mono {
         width: 100%;
     }
 
-    .projects {
+    .parent {
         width: 100%;
     }
 
