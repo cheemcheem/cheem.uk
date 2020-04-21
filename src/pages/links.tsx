@@ -1,6 +1,6 @@
 import React from "react";
 import SmallCard from "../subcomponents/smallCard";
-import {LinksProps} from "../common/types";
+import {LinksProps, LinkType} from "../common/types";
 
 
 function Row(props: { title: string, link: URL }) {
@@ -22,13 +22,13 @@ export default function Links(props: LinksProps) {
         <div className={"parent"}>
             <div ref={props.linksRef} className={"card-deck-horizontal"}>
                 <div ref={props.variableDivRef} id={"variableDiv"}/>
-                <SmallCard headerTitle={"web development links"}>
+                <SmallCard<LinkType> headerTitle={"web development links"}>
                     <Row title={"flex box"} link={new URL("https://www.internetingishard.com/html-and-css/flexbox/")}/>
                     <Row title={"mdn"} link={new URL("https://developer.mozilla.org/")}/>
                     <Row title={"coolers"} link={new URL("https://coolors.co/")}/>
                     <Row title={"css fonts"} link={new URL("https://www.cssfontstack.com/")}/>
                 </SmallCard>
-                <SmallCard headerTitle={"general development links"}>
+                <SmallCard<LinkType> headerTitle={"general development links"}>
                     <Row title={"duckduckgo bangs"} link={new URL("https://duckduckgo.com/bang")}/>
                 </SmallCard>
             </div>

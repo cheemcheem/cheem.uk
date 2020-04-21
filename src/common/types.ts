@@ -1,8 +1,8 @@
 import {MutableRefObject} from "react";
 
 export type PageType = "Home" | "Projects" | "Links"
-export type CardProps = { headerTitle: string, headerSubtitle: any, footer: any }
-export type SmallCardProps = { headerTitle: string, children: any }
+export type CardProps<T extends string> = { headerTitle: T, headerSubtitle: any, footer: any }
+export type SmallCardProps<T extends string> = { headerTitle: T, children: any }
 export type ProjectType = "Rubik's Cube Solver" | "Energy Usage Tracker" | "VCS Visualiser"
 export type LinkType = "web development links" | "general development links"
 export type NavigationProps<T> = { location: T, setLocation: (location: T) => void, targetLocation: T }
