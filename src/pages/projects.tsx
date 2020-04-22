@@ -1,12 +1,12 @@
 import Card from "../subcomponents/card";
 import RepoLink from "../subcomponents/repoLink";
 import React from "react";
-import {ProjectsProps, ProjectType} from "../common/types";
+import {LocationProps, ProjectType} from "../common/types";
 
-export default function Projects(props: ProjectsProps) {
+export default function Projects(props: LocationProps) {
     return <>
         <div className={"parent"}>
-            <div ref={props.projectsRef} className={"card-deck-horizontal"}>
+            <div ref={props.parentRef} className={"card-deck-horizontal"}>
                 <div ref={props.variableDivRef} id={"variableDiv"}/>
                 <Card<ProjectType> headerTitle={"Rubik's Cube Solver"}
                                    headerSubtitle={

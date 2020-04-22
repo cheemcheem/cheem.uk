@@ -34,12 +34,12 @@ export default function App() {
             <main>
                 <Page location={page} setLocation={setPage} targetLocation={"Projects"}>
                     <Suspense fallback={<></>}>
-                        <Projects projectsRef={parentDiv} variableDivRef={variableDiv}/>
+                        <Projects parentRef={parentDiv} variableDivRef={variableDiv}/>
                     </Suspense>
                 </Page>
                 <Page location={page} setLocation={setPage} targetLocation={"Links"}>
                     <Suspense fallback={<></>}>
-                        <Links linksRef={parentDiv} variableDivRef={variableDiv}/>
+                        <Links parentRef={parentDiv} variableDivRef={variableDiv}/>
                     </Suspense>
                 </Page>
             </main>

@@ -10,5 +10,4 @@ export type PageProps = NavigationProps<PageType> & HasChildren;
 export type NavigationDropDownProps = { visible: boolean; } & HasChildren;
 export type HasChildren = { children: any };
 export type RepoLinkProps = { link: string }
-export type ProjectsProps = { projectsRef: MutableRefObject<null | HTMLDivElement>, variableDivRef: MutableRefObject<null | HTMLDivElement> };
-export type LinksProps = { linksRef: MutableRefObject<null | HTMLDivElement>, variableDivRef: MutableRefObject<null | HTMLDivElement> };
+export type LocationProps = { parentRef: MutableRefObject<null | HTMLDivElement>, variableDivRef: MutableRefObject<null | HTMLDivElement> };
