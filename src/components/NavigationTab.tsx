@@ -1,7 +1,7 @@
 import React from "react";
 import {NavigationProps} from "../common/types";
 
-export default function Navigation<T>(props: NavigationProps<T>) {
+export default function NavigationTab<T>(props: NavigationProps<T>) {
     const setLocationOnClick = () => props.setLocation(props.targetLocation);
 
     return <>

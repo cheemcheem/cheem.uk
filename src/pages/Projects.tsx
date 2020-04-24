@@ -1,5 +1,5 @@
-import Card from "../subcomponents/card";
-import RepoLink from "../subcomponents/repoLink";
+import Card from "../components/Card";
+import RepoLink from "../components/RepoLink";
 import React from "react";
 import {LocationProps, ProjectType} from "../common/types";
 

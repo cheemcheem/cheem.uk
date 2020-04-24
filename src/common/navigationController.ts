@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {PageType} from "./types";
 
-export default function AppNavigationHandler() {
+export default function NavigationController() {
     // page = top level nav, location = lower level nav
     const pageKey = "pageKey";
     const [page, setPage] = useState(() => localStorage.getItem(pageKey) as PageType || "Home");

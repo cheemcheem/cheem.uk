@@ -1,5 +1,5 @@
 import React from "react";
-import SmallCard from "../subcomponents/smallCard";
+import SmallCard from "../components/SmallCard";
 import {LinkType, LocationProps} from "../common/types";
 
 
