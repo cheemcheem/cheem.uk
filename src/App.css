@@ -16,7 +16,8 @@
 }
 
 iframe {
-    pointer-events: stroke;
+    pointer-events: none;
+    touch-action: none;
 }
 
 

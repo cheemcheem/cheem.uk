@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import './App.css';
 import NavigationTab from "./components/NavigationTab";
 import Page from "./components/Page";
@@ -6,6 +6,7 @@ import {LinkType, PageType, ProjectType} from "./common/types";
 import NavigationDropDown from "./components/NavigationDropDown";
 import NavigationController from "./common/navigationController";
 
+const Home = React.lazy(() => import("./pages/Home"));
 const Projects = React.lazy(() => import("./pages/Projects"));
 const Links = React.lazy(() => import("./pages/Links"));
 
@@ -20,9 +21,10 @@ export default function App() {
                     <NavigationTab<PageType> location={page} setLocation={setPageViaNav} targetLocation={"Home"}/>
                     <NavigationTab<PageType> location={page} setLocation={setPageViaNav} targetLocation={"Projects"}/>
                     <NavigationDropDown visible={page === "Projects"}>
-                        <NavigationTab<ProjectType> location={location} setLocation={setLocationViaNav} targetLocation={"Rubik's Cube Solver"}/>
-                        <NavigationTab<ProjectType> location={location} setLocation={setLocationViaNav} targetLocation={"Energy Usage Tracker"}/>
-                        <NavigationTab<ProjectType> location={location} setLocation={setLocationViaNav} targetLocation={"VCS Visualiser"}/>
+                        <NavigationTab<ProjectType> location={location} setLocation={setLocationViaNav} targetLocation={"rubik's cube solver"}/>
+                        <NavigationTab<ProjectType> location={location} setLocation={setLocationViaNav} targetLocation={"energy usage tracker"}/>
+                        <NavigationTab<ProjectType> location={location} setLocation={setLocationViaNav} targetLocation={"vcs visualiser"}/>
+                        <NavigationTab<ProjectType> location={location} setLocation={setLocationViaNav} targetLocation={"cheem.uk"}/>
                     </NavigationDropDown>
                     <NavigationTab<PageType> location={page} setLocation={setPageViaNav} targetLocation={"Links"}/>
                     <NavigationDropDown visible={page === "Links"}>
@@ -32,15 +34,14 @@ export default function App() {
                 </ul>
             </nav>
             <main>
-                <Page location={page} setLocation={setPage} targetLocation={"Projects"}>
-                    <Suspense fallback={<></>}>
-                        <Projects parentRef={parentDiv} variableDivRef={variableDiv}/>
-                    </Suspense>
+                <Page location={page} setLocation={setPage} targetLocation={"Home"} parentRef={parentDiv} variableDivRef={variableDiv}>
+                        <Home/>
                 </Page>
-                <Page location={page} setLocation={setPage} targetLocation={"Links"}>
-                    <Suspense fallback={<></>}>
-                        <Links parentRef={parentDiv} variableDivRef={variableDiv}/>
-                    </Suspense>
+                <Page location={page} setLocation={setPage} targetLocation={"Projects"} parentRef={parentDiv} variableDivRef={variableDiv}>
+                        <Projects/>
+                </Page>
+                <Page location={page} setLocation={setPage} targetLocation={"Links"} parentRef={parentDiv} variableDivRef={variableDiv}>
+                        <Links/>
                 </Page>
             </main>
         </div>
