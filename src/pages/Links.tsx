@@ -21,7 +21,7 @@ export default function Links() {
         <SmallCard<LinkType> headerTitle={"web development links"}>
             <Row title={"flex box"} link={new URL("https://www.internetingishard.com/html-and-css/flexbox/")}/>
             <Row title={"mdn"} link={new URL("https://developer.mozilla.org/")}/>
-            <Row title={"coolers"} link={new URL("https://coolors.co/")}/>
+            <Row title={"coolors"} link={new URL("https://coolors.co/")}/>
             <Row title={"css fonts"} link={new URL("https://www.cssfontstack.com/")}/>
         </SmallCard>
         <SmallCard<LinkType> headerTitle={"general development links"}>
