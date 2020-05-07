@@ -2,6 +2,7 @@ import Card from "../components/Card";
 import RepoLink from "../components/RepoLink";
 import React from "react";
 import {ProjectType} from "../common/types";
+import NewTabLink from "../components/NewTabLink";
 
 export default function Projects() {
     return <>
@@ -9,7 +10,7 @@ export default function Projects() {
                            headerSubtitle={
                                <div className={"card-deck space-between"}>
                                    <RepoLink link={"rubiks-cube-solver"}/>
-                                   <a target="_blank" rel="noopener noreferrer" href={"https://cube.cheem.uk"}>Live</a>
+                                   <NewTabLink link={"https://cube.cheem.uk"}>Live</NewTabLink>
                                </div>
                            }
                            footer={
@@ -29,7 +30,7 @@ export default function Projects() {
                            headerSubtitle={
                                <div className={"card-deck space-between"}>
                                    <RepoLink link={"cheem.uk"}/>
-                                   <a target="_blank" rel="noopener noreferrer" href={"https://cheem.uk"}>Live</a>
+                                   <NewTabLink link={"https://cheem.uk"}>Live</NewTabLink>
                                </div>
                            }
                            footer={<div style={{height: 1000}}>example</div>}/>

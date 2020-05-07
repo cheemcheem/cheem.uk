@@ -1,6 +1,7 @@
 import React from "react";
 import SmallCard from "../components/SmallCard";
 import {LinkType} from "../common/types";
+import NewTabLink from "../components/NewTabLink";
 
 function Row(props: { title: string, link: URL }) {
     return <div className={"card-deck space-between mb-1 mono"}>
@@ -9,9 +10,9 @@ function Row(props: { title: string, link: URL }) {
             <span className={"hidden-mobile"}>-</span>
         </div>
         <div className={"card-deck right"}>
-            <a target="_blank" rel="noopener noreferrer" href={props.link.href}>
+            <NewTabLink link={props.link.href}>
                 <span>{props.link.hostname}</span>
-            </a>
+            </NewTabLink>
         </div>
     </div>
 }
