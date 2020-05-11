@@ -25,7 +25,7 @@ export default function Home() {
             }
         }
     }, [isDarkMode])
-    console.log({isDarkMode});
+
     return <>
         <div className={"card-deck"}>
             <div className={"card-deck space-between card"}>

@@ -113,6 +113,11 @@ export default function NavigationController() {
             let newLocation = location;
             for (let childIndex = 0; childIndex < parentDiv.current!.children.length; childIndex++) {
                 const child = parentDiv.current!.children.item(childIndex)! as HTMLElement;
+
+                if (child.id === "variableDiv") {
+                    continue;
+                }
+
                 const offsetTop = child.offsetTop - (getNavHeight() + navOffset);
                 const offsetHeight = child.offsetHeight;
                 if (offsetTop <= fromTop && offsetTop + offsetHeight >= fromTop) {
@@ -125,6 +130,7 @@ export default function NavigationController() {
         });
 
     }, [location]);
+
     useEffect(() => {
         const handleScroll = () => {
             setNavModeOnScroll();
@@ -144,9 +150,9 @@ export default function NavigationController() {
     const setPageViaNav = (targetPage: PageType) => {
         navScrolling.current = false;
         navAnimationFrameTicking.current = false;
-        window.scroll({top: 0});
         setPage(targetPage);
-        setNavActiveOnScroll();
+        window.scroll({top: 0});
+        window.requestAnimationFrame(setNavActiveOnScroll);
     };
     const setLocationViaNav = (targetLocation: string) => {
         if (!parentDiv.current || !variableDiv.current) return;
