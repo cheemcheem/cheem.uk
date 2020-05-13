@@ -1,5 +1,3 @@
-import {MutableRefObject} from "react";
-
 export type PageType = "Home" | "Projects" | "Links"
 export type CardProps<T extends string> = { headerTitle: T, headerSubtitle: any, footer: any }
 export type SmallCardProps<T> = { headerTitle: T, children: any }
@@ -10,7 +8,4 @@ export type NavigationDropDownProps = { visible: boolean; } & HasChildren;
 export type HasChildren = { children: any };
 export type RepoLinkProps = { link: string }
 export type NewTabLinkProps = RepoLinkProps & HasChildren;
-export type PageProps =
-    { parentRef: MutableRefObject<null | HTMLDivElement>, variableDivRef: MutableRefObject<null | HTMLDivElement> }
-    & NavigationProps<PageType>
-    & HasChildren;
+export type PageProps = NavigationProps<PageType> & HasChildren;
