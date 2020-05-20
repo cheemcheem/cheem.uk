@@ -122,13 +122,14 @@ export default function App() {
          * The ticking of this method is handled through the ticking of the other useEffect.
          */
         const ids: (HomeType | ProjectType | LinkType)[] = [
-            "web development links",
-            "vcs visualiser",
+            "About Me",
             "rubik's cube solver",
-            "general development links",
             "energy usage tracker",
+            "vcs visualiser",
             "cheem.uk",
-            "About Me"
+            "web development links",
+            "general development links",
+            "useful links",
         ]
         const setLocationBasedOnScroll = () => {
             const orderedLocations = ids.map(id => document.getElementById(id)) // map to elements

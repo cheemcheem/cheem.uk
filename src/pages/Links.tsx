@@ -28,5 +28,12 @@ export default function Links() {
         <SmallCard<LinkType> headerTitle={"general development links"}>
             <Row title={"duckduckgo bangs"} link={new URL("https://duckduckgo.com/bang")}/>
         </SmallCard>
+        <SmallCard<LinkType> headerTitle={"useful links"}>
+            <Row title={"usb c 100w docks"}
+                 link={new URL("https://dancharblog.wordpress.com/2020/03/21/usb-c-docks-with-100w-power-delivery/")}/>
+            <Row title={"usb c hub video"}
+                 link={new URL("https://www.bigmessowires.com/2019/05/19/explaining-4k-60hz-video-through-usb-c-hub/")}/>
+            <Row title={"cheem.uk 😬"} link={new URL("https://cheem.uk")}/>
+        </SmallCard>
     </>;
 }

@@ -19,6 +19,7 @@ export default function Nav() {
                 <NavPage targetPage={"Links"}>
                     <NavLocation<LinkType> targetPage={"Links"} targetLocation={"web development links"}/>
                     <NavLocation<LinkType> targetPage={"Links"} targetLocation={"general development links"}/>
+                    <NavLocation<LinkType> targetPage={"Links"} targetLocation={"useful links"}/>
                 </NavPage>
             </ul>
         </nav>
