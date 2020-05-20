@@ -19,7 +19,6 @@ const Home = React.lazy(() => import("./pages/Home"));
 const Projects = React.lazy(() => import("./pages/Projects"));
 const Links = React.lazy(() => import("./pages/Links"));
 
-
 export default function App() {
 
     const [isDarkMode, setIsDarkMode] = useState(defaultIsDarkMode);
@@ -82,25 +81,24 @@ export default function App() {
          */
         let tick = false;
         const check = () => {
-            if (tick) {
-                return;
-            }
+            if (tick) return;
+
             const onscroll = (currentScroll: number, lastScroll: number) => () => {
                 let shouldRun = true;
-                if (currentScroll < 0 || currentScroll > window.innerHeight) {
+                if (currentScroll <= 0 || currentScroll + window.innerHeight >= document.body.getBoundingClientRect().height) {
                     shouldRun = false;
                 }
-                if (lastScroll < 0 || lastScroll > window.innerHeight) {
+                if (lastScroll <= 0 || lastScroll + window.innerHeight >= document.body.getBoundingClientRect().height) {
                     shouldRun = false;
                 }
                 if (shouldRun) {
-                    setIsNavBarLarge(currentScroll - lastScroll < 0);
+                    setIsNavBarLarge(currentScroll < lastScroll);
                 }
                 tick = false;
             }
             const currentScroll = window.scrollY;
             const scrollDiff = Math.abs(currentScroll - lastScroll);
-            if (scrollDiff > 5) {
+            if (scrollDiff > 15) {
                 tick = true;
                 window.requestAnimationFrame(onscroll(currentScroll, lastScroll));
                 setLastScroll(currentScroll);
@@ -109,7 +107,7 @@ export default function App() {
 
         window.addEventListener("scroll", check);
         return () => window.removeEventListener("scroll", check);
-    }, [lastScroll]);
+    });
 
     const [page, setPage] = useState(defaultPage);
     const [location, setLocation] = useState(defaultLocation);
@@ -121,6 +119,7 @@ export default function App() {
          * This solves issues with page switching not updating the location.
          * There is also the dependency on location so that it can default back to the previous location when scrolling
          * above or below bounds.
+         * The ticking of this method is handled through the ticking of the other useEffect.
          */
         const ids: (HomeType | ProjectType | LinkType)[] = [
             "web development links",
@@ -131,28 +130,29 @@ export default function App() {
             "cheem.uk",
             "About Me"
         ]
-        let tick = false;
-
-        if (tick) {
-            return;
-        }
         const setLocationBasedOnScroll = () => {
             const orderedLocations = ids.map(id => document.getElementById(id)) // map to elements
-                .filter(el => el).map(el => el as HTMLElement) // find elements that are on screen
+                .filter(el => el) // find elements that are on screen (remove nulls)
+                .map(el => el as HTMLElement) // let the type system know that all elements are not null
                 .sort((el1, el2) => el1.offsetTop > el2.offsetTop ? 1 : -1) // sort by distance from top
+
+            // find closest to top that is on the screen
             const match = orderedLocations.find(element => {
                 const rect = element.getBoundingClientRect();
-                return (element.offsetTop >= window.scrollY && element.offsetTop <= window.scrollY + window.innerHeight) ||
-                    (rect.bottom >= window.scrollY && rect.bottom <= window.scrollY + window.innerHeight)
-            }); // find closest to top that is on the screen
+                const topOfMatch = element.offsetTop;
+                const bottomOfMatch = topOfMatch + rect.bottom;
+                const topOfWindow = window.scrollY;
+                const bottomOfWindow = topOfWindow + window.innerHeight;
+                return (topOfMatch >= topOfWindow && topOfMatch <= bottomOfWindow)
+                    || (bottomOfMatch >= topOfWindow && bottomOfMatch <= bottomOfWindow)
+            });
             if (!match) {
+                // the current page isn't rendered on the dom
                 return window.requestAnimationFrame(setLocationBasedOnScroll);
             }
             setLocation(match.id);
-            tick = false;
         }
         window.requestAnimationFrame(setLocationBasedOnScroll);
-        tick = true;
     }, [lastScroll, page]);
 
     return <>
@@ -170,7 +170,6 @@ export default function App() {
                         <Page targetPage={"Links"}><Links/></Page>
                     </main>
                 </DarkModeContext.Provider>
-
             </div>
         </PageContext.Provider>
     </>;

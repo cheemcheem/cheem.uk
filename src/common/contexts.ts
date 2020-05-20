@@ -7,7 +7,7 @@ export const defaultIsDarkMode = true;
 export const defaultIsMobile = false;
 
 export const PageContext = React.createContext({
-    page: defaultPage, setPage: (page: string) => {
+    page: defaultPage, setPage: (_: string) => {
     }
 });
 export const LocationContext = React.createContext(defaultLocation);
