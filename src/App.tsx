@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import Page from "./components/Page";
-import {HomeType, LinkType, ProjectType} from "./common/types";
+import {LocationType, PageMapping} from "./common/types";
 import Nav from "./components/Nav";
 import {
     DarkModeContext,
@@ -121,16 +121,8 @@ export default function App() {
          * above or below bounds.
          * The ticking of this method is handled through the ticking of the other useEffect.
          */
-        const ids: (HomeType | ProjectType | LinkType)[] = [
-            "About Me",
-            "rubik's cube solver",
-            "energy usage tracker",
-            "vcs visualiser",
-            "cheem.uk",
-            "web development links",
-            "general development links",
-            "useful links",
-        ]
+        const ids: LocationType[] = [];
+        PageMapping.forEach(locations => locations.forEach(location => ids.push(location)));
         const setLocationBasedOnScroll = () => {
             const orderedLocations = ids.map(id => document.getElementById(id)) // map to elements
                 .filter(el => el) // find elements that are on screen (remove nulls)

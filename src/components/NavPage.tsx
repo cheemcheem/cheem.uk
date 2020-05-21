@@ -1,9 +1,10 @@
-import {PageType} from "../common/types";
+import {PageMapping, PageType} from "../common/types";
 import {NavContext, PageContext} from "../common/contexts";
 import NavListItem from "./NavListItem";
 import React from "react";
+import NavLocation from "./NavLocation";
 
-export default function NavPage(props: { targetPage: PageType, children?: any }) {
+export default function NavPage(props: { targetPage: PageType }) {
     return <>
         <PageContext.Consumer>
             {page =>
@@ -21,7 +22,11 @@ export default function NavPage(props: { targetPage: PageType, children?: any })
                             {
                                 navContext.isMobile && props.targetPage !== page.page
                                     ? <></> :
-                                    <ul>{props.children}</ul>
+                                    <ul>
+                                        {PageMapping.get(props.targetPage)!.map(location =>
+                                            <NavLocation targetPage={props.targetPage} targetLocation={location}/>
+                                        )}
+                                    </ul>
                             }
                         </>
                     }

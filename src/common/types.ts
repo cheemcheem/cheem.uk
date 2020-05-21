@@ -9,3 +9,10 @@ export type HasChildren = { children: any };
 export type RepoLinkProps = { link: string }
 export type NewTabLinkProps = RepoLinkProps & HasChildren;
 export type PageProps = { targetPage: PageType } & HasChildren;
+export type LocationType = (HomeType | ProjectType | LinkType);
+
+export const PageMapping = new Map<PageType, LocationType[]>([
+    ["Home", ["About Me"]],
+    ["Projects", ["rubik's cube solver", "energy usage tracker", "vcs visualiser", "cheem.uk"]],
+    ["Links", ["web development links", "general development links", "useful links"]]
+]);
