@@ -1,6 +1,5 @@
 import React from "react";
 import SmallCard from "../components/SmallCard";
-import {LinkType} from "../common/types";
 import NewTabLink from "../components/NewTabLink";
 
 function Row(props: { title: string, link: URL }) {
@@ -19,16 +18,16 @@ function Row(props: { title: string, link: URL }) {
 
 export default function Links() {
     return <>
-        <SmallCard<LinkType> headerTitle={"web development links"}>
+        <SmallCard headerTitle={"web development links"}>
             <Row title={"flex box"} link={new URL("https://www.internetingishard.com/html-and-css/flexbox/")}/>
             <Row title={"mdn"} link={new URL("https://developer.mozilla.org/")}/>
             <Row title={"coolors"} link={new URL("https://coolors.co/")}/>
             <Row title={"css fonts"} link={new URL("https://www.cssfontstack.com/")}/>
         </SmallCard>
-        <SmallCard<LinkType> headerTitle={"general development links"}>
+        <SmallCard headerTitle={"general development links"}>
             <Row title={"duckduckgo bangs"} link={new URL("https://duckduckgo.com/bang")}/>
         </SmallCard>
-        <SmallCard<LinkType> headerTitle={"useful links"}>
+        <SmallCard headerTitle={"useful links"}>
             <Row title={"usb c 100w docks"}
                  link={new URL("https://dancharblog.wordpress.com/2020/03/21/usb-c-docks-with-100w-power-delivery/")}/>
             <Row title={"usb c hub video"}

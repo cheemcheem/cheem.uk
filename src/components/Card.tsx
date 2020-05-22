@@ -1,7 +1,7 @@
 import React from "react";
 import {CardProps} from "../common/types";
 
-export default function Card<T extends string>(props: CardProps<T>) {
+export default function Card(props: CardProps) {
     return <div id={props.headerTitle} className={"card-deck"}>
         <div className={"card mb-3"}>
             <div className={"card-header mb-1"}>

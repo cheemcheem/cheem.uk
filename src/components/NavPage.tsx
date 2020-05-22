@@ -1,10 +1,10 @@
-import {PageMapping, PageType} from "../common/types";
+import {NavPageProps, PageMapping} from "../common/types";
 import {NavContext, PageContext} from "../common/contexts";
 import NavListItem from "./NavListItem";
 import React from "react";
 import NavLocation from "./NavLocation";
 
-export default function NavPage(props: { targetPage: PageType }) {
+export default function NavPage(props: NavPageProps) {
     return <>
         <PageContext.Consumer>
             {page =>

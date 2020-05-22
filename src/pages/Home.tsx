@@ -26,8 +26,9 @@ export default function Home() {
                 </div>
             </>}
         </DarkModeContext.Consumer>
-        <SmallCard headerTitle={"Kathan Cheema"}>
-            <h4 id={"About Me"}>Welcome to my web page.</h4>
+        <SmallCard id={"about me"} headerTitle={"Kathan Cheema"}>
+            <h4>Welcome to my web page.</h4>
+            <small>test</small>
         </SmallCard>
         <div className={"card"} style={{background: "unset", flex: "unset", fontSize: "var(--smallest-font-size)"}}>
             <div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave

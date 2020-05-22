@@ -1,9 +1,9 @@
-import {PageType} from "../common/types";
+import {NavLocationProps} from "../common/types";
 import {NavContext, PageContext} from "../common/contexts";
 import NavListItem from "./NavListItem";
 import React from "react";
 
-export default function NavLocation<T extends string>(props: { targetPage: PageType, targetLocation: T }) {
+export default function NavLocation(props: NavLocationProps) {
     return <>
         <PageContext.Consumer>
             {page =>
@@ -32,7 +32,7 @@ export default function NavLocation<T extends string>(props: { targetPage: PageT
                             waitForPageLoad();
                         };
                         return <>
-                            <NavListItem<T> active={props.targetLocation === navContext.location} onClick={onClick}>
+                            <NavListItem active={props.targetLocation === navContext.location} onClick={onClick}>
                                 {props.targetLocation}
                             </NavListItem>
                         </>
