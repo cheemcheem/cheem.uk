@@ -8,7 +8,7 @@ export default function Nav() {
     return <>
         <nav id="nav" className={"side-nav"}>
             <ul>
-                {pages.map(page => <NavPage targetPage={page}/>)}
+                {pages.map(page => <NavPage key={page} targetPage={page}/>)}
             </ul>
         </nav>
     </>

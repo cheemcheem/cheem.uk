@@ -1,7 +1,7 @@
 import React from "react";
 
 export const defaultPage = "Home";
-export const defaultLocation = "About Me";
+export const defaultLocation = "about me";
 export const defaultIsNavBarLarge = true;
 export const defaultIsDarkMode = true;
 export const defaultIsMobile = false;

@@ -24,7 +24,8 @@ export default function NavPage(props: NavPageProps) {
                                     ? <></> :
                                     <ul>
                                         {PageMapping.get(props.targetPage)!.map(location =>
-                                            <NavLocation targetPage={props.targetPage} targetLocation={location}/>
+                                            <NavLocation key={location} targetPage={props.targetPage}
+                                                         targetLocation={location}/>
                                         )}
                                     </ul>
                             }
