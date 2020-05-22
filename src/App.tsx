@@ -10,7 +10,6 @@ import {
     defaultIsNavBarLarge,
     defaultLocation,
     defaultPage,
-    LocationContext,
     NavContext,
     PageContext
 } from "./common/contexts";
@@ -151,10 +150,8 @@ export default function App() {
     return <>
         <PageContext.Provider value={{page, setPage}}>
             <div className={"card-deck space-between container"}>
-                <NavContext.Provider value={{isMobile, isNavBarLarge}}>
-                    <LocationContext.Provider value={location}>
-                        <Nav/>
-                    </LocationContext.Provider>
+                <NavContext.Provider value={{isMobile, isNavBarLarge, location}}>
+                    <Nav/>
                 </NavContext.Provider>
                 <DarkModeContext.Provider value={isDarkMode}>
                     <main>

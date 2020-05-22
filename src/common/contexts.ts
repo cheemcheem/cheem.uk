@@ -10,6 +10,9 @@ export const PageContext = React.createContext({
     page: defaultPage, setPage: (_: string) => {
     }
 });
-export const LocationContext = React.createContext(defaultLocation);
-export const NavContext = React.createContext({isMobile: defaultIsMobile, isNavBarLarge: defaultIsNavBarLarge});
+export const NavContext = React.createContext({
+    isMobile: defaultIsMobile,
+    isNavBarLarge: defaultIsNavBarLarge,
+    location: defaultLocation
+});
 export const DarkModeContext = React.createContext(defaultIsDarkMode);

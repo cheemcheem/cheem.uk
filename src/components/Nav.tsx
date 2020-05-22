@@ -6,7 +6,7 @@ export default function Nav() {
     const pages: PageType[] = [];
     PageMapping.forEach((_, key) => pages.push(key));
     return <>
-        <nav className={"side-nav"}>
+        <nav id="nav" className={"side-nav"}>
             <ul>
                 {pages.map(page => <NavPage targetPage={page}/>)}
             </ul>
