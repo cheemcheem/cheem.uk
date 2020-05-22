@@ -1,213 +1,168 @@
-import React, {Suspense, useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
-import Navigation from "./subcomponents/navigation";
-import Page from "./subcomponents/page";
-import {LinkType, PageType, ProjectType} from "./common/types";
-import NavigationDropDown from "./subcomponents/navigationDropDown";
+import Page from "./components/Page";
+import {LocationType, PageMapping} from "./common/types";
+import Nav from "./components/Nav";
+import {
+    DarkModeContext,
+    defaultIsDarkMode,
+    defaultIsMobile,
+    defaultIsNavBarLarge,
+    defaultLocation,
+    defaultPage,
+    NavContext,
+    PageContext
+} from "./common/contexts";
 
-const Projects = React.lazy(() => import("./pages/projects"));
-const Links = React.lazy(() => import("./pages/links"));
+const Home = React.lazy(() => import("./pages/Home"));
+const Projects = React.lazy(() => import("./pages/Projects"));
+const Links = React.lazy(() => import("./pages/Links"));
 
 export default function App() {
-    // page = top level nav, location = lower level nav
-    const pageKey = "pageKey";
-    const [page, setPage] = useState(() => localStorage.getItem(pageKey) as PageType || "Home");
-    const [location, setLocation] = useState();
 
-    // parent div = top level div in page, variable div = expandable div
-    const pageParentDiv: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
-    const pageVariableDiv: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
-
-    // nav = container of navs, ticking = latch to wait on to request an animation frame, scrolling = if the page is scrolling
-    const nav: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
-    const navAnimationFrameTicking: React.MutableRefObject<boolean> = useRef(false);
-    const navScrolling: React.MutableRefObject<boolean> = useRef(false);
-
-    // offset = padding above the target to scroll to when nav is clicked
-    const navOffset = 30;
-    const getNavHeight = () => (window.innerWidth <= 750 ? nav.current!.getBoundingClientRect().height : 0);
-
-    // values from last scroll
-    const lastScrollTop = useRef(0);
-    const lastNavHeight = useRef(0);
-    const deltaForNavScroll = 5;
-
-    // adjustments to be made when page is scrolled
-    const setNavModeOnScroll = useCallback(() => {
-        // pre nav change values
-        const currentNavHeight = getNavHeight();
-        const fromTop = window.scrollY;
-
-        // conditions to check before making nav changes
-        const sideNavCreated = nav.current;
-        const variableDivCreated = pageVariableDiv.current;
-        const navHeightNotJustChanged = currentNavHeight === lastNavHeight.current;
-        const windowScrolledEnough = Math.abs(lastScrollTop.current - fromTop) >= deltaForNavScroll;
-        const isSmallScreenMode = window.innerWidth <= 750;
-
-        const shouldRun = sideNavCreated
-            && variableDivCreated
-            && navHeightNotJustChanged
-            && windowScrolledEnough
-            && isSmallScreenMode
-            && !navScrolling.current;
-
-        if (shouldRun) {
-            const sideNavUL = nav.current!.children.item(0)!;
-            const navItems = sideNavUL.children;
-            const scrolledDownwards = fromTop > lastScrollTop.current && fromTop > currentNavHeight;
-
-            if (scrolledDownwards) {
-                // hide non-essential nav items to make room on screen
-                sideNavUL.classList.add("contains-non-active");
-                for (let i = 0; i < navItems.length; i++) {
-                    navItems.item(i)!.classList.add("non-active");
-                }
-
-                // calculate height of adjusting div to stop scroll jumping
-                const diffNavHeight = currentNavHeight - getNavHeight();
-                if (diffNavHeight > 0) {
-                    pageVariableDiv.current!.style.height = `${diffNavHeight}px`;
-                }
-            } else {
-                // ensure not at the top of the page
-                const canScrollUp = fromTop + window.innerHeight < document.body.clientHeight;
-                if (canScrollUp) {
-                    // show all nav items
-                    sideNavUL.classList.remove("contains-non-active");
-                    for (let i = 0; i < navItems.length; i++) {
-                        navItems.item(i)!.classList.remove("non-active");
-                    }
-
-                    // calculate height of adjusting div to stop scroll jumping
-                    const diffNavHeight = currentNavHeight - getNavHeight();
-                    if (diffNavHeight < 0) {
-                        pageVariableDiv.current!.style.height = '0';
-                    }
-                }
-            }
-        }
-
-        const shouldRecordLastValues = sideNavCreated && isSmallScreenMode;
-        if (shouldRecordLastValues) {
-            // set values for use next time
-            lastNavHeight.current = currentNavHeight;
-            lastScrollTop.current = fromTop;
-        } else {
-            // reset values to defaults (prevents issues when resizing screen)
-            lastNavHeight.current = 0;
-            lastScrollTop.current = 0;
-            if (variableDivCreated) {
-                pageVariableDiv.current!.style.height = '0';
-            }
-        }
-
-    }, []);
-    const setNavActiveOnScroll = useCallback(() => {
-        // conditions to check before performing calculation (without ticking condition it will render incorrectly)
-        if (navAnimationFrameTicking.current) return;
-
-        navAnimationFrameTicking.current = true;
-
-        window.requestAnimationFrame(() => {
-            if (!pageParentDiv.current) {
-                navAnimationFrameTicking.current = false;
-                return;
-            }
-            // find the location that is on screen (or use the current location) and set the location
-            const fromTop = window.scrollY;
-
-            let newLocation = location;
-            for (let childIndex = 0; childIndex < pageParentDiv.current!.children.length; childIndex++) {
-                const child = pageParentDiv.current!.children.item(childIndex)! as HTMLElement;
-                const offsetTop = child.offsetTop - (getNavHeight() + navOffset);
-                const offsetHeight = child.offsetHeight;
-                if (offsetTop <= fromTop && offsetTop + offsetHeight >= fromTop) {
-                    newLocation = child.id;
-                    break;
-                }
-            }
-            setLocation(newLocation);
-            navAnimationFrameTicking.current = false;
-        });
-
-    }, [location]);
+    const [isDarkMode, setIsDarkMode] = useState(defaultIsDarkMode);
     useEffect(() => {
-        const handleScroll = () => {
-            setNavModeOnScroll();
-            setNavActiveOnScroll();
-        };
-        setNavActiveOnScroll();
-        localStorage.setItem(pageKey, page);
-        window.addEventListener("scroll", handleScroll, true);
-        window.addEventListener("resize", handleScroll, true);
-        return () => {
-            window.removeEventListener("scroll", handleScroll, true);
-            window.removeEventListener("resize", handleScroll, true);
+        /**
+         * Update isDarkMode when detects CSS prefers color scheme media queries changed.
+         */
+        const switchColourScheme = () => setIsDarkMode(!isDarkMode);
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
+
+        setIsDarkMode(!mediaQuery.matches);
+
+        // use deprecated api if current api is not supported
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener("change", switchColourScheme);
+        } else {
+            mediaQuery.addListener(switchColourScheme);
         }
-    }, [page, setNavActiveOnScroll, setNavModeOnScroll]);
 
-    // set the active page or location via the nav
-    const setPageViaNav = (targetPage: PageType) => {
-        navScrolling.current = false;
-        navAnimationFrameTicking.current = false;
-        window.scroll({top: 0});
-        setPage(targetPage);
-        setNavActiveOnScroll();
-    };
-    const setLocationViaNav = (targetLocation: string) => {
-        if (!pageParentDiv.current || !pageVariableDiv.current) return;
-
-        navScrolling.current = true;
-
-        for (let childIndex = 0; childIndex < pageParentDiv.current!.children.length; childIndex++) {
-            const child = pageParentDiv.current!.children.item(childIndex)!;
-            if (child.id === targetLocation) {
-                const childChild = child.children.item(0)!.children.item(0)! as HTMLElement;
-                window.scrollTo({behavior: "auto", top: (childChild).offsetTop - (getNavHeight() + navOffset)});
-
-                // nav scrolling as false prevents the nav from changing size when buttons are clicked
-                // only works if scroll behaviour is not smooth otherwise it will take too long to scroll
-                window.requestAnimationFrame(() => navScrolling.current = false);
-                break;
+        return () => {
+            if (mediaQuery.removeEventListener) {
+                mediaQuery.removeEventListener("change", switchColourScheme);
+            } else {
+                mediaQuery.removeListener(switchColourScheme);
             }
         }
-    };
+    }, [isDarkMode])
 
-    //@formatter:off
+    const [isMobile, setIsMobile] = useState(defaultIsMobile);
+    useEffect(() => {
+        /*
+         * Update isMobile when detects CSS mobile only media queries are active.
+         */
+        const switchIsMobile = () => setIsMobile(!isMobile);
+        const mediaQuery = window.matchMedia("(max-width: 750px)");
+
+        setIsMobile(mediaQuery.matches);
+
+        // use deprecated api if current api is not supported
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener("change", switchIsMobile);
+        } else {
+            mediaQuery.addListener(switchIsMobile);
+        }
+
+        return () => {
+            if (mediaQuery.removeEventListener) {
+                mediaQuery.removeEventListener("change", switchIsMobile);
+            } else {
+                mediaQuery.removeListener(switchIsMobile);
+            }
+        }
+    }, [isMobile])
+
+    const [isNavBarLarge, setIsNavBarLarge] = useState(defaultIsNavBarLarge);
+    const [lastScroll, setLastScroll] = useState(0);
+    useEffect(() => {
+        /**
+         * Change nav bar size and also update the last scroll when scrolled enough.
+         */
+        let tick = false;
+        const check = () => {
+            if (tick) return;
+
+            const onscroll = (currentScroll: number, lastScroll: number) => () => {
+                let shouldRun = true;
+                if (currentScroll <= 0 || currentScroll + window.innerHeight >= document.body.getBoundingClientRect().height) {
+                    shouldRun = false;
+                }
+                if (lastScroll <= 0 || lastScroll + window.innerHeight >= document.body.getBoundingClientRect().height) {
+                    shouldRun = false;
+                }
+                if (shouldRun) {
+                    setIsNavBarLarge(currentScroll < lastScroll);
+                }
+                tick = false;
+            }
+            const currentScroll = window.scrollY;
+            const scrollDiff = Math.abs(currentScroll - lastScroll);
+            if (scrollDiff > 15) {
+                tick = true;
+                window.requestAnimationFrame(onscroll(currentScroll, lastScroll));
+                setLastScroll(currentScroll);
+            }
+        }
+
+        window.addEventListener("scroll", check);
+        return () => window.removeEventListener("scroll", check);
+    });
+
+    const [page, setPage] = useState(defaultPage);
+    const [location, setLocation] = useState(defaultLocation);
+    useEffect(() => {
+        /**
+         * Sets the location when the body is scrolled or the page is changed.
+         *
+         * Only runs when lastScroll is changed enough (on animation frame from above) or when page is changed.
+         * This solves issues with page switching not updating the location.
+         * There is also the dependency on location so that it can default back to the previous location when scrolling
+         * above or below bounds.
+         * The ticking of this method is handled through the ticking of the other useEffect.
+         */
+        const ids: LocationType[] = [];
+        PageMapping.forEach(locations => locations.forEach(location => ids.push(location)));
+        const setLocationBasedOnScroll = () => {
+            const orderedLocations = ids.map(id => document.getElementById(id)) // map to elements
+                .filter(el => el) // find elements that are on screen (remove nulls)
+                .map(el => el as HTMLElement) // let the type system know that all elements are not null
+                .sort((el1, el2) => el1.offsetTop > el2.offsetTop ? 1 : -1) // sort by distance from top
+
+            // find closest to top that is on the screen
+            const match = orderedLocations.find(element => {
+                const rect = element.getBoundingClientRect();
+                const topOfMatch = element.offsetTop;
+                const bottomOfMatch = topOfMatch + rect.bottom;
+                const topOfWindow = window.scrollY;
+                const bottomOfWindow = topOfWindow + window.innerHeight;
+                return (topOfMatch >= topOfWindow && topOfMatch <= bottomOfWindow)
+                    || (bottomOfMatch >= topOfWindow && bottomOfMatch <= bottomOfWindow)
+            });
+            if (!match) {
+                // the current page isn't rendered on the dom
+                return window.requestAnimationFrame(setLocationBasedOnScroll);
+            }
+            setLocation(match.id);
+        }
+        window.requestAnimationFrame(setLocationBasedOnScroll);
+    }, [lastScroll, page]);
+
     return <>
-        <div className={"card-deck space-between container"}>
-            <nav ref={nav} className={"side-nav"}>
-                <ul>
-                    <Navigation<PageType> location={page} setLocation={setPageViaNav} targetLocation={"Home"}/>
-                    <Navigation<PageType> location={page} setLocation={setPageViaNav} targetLocation={"Projects"}/>
-                    <NavigationDropDown visible={page === "Projects"}>
-                        <Navigation<ProjectType> location={location} setLocation={setLocationViaNav} targetLocation={"Rubik's Cube Solver"}/>
-                        <Navigation<ProjectType> location={location} setLocation={setLocationViaNav} targetLocation={"Energy Usage Tracker"}/>
-                        <Navigation<ProjectType> location={location} setLocation={setLocationViaNav} targetLocation={"VCS Visualiser"}/>
-                    </NavigationDropDown>
-                    <Navigation<PageType> location={page} setLocation={setPageViaNav} targetLocation={"Links"}/>
-                    <NavigationDropDown visible={page === "Links"}>
-                        <Navigation<LinkType> location={location} setLocation={setLocationViaNav} targetLocation={"web development links"}/>
-                        <Navigation<LinkType> location={location} setLocation={setLocationViaNav} targetLocation={"general development links"}/>
-                    </NavigationDropDown>
-                </ul>
-            </nav>
-            <main>
-                <Page location={page} setLocation={setPage} targetLocation={"Projects"}>
-                    <Suspense fallback={<></>}>
-                        <Projects projectsRef={pageParentDiv} variableDivRef={pageVariableDiv}/>
-                    </Suspense>
-                </Page>
-                <Page location={page} setLocation={setPage} targetLocation={"Links"}>
-                    <Suspense fallback={<></>}>
-                        <Links linksRef={pageParentDiv} variableDivRef={pageVariableDiv}/>
-                    </Suspense>
-                </Page>
-            </main>
-        </div>
+        <PageContext.Provider value={{page, setPage}}>
+            <div className={"card-deck space-between container"}>
+                <NavContext.Provider value={{isMobile, isNavBarLarge, location}}>
+                    <Nav/>
+                </NavContext.Provider>
+                <DarkModeContext.Provider value={isDarkMode}>
+                    <main>
+                        <Page targetPage={"Home"}><Home/></Page>
+                        <Page targetPage={"Projects"}><Projects/></Page>
+                        <Page targetPage={"Links"}><Links/></Page>
+                    </main>
+                </DarkModeContext.Provider>
+            </div>
+        </PageContext.Provider>
     </>;
-    //@formatter:on
 
 }
 

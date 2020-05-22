@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
     <title>Kathan Cheema - Home</title>
-
-<!--    <link href="%PUBLIC_URL%/stylesheets/style.css" rel="stylesheet">-->
     <link href="%PUBLIC_URL%/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
     <link href="%PUBLIC_URL%/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
     <link href="%PUBLIC_URL%/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
@@ -16,23 +14,23 @@
     <meta content="#0a100d" name="theme-color">
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <meta
-            content="Kathan Cheema's Website"
-            name="Information about my projects and myself."
-    />
+    <meta content="Kathan Cheema's Website" name="Information about my projects and myself."/>
 </head>
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="root"></div>
-<!--
-  This HTML file is a template.
-  If you open it directly in the browser, you will see an empty page.
-
-  You can add webfonts, meta tags, or analytics to this file.
-  The build step will place the bundled scripts into the <body> tag.
-
-  To begin the development, run `npm start` or `yarn start`.
-  To create a production bundle, use `npm run build` or `yarn build`.
--->
 </body>
+<script>
+    // Add smooth scrolling polyfill to browsers that don't support it natively
+    const testElement = document.createElement('div');
+    const requiresScrollPoly = testElement.style.scrollBehavior === undefined;
+    if (requiresScrollPoly) {
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/iamdustan-smoothscroll/0.4.0/smoothscroll.min.js";
+        script.integrity = "sha256-IylDNWjip7FK2TJUYck237qBTBeSiwnSFDCjLG686D4="
+        script.crossOrigin = "anonymous";
+        document.getElementsByTagName("head")[0].appendChild(script);
+    }
+</script>
 </html>
