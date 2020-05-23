@@ -1,23 +1,22 @@
 import React from "react";
-import {parseDomain, ParseResultType} from "parse-domain";
+import {get as parseDomain} from "psl";
 import SmallCard from "../components/SmallCard";
 import NewTabLink from "../components/NewTabLink";
 
 function Row(props: { title: string, link: URL }) {
-    console.log({link: props.link})
-    const parseURL = parseDomain(props.link.hostname);
-    console.log({parseURL});
-    return <div className={"card-deck space-between mb-1 mono"}>
-        <div className={"card-deck space-between card-deck-half"}>
-            <span>{props.title}</span>
-            <span className={"hidden-mobile"}>-</span>
+    return <>
+        <div className={"card-deck space-between mb-1 mono"}>
+            <div className={"card-deck space-between card-deck-half"}>
+                <span>{props.title}</span>
+                <span className={"hidden-mobile"}>-</span>
+            </div>
+            <div className={"card-deck right"}>
+                <NewTabLink link={props.link.href}>
+                    <span>{parseDomain(props.link.hostname)}</span>
+                </NewTabLink>
+            </div>
         </div>
-        <div className={"card-deck right"}>
-            <NewTabLink link={props.link.href}>
-                <span>{parseURL.type === ParseResultType.Listed ? `${parseURL.icann.domain}.${parseURL.icann.topLevelDomains.join(".")}` : parseURL.hostname}</span>
-            </NewTabLink>
-        </div>
-    </div>
+    </>;
 }
 
 export default function Links() {
