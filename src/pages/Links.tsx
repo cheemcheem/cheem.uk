@@ -6,6 +6,7 @@ import NewTabLink from "../components/NewTabLink";
 function Row(props: { title: string, link: URL }) {
     console.log({link: props.link})
     const parseURL = parseDomain(props.link.hostname);
+    console.log({parseURL});
     return <div className={"card-deck space-between mb-1 mono"}>
         <div className={"card-deck space-between card-deck-half"}>
             <span>{props.title}</span>
