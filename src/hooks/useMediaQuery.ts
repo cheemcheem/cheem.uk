@@ -15,6 +15,7 @@ export default function useMediaQuery(query: string, defaultState: boolean) {
         if (mediaQuery.addEventListener) {
             mediaQuery.addEventListener("change", switchState);
         } else {
+            // noinspection JSDeprecatedSymbols
             mediaQuery.addListener(switchState);
         }
 
@@ -22,6 +23,7 @@ export default function useMediaQuery(query: string, defaultState: boolean) {
             if (mediaQuery.removeEventListener) {
                 mediaQuery.removeEventListener("change", switchState);
             } else {
+                // noinspection JSDeprecatedSymbols
                 mediaQuery.removeListener(switchState);
             }
         }

@@ -7,20 +7,20 @@ import NavLocation from "./NavLocation";
 export default function NavPage(props: NavPageProps) {
     return <>
         <PageContext.Consumer>
-            {page =>
+            {pageContext =>
                 <NavContext.Consumer>
                     {navContext =>
                         <>
                             {
                                 navContext.isMobile && !navContext.isNavBarLarge
                                     ? <></>
-                                    : <NavListItem active={props.targetPage === page.page}
-                                                   onClick={() => page.setPage(props.targetPage)}>
+                                    : <NavListItem active={props.targetPage === pageContext.page}
+                                                   onClick={() => pageContext.setPage(props.targetPage)}>
                                         {props.targetPage}
                                     </NavListItem>
                             }
                             {
-                                navContext.isMobile && props.targetPage !== page.page
+                                navContext.isMobile && props.targetPage !== pageContext.page
                                     ? <></> :
                                     <ul>
                                         {PageMapping.get(props.targetPage)!.map(location =>

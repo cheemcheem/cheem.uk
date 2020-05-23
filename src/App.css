@@ -82,7 +82,7 @@ h3 {
     font-size: var(--big-font-size);
 }
 
-h1, h2 {
+h1, h2, h3 {
     color: var(--header-color);
 }
 
@@ -347,6 +347,7 @@ div.card-deck.space-between.mb-1.mono {
         display: none;
     }
 
+    /*noinspection ALL*/
     .top-nav-container {
         margin-top: 0;
     }

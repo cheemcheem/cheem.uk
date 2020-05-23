@@ -12,7 +12,12 @@ export const PageContext = React.createContext({
 });
 export const NavContext = React.createContext({
     isMobile: defaultIsMobile,
-    isNavBarLarge: defaultIsNavBarLarge,
-    location: defaultLocation
+    isNavBarLarge: defaultIsNavBarLarge
+});
+
+export const LocationContext = React.createContext({
+    location: defaultLocation,
+    setTargetLocation: (_: string) => {
+    }
 });
 export const DarkModeContext = React.createContext(defaultIsDarkMode);

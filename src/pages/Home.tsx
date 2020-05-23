@@ -27,8 +27,14 @@ export default function Home() {
             </>}
         </DarkModeContext.Consumer>
         <SmallCard id={"about me"} headerTitle={"Kathan Cheema"}>
-            <h4>Welcome to my web page.</h4>
-            <small>test</small>
+            <span tabIndex={0}>
+                <p>
+                    <span>Welcome to my web page!</span>
+                </p>
+                <p>
+                    <span>Here you can find a few of my highlighted projects, links to my GitHub and LinkedIn, and some other links I found to be useful.</span>
+                </p>
+            </span>
         </SmallCard>
         <div className={"card"} style={{background: "unset", flex: "unset", fontSize: "var(--smallest-font-size)"}}>
             <div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave

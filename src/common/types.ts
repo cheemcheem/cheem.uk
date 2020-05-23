@@ -6,7 +6,7 @@ export type LinkType = "web development links" | "general development links" | "
 export type HomeType = "about me";
 export type LocationType = (HomeType | ProjectType | LinkType);
 export type AnyChildren = { children: any };
-export type ReactChildren = { children: React.ReactElement | React.ReactElement[] };
+export type ReactChildren = { children?: React.ReactElement | React.ReactElement[] };
 
 export type RepoLinkProps = { link: string };
 export type NavPageProps = { targetPage: PageType };

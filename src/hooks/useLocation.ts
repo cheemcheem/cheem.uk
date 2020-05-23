@@ -1,14 +1,15 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {defaultLocation} from "../common/contexts";
 import {LocationType, PageMapping} from "../common/types";
+import useSavedState from "./useSavedState";
 
-export default function useLocation(trigger: any) {
+export default function useLocation(trigger: any, isMobile: boolean): [string, React.Dispatch<React.SetStateAction<string>>] {
     const [location, setLocation] = useState(defaultLocation);
     useEffect(() => {
         /**
          * Sets the location when the body is scrolled or the page is changed.
          *
-         * Only runs when lastScroll is changed enough (on animation frame from above) or when page is changed.
+         * Only runs when the trigger is changed.
          * This solves issues with page switching not updating the location.
          * There is also the dependency on location so that it can default back to the previous location when scrolling
          * above or below bounds.
@@ -41,5 +42,33 @@ export default function useLocation(trigger: any) {
         window.requestAnimationFrame(setLocationBasedOnScroll);
     }, [trigger]);
 
-    return location;
+    const [targetLocation, setTargetLocation] = useSavedState(defaultLocation, "location");
+    useEffect(() => {
+        const waitForPageLoad = () => {
+            window.requestAnimationFrame(() => {
+                const found = document.getElementById(targetLocation);
+                if (!found) {
+                    return waitForPageLoad();
+                }
+
+                let target = found!.offsetTop;
+                if (isMobile) {
+                    const nav = document.getElementById("nav")!;
+                    target -= nav.getBoundingClientRect().height + 2;
+                }
+                window.scrollTo({top: target, behavior: "smooth"});
+            });
+        };
+        waitForPageLoad();
+    }, [targetLocation, isMobile]);
+
+    useEffect(() => {
+        const setTargetToCurrent = () => setTargetLocation(location);
+
+        window.addEventListener("beforeunload", setTargetToCurrent);
+
+        return () => window.removeEventListener("beforeunload", setTargetToCurrent);
+    }, [setTargetLocation, location]);
+
+    return [location, setTargetLocation];
 }
