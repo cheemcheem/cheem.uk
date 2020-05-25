@@ -1,31 +1,30 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import SmallCard from "./subcomponents/SmallCard";
 import NewTabLink from "./subcomponents/NewTabLink";
-import {DarkModeContext} from '../common/contexts';
 
+const GitHubLogo = React.lazy(() => import("./subcomponents/svg/GitHubLogo"));
+const LinkedInLogo = React.lazy(() => import("./subcomponents/svg/LinkedInLogo"));
 
 export default function Home() {
     return <>
-        <DarkModeContext.Consumer>
-            {isDarkMode => <>
-                <div className={"card-deck"}>
-                    <div className={"card-deck space-between card"}>
-                        <NewTabLink link={"https://github.com/cheemcheem"}>
-                            <img style={{padding: "5px"}} className={"onclick"}
-                                 src={`github-logo${isDarkMode ? "-light" : ""}.svg`}
-                                 width={"30px"} height={"30px"}
-                                 alt={"GitHub Logo"}/>
-                        </NewTabLink>
-                        <NewTabLink link={"https://linkedin.com/in/kathancheema"}>
-                            <img style={{padding: "5px"}} className={"onclick"}
-                                 src={`linkedin-logo${isDarkMode ? "-light" : ""}.svg`}
-                                 width={"30px"} height={"30px"}
-                                 alt={"LinkedIn Logo"}/>
-                        </NewTabLink>
+        <div className={"card-deck"}>
+            <div className={"card-deck space-between card"}>
+                <NewTabLink link={"https://github.com/cheemcheem"}>
+                    <div style={{padding: "5px", width: "30px", height: "30px"}} className={"onclick"}>
+                        <Suspense fallback={<></>}>
+                            <GitHubLogo/>
+                        </Suspense>
                     </div>
-                </div>
-            </>}
-        </DarkModeContext.Consumer>
+                </NewTabLink>
+                <NewTabLink link={"https://linkedin.com/in/kathancheema"}>
+                    <div style={{padding: "5px", width: "30px", height: "30px"}} className={"onclick"}>
+                        <Suspense fallback={<></>}>
+                            <LinkedInLogo/>
+                        </Suspense>
+                    </div>
+                </NewTabLink>
+            </div>
+        </div>
         <SmallCard id={"about me"} headerTitle={"Kathan Cheema"}>
             <span tabIndex={0}>
                 <p>
