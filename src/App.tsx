@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Page from "./components/Page";
 import Nav from "./components/Nav";
 import {
     DarkModeContext,
@@ -16,10 +15,7 @@ import useLocation from "./hooks/useLocation";
 import useIsNavBarLarge from "./hooks/useIsNavBarLarge";
 import {ReactChildren} from "./common/types";
 import usePage from "./hooks/usePage";
-
-const Home = React.lazy(() => import("./pages/Home"));
-const Projects = React.lazy(() => import("./pages/Projects"));
-const Links = React.lazy(() => import("./pages/Links"));
+import Main from "./components/Main";
 
 function ContextProviders(props: ReactChildren) {
     const isDarkMode = useMediaQuery("(prefers-color-scheme: dark)", defaultIsDarkMode);
@@ -47,11 +43,7 @@ export default function App() {
         <ContextProviders>
             <div className={"card-deck space-between container"}>
                 <Nav/>
-                <main>
-                    <Page targetPage={"Home"}><Home/></Page>
-                    <Page targetPage={"Projects"}><Projects/></Page>
-                    <Page targetPage={"Links"}><Links/></Page>
-                </main>
+                <Main/>
             </div>
         </ContextProviders>
     </>;

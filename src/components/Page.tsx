@@ -9,14 +9,16 @@ export default function Page(props: PageProps) {
             {page =>
                 (page.page !== props.targetPage)
                     ? <></>
-                    : <div className={"parent"}>
-                        <div className={"card-deck-horizontal"}>
-                            <div id={"variableDiv"}/>
-                            <Suspense fallback={<></>}>
-                                {props.children}
-                            </Suspense>
+                    : <>
+                        <div className={"parent"}>
+                            <div className={"card-deck-horizontal"}>
+                                <div id={"variableDiv"}/>
+                                <Suspense fallback={<></>}>
+                                    {props.children}
+                                </Suspense>
+                            </div>
                         </div>
-                    </div>
+                    </>
             }
         </PageContext.Consumer>
     </>;

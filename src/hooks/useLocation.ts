@@ -16,7 +16,7 @@ export default function useLocation(trigger: any, isMobile: boolean): [string, R
          * The ticking of this method is handled through the ticking of the other useEffect.
          */
         const ids: LocationType[] = [];
-        PageMapping.forEach(locations => locations.forEach(location => ids.push(location)));
+        PageMapping.forEach(locations => locations.locations.forEach(location => ids.push(location)));
         const setLocationBasedOnScroll = () => {
             const orderedLocations = ids.map(id => document.getElementById(id)) // map to elements
                 .filter(el => el) // find elements that are on screen (remove nulls)

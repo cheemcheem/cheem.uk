@@ -1,7 +1,7 @@
-import Card from "../components/Card";
-import RepoLink from "../components/RepoLink";
+import Card from "./subcomponents/Card";
+import RepoLink from "./subcomponents/RepoLink";
 import React from "react";
-import NewTabLink from "../components/NewTabLink";
+import NewTabLink from "./subcomponents/NewTabLink";
 
 export default function Projects() {
     return <>
@@ -33,5 +33,5 @@ export default function Projects() {
                   </div>
               }
               footer={<div style={{height: 1000}}>example</div>}/>
-    </>
+    </>;
 }

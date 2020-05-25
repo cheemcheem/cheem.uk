@@ -10,5 +10,5 @@ export default function DarkCard(props: DarkCardProps) {
         <div className={"onclick"} onClick={() => window.open(props.link, "_blank")}>
             {props.children}
         </div>
-    </>
+    </>;
 }

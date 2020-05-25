@@ -1,6 +1,6 @@
 import React from 'react';
-import SmallCard from "../components/SmallCard";
-import NewTabLink from "../components/NewTabLink";
+import SmallCard from "./subcomponents/SmallCard";
+import NewTabLink from "./subcomponents/NewTabLink";
 import {DarkModeContext} from '../common/contexts';
 
 
