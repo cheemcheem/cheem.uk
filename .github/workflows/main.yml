@@ -37,13 +37,12 @@ jobs:
       
       - name: Prepare SSH Key
         if: ${{github.ref == 'refs/heads/develop'}}
-        run: 'echo "$SSH_KEY" > key'
+        run: 'echo "$SSH_KEY" > key && chmod 700 key'
         shell: bash
         env:
           SSH_KEY: ${{secrets.KEY}}
       
       - name: Upload Project to Dev Server 
         if: ${{github.ref == 'refs/heads/develop'}}
-        run:
-          scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i key -r build/ ${{secrets.USERNAME}}@${{secrets.HOST}}:${{secrets.PATH}}
+        run: scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i key -r build/ ${{secrets.USERNAME}}@${{secrets.HOST}}:${{secrets.PATH}}
   
