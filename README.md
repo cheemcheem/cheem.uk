@@ -1,3 +1,5 @@
+![CI](https://github.com/cheemcheem/cheem.uk/workflows/CI/badge.svg)
+
 ### cheem.uk
 
 This is the source code for my website, it is written in React and can be run locally using:
