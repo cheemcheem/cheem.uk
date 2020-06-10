@@ -30,11 +30,9 @@ jobs:
         run: npm install
 
       - name: Run Tests
-        working-directory: project
         run: npm test
 
       - name: Build Project
-        working-directory: project
         run: npm run build
       
       - name: Upload Project to Dev Server 
