@@ -45,4 +45,7 @@ jobs:
       - name: Upload Project to Dev Server 
         if: ${{github.ref == 'refs/heads/develop'}}
         run: scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i key -r build/* ${{secrets.USERNAME}}@${{secrets.HOST}}:${{secrets.PATH}}
-  
+          
+      - name: Deploy Project on Dev Server 
+        if: ${{github.ref == 'refs/heads/develop'}}
+        run: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i key ${{secrets.USERNAME}}@${{secrets.HOST}} ${{secrets.RESTART_SERVICE}}
