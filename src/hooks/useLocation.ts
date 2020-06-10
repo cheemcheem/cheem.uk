@@ -56,7 +56,7 @@ export default function useLocation(trigger: any, isMobile: boolean): [string, R
                     const nav = document.getElementById("nav")!;
                     target -= nav.getBoundingClientRect().height + 2;
                 }
-                window.To({top: target, behavior: "smooth"});
+                window.scrollTo({top: target, behavior: "smooth"});
             });
         };
         waitForPageLoad();
