@@ -35,16 +35,15 @@ jobs:
       - name: Build Project
         run: npm run build
       
+      - name: Prepare SSH Key
+        if: ${{github.ref == 'refs/heads/develop'}}
+        run: 'echo "$SSH_KEY" > key'
+        shell: bash
+        env:
+          SSH_KEY: ${{secrets.KEY}}
+      
       - name: Upload Project to Dev Server 
         if: ${{github.ref == 'refs/heads/develop'}}
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.KEY }}
-          source: "build/build/"
-          target: "/built/cheem.uk/"
-          rm: true
-
+        run:
+          scp -i key -r build/ ${{secrets.USERNAME}}@${{secrets.HOST}}:${{secrets.PATH}}
   
