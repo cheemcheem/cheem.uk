@@ -10,79 +10,43 @@ on:
   pull_request:
     branches: [ master, develop ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  prepare:
-    name: Prepare project
+  build:
+    name: Test, Build, Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Start Cache
+        
+      - name: Start NPM Cache
         uses: actions/cache@v2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-        
+            ${{ runner.os }}-node-     
+               
       - name: Install Node Modules
         run: npm install
-      - name: Upload project and dependencies
-        uses: actions/upload-artifact@v1
-        with:
-          name: project
-          path: .
-      
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    needs: [prepare]
-    steps:
-      - name: Download project and dependencies
-        uses: actions/download-artifact@v1
-        with:
-          name: project
-      - name: Run npm tests
+
+      - name: Run Tests
         working-directory: project
         run: npm test
- 
-  build:
-    name: Build Production Build
-    runs-on: ubuntu-latest
-    needs: [test]
-    steps:
-      - name: Download project and dependencies
-        uses: actions/download-artifact@v1
-        with:
-          name: project
-      - name: Build production
+
+      - name: Build Project
         working-directory: project
         run: npm run build
-      - name: Upload project build
-        uses: actions/upload-artifact@v1
+      
+      - name: Upload Project to Dev Server 
+        if: ${{github.ref == 'develop'}}
+        uses: appleboy/scp-action@master
         with:
-          name: build
-          path: build
-  
-  deploy:
-     if: ${{github.ref == 'develop'}}
-     name: Deploy to dev server
-     runs-on: ubuntu-latest
-     needs: [build]
-     steps:
-       - name: Download project build
-         uses: actions/download-artifact@v1
-         with:
-           name: build
-       - name: copy file via ssh key
-         uses: appleboy/scp-action@master
-         with:
-           host: ${{ secrets.HOST }}
-           username: ${{ secrets.USERNAME }}
-           port: ${{ secrets.PORT }}
-           key: ${{ secrets.KEY }}
-           source: "build/build/"
-           target: "/built/cheem.uk/"
-           rm: true
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
+          source: "build/build/"
+          target: "/built/cheem.uk/"
+          rm: true
 
   
