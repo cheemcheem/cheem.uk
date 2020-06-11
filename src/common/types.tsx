@@ -13,7 +13,7 @@ export type AnyChildren = { children: any };
 export type ReactChildren = { children?: React.ReactElement | React.ReactElement[] };
 
 export type RepoLinkProps = { link: string };
-export type NewTabLinkProps = RepoLinkProps & AnyChildren;
+export type NewTabLinkProps = { mono?: boolean } & RepoLinkProps & AnyChildren;
 export type PageProps = { targetPage: PageType } & ReactChildren;
 export type CardProps = { headerTitle: LocationType, headerSubtitle: any, footer: any };
 export type SmallCardProps =

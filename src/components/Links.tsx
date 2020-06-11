@@ -12,7 +12,7 @@ function Row(props: { title: string, link: URL }) {
             </div>
             <div className={"card-deck right"}>
                 <NewTabLink link={props.link.href}>
-                    <span>{parseDomain(props.link.hostname)}</span>
+                    <span style={{fontWeight: 400}}>{parseDomain(props.link.hostname)}</span>
                 </NewTabLink>
             </div>
         </div>

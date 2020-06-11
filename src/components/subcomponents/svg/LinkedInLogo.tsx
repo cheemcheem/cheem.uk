@@ -5,7 +5,7 @@ export default function LinkedInLogo() {
     return <>
         <DarkModeContext.Consumer>
             {isDarkMode => <>
-                <svg role="image"
+                <svg role="img"
                      aria-label={"LinkedIn Logo - LinkedIn is an employment website and this is the logo for it."}
                      version="1.1"
                      id="linkedin-logo"

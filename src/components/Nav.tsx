@@ -49,12 +49,14 @@ function NavPage(props: { targetPage: PageType }) {
                             {
                                 navContext.isMobile && props.targetPage !== pageContext.page
                                     ? <></> :
-                                    <ul>
-                                        {PageMapping.get(props.targetPage)!.locations.map(location =>
-                                            <NavLocation key={location} targetPage={props.targetPage}
-                                                         targetLocation={location}/>
-                                        )}
-                                    </ul>
+                                    <li className={"sub-nav"}>
+                                        <ul>
+                                            {PageMapping.get(props.targetPage)!.locations.map(location =>
+                                                <NavLocation key={location} targetPage={props.targetPage}
+                                                             targetLocation={location}/>
+                                            )}
+                                        </ul>
+                                    </li>
                             }
                         </>
                     }

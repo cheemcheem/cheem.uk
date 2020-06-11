@@ -5,7 +5,7 @@ export default function GitHubLogo() {
     return <>
         <DarkModeContext.Consumer>
             {isDarkMode => <>
-                <svg role="image"
+                <svg role="img"
                      aria-label={"GitHub Logo - GitHub is a website that hosts code repositories."}
                      version="1.1"
                      id="github-logo"
