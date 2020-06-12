@@ -51,6 +51,7 @@ jobs:
         run: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i key ${{secrets.USERNAME}}@${{secrets.HOST}} ${{secrets.RESTART_SERVICE}}
         
       - name: Alert IFTTT
+        if: ${{github.ref == 'refs/heads/develop'}}
         uses: distributhor/workflow-webhook@v1
         env:
           webhook_url: ${{secrets.IFTTT_URL}}
