@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import './App.css';
-import Nav from "./components/Nav";
 import {
     DarkModeContext,
     defaultIsDarkMode,
@@ -15,7 +14,10 @@ import useLocation from "./hooks/useLocation";
 import useIsNavBarLarge from "./hooks/useIsNavBarLarge";
 import {ReactChildren} from "./common/types";
 import usePage from "./hooks/usePage";
-import Main from "./components/Main";
+
+
+const Nav = React.lazy(() => import('./components/Nav'));
+const Main = React.lazy(() => import('./components/Main'));
 
 function ContextProviders(props: ReactChildren) {
     const isDarkMode = useMediaQuery("(prefers-color-scheme: dark)", defaultIsDarkMode);
@@ -42,8 +44,10 @@ export default function App() {
     return <>
         <ContextProviders>
             <div className={"card-deck space-between container"}>
-                <Nav/>
-                <Main/>
+                <Suspense fallback={<></>}>
+                    <Nav/>
+                    <Main/>
+                </Suspense>
             </div>
         </ContextProviders>
     </>;
