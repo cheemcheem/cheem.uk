@@ -5,6 +5,6 @@ import './test/matchMedia.mock';
 
 test('renders learn react link', () => {
   const {getByText} = render(<App/>);
-  const linkElement = getByText(/vcs/i);
+  const linkElement = getByText(/Home/i);
   expect(linkElement).toBeInTheDocument();
 });
