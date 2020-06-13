@@ -1,8 +1,8 @@
-import {AnyChildren, LocationType, PageMapping, PageType} from "../common/types";
-import React from "react";
+import {LocationType, PageMapping, PageType} from "../common/types";
+import React, {PropsWithChildren} from "react";
 import {LocationContext, NavContext, PageContext} from "../common/contexts";
 
-function NavListItem(props: { active: boolean, onClick: () => void } & AnyChildren) {
+function NavListItem(props: { active: boolean, onClick: () => void } & PropsWithChildren<any>) {
     return <>
         <li tabIndex={0} className={`nav-item ${props.active ? "active" : ""}`} style={{cursor: "pointer"}}
             onKeyUp={event => event.keyCode === 13 ? props.onClick() : undefined} onClick={props.onClick}>

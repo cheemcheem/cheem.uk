@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, {PropsWithChildren, Suspense} from 'react';
 import './App.css';
 import {
     DarkModeContext,
@@ -12,14 +12,13 @@ import useMediaQuery from "./hooks/useMediaQuery";
 import useScrollDiff from "./hooks/useScrollDiff";
 import useLocation from "./hooks/useLocation";
 import useIsNavBarLarge from "./hooks/useIsNavBarLarge";
-import {ReactChildren} from "./common/types";
 import usePage from "./hooks/usePage";
 
 
 const Nav = React.lazy(() => import('./components/Nav'));
 const Main = React.lazy(() => import('./components/Main'));
 
-function ContextProviders(props: ReactChildren) {
+function ContextProviders(props: PropsWithChildren<any>) {
     const isDarkMode = useMediaQuery("(prefers-color-scheme: dark)", defaultIsDarkMode);
     const isMobile = useMediaQuery("(max-width: 750px)", defaultIsMobile)
     const scrollDiff = useScrollDiff();

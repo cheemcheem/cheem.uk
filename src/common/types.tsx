@@ -1,4 +1,4 @@
-import React from "react";
+import React, {PropsWithChildren} from "react";
 
 const Home = React.lazy(() => import("../components/Home"));
 const Projects = React.lazy(() => import("../components/Projects"));
@@ -9,16 +9,15 @@ export type ProjectType = "rubik's cube solver" | "energy usage tracker" | "vcs 
 export type LinkType = "web development links" | "general development links" | "useful links";
 export type HomeType = "about me";
 export type LocationType = (HomeType | ProjectType | LinkType);
-export type AnyChildren = { children: any };
-export type ReactChildren = { children?: React.ReactElement | React.ReactElement[] };
 
 export type RepoLinkProps = { link: string };
-export type NewTabLinkProps = { mono?: boolean } & RepoLinkProps & AnyChildren;
-export type PageProps = { targetPage: PageType } & ReactChildren;
+export type NewTabLinkProps = { title?: string, mono?: boolean } & RepoLinkProps & PropsWithChildren<any>;
+export type PageProps = { targetPage: PageType } & PropsWithChildren<any>;
 export type CardProps = { headerTitle: LocationType, headerSubtitle: any, footer: any };
 export type SmallCardProps =
     ({ headerTitle: LocationType, id?: LocationType } | { headerTitle: string, id?: LocationType })
-    & ReactChildren;
+    & PropsWithChildren<any>;
+export type HeaderCardProps = { header: string } & PropsWithChildren<any>
 
 export const PageMapping = new Map<PageType, { locations: LocationType[], component: React.ReactElement }>([
     ["Home", {
