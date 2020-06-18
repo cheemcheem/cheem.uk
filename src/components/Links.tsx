@@ -32,6 +32,7 @@ export default function Links() {
                  link={new URL("https://medium.com/@guptagaruda/react-hooks-understanding-component-re-renders-9708ddee9928")}/>
             <Row title={"react lifecycle"}
                  link={new URL("https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/")}/>
+            <Row title={"http statuses"} link={new URL("https://httpstatuses.com/")}/>
         </SmallCard>
         <SmallCard headerTitle={"general development links"}>
             <br/>
