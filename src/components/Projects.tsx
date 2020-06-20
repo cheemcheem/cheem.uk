@@ -11,6 +11,7 @@ export default function Projects() {
     }
 
     const react = <NewTabLink mono link={"https://reactjs.org/"}>react</NewTabLink>;
+    const typescript = <NewTabLink mono link={"https://www.typescriptlang.org/"}>typescript</NewTabLink>;
     const reactB = <NewTabLink mono link={"https://github.com/brianzinn/react-babylonjs"}>react-babylonjs</NewTabLink>;
     const babylonJS = <NewTabLink mono link={"https://github.com/BabylonJS/Babylon.js"}>babylonjs</NewTabLink>;
     const webgl = <NewTabLink mono link={"https://get.webgl.org/"}>webgl</NewTabLink>;
@@ -23,69 +24,75 @@ export default function Projects() {
     const gradle = <NewTabLink mono link={"https://gradle.org/"}>gradle</NewTabLink>;
     const lombok = <NewTabLink mono link={"https://projectlombok.org/"}>lombok</NewTabLink>;
 
-    function RubiksCube() {
-        return <>
-            <p>
-                I set out on this project to create a Rubik's cube game that works from within the browser.
-                My motivations came from playing with my Rubik's cube and wanting to programmatically solve my cube
-                using software that I wrote.
-            </p>
-            <p>
-                I ended up creating a full-stack app, with a front-end for rendering the cube state and a back-end for
-                handling user requests and updating the state of the cube.
-            </p>
-            <p>
-                Seeing as the front-end seemed very state-dependant, I thought this would be a good opportunity to
-                learn {react}, so I used a library called {reactB} that provided {react} components for the
-                WebGL library {babylonJS}.
-            </p>
-            <p>
-                For the back end, I used {springBoot} running on {jdk13} with an in-memory Hibernate database for
-                handling sessions storage and cube state storage.
-            </p>
-            <p>
-                As it stands now, I achieved most of my goals going into this project.
-                You can browse to {cube} and see a 3D, manipulable, interactive Rubik's cube!
-                It currently does not solve the cube by performing any special actions, it merely reverses the moves
-                made so far until it reaches the last solved state!
-            </p>
-            <br/>
-            <iframe title={"cube"} src={"https://cube.cheem.uk"} width={"100%"} height={500} frameBorder={0}/>
-            <HashTags hashtags={[springBoot, jdk13, java, webgl, react, maven, lombok]}/>
-        </>
-    }
+    const RubiksCube = <>
+        <p>
+            I set out on this project to create a Rubik's cube game that works from within the browser.
+            My motivations came from playing with my Rubik's cube and wanting to programmatically solve my cube
+            using software that I wrote.
+        </p>
+        <p>
+            I ended up creating a full-stack app, with a front-end for rendering the cube state and a back-end for
+            handling user requests and updating the state of the cube.
+        </p>
+        <p>
+            Seeing as the front-end seemed very state-dependant, I thought this would be a good opportunity to
+            learn {react}, so I used a library called {reactB} that provided {react} components for the
+            WebGL library {babylonJS}.
+        </p>
+        <p>
+            For the back end, I used {springBoot} running on {jdk13} with an in-memory Hibernate database for
+            handling sessions storage and cube state storage.
+        </p>
+        <p>
+            As it stands now, I achieved most of my goals going into this project.
+            You can browse to {cube} and see a 3D, manipulable, interactive Rubik's cube!
+            It currently does not solve the cube by performing any special actions, it merely reverses the moves
+            made so far until it reaches the last solved state!
+        </p>
+        <br/>
+        <iframe title={"cube"} src={"https://cube.cheem.uk"} width={"100%"} height={500} frameBorder={0}/>
+        <HashTags hashtags={[springBoot, jdk13, java, webgl, react, typescript, maven, lombok]}/>
+    </>;
 
-    function EnergyUsage() {
-        return <>
-            <p>
-                This is a {springBoot} app that runs on {jdk13} and provides a RESTful API for tracking your household
-                energy usage! I created this to get a grasp of how much energy I am spending on a monthly basis, as I
-                still have one of those old top-up meters and have not yet been upgraded to a smart meter.
-            </p>
-            <p>
-                To use this app, you are required to have a csv of date and balance columns. Once that csv is loaded
-                into the app, it will show you information like average or total spending across a range of days, weeks,
-                months, or years!
-            </p>
-            <p>
-                This can be useful if you would like to determine your summer month spending, you could give a query
-                like this <span className={"mono"}>
+
+    const CardGames = <>
+        <HashTags hashtags={[springBoot, jdk13, java, maven, lombok, "game-dev"]}/>
+    </>;
+
+
+    const EnergyUsage = <>
+        <p>
+            This is a {springBoot} app that runs on {jdk13} and provides a RESTful API for tracking your household
+            energy usage! I created this to get a grasp of how much energy I am spending on a monthly basis, as I
+            still have one of those old top-up meters and have not yet been upgraded to a smart meter.
+        </p>
+        <p>
+            To use this app, you are required to have a csv of date and balance columns. Once that csv is loaded
+            into the app, it will show you information like average or total spending across a range of days, weeks,
+            months, or years!
+        </p>
+        <p>
+            This can be useful if you would like to determine your summer month spending, you could give a query
+            like this <span className={"mono"}>
                     curl -X POST 'http://localhost:8080&#8203;/api&#8203;/average&#8203;/monthly&#8203;/between&#8203;?startDate=01/06/2020 00:00&#8203;&endDate=31/08/2020 23:59'
                 </span>
-                .
-            </p>
-            <p>
-                Future plans for this project include allowing multiple users to use it at once and creating a {react}-based
-                front-end interface.
-            </p>
+            .
+        </p>
+        <p>
+            Future plans for this project include allowing multiple users to use it at once and creating a {react}-based
+            front-end interface.
+        </p>
 
-            <HashTags hashtags={[springBoot, jdk13, java, maven, lombok]}/>
-        </>
-    }
+        <HashTags hashtags={[springBoot, jdk13, java, maven, lombok]}/>
+    </>;
 
 
     const VCSVisualiser = <>
         <HashTags hashtags={[java, gradle, jdk12, lombok]}/>
+    </>;
+
+    const CheemUK = <>
+        <HashTags hashtags={[react, typescript]}/>
     </>;
 
 
@@ -102,11 +109,16 @@ export default function Projects() {
                   <RepoLink link={"rubiks-cube-solver"}/>
                   <NewTabLink link={"https://cube.cheem.uk"}>Live</NewTabLink>
               </div>}
-              footer={<RubiksCube/>}/>
+              footer={RubiksCube}/>
+
+        <Card headerTitle={"card games"} headerSubtitle={<div className={"card-deck space-between"}>
+            <RepoLink link={"card-games"}/>
+            <NewTabLink link={"https://cards.cheem.uk"}>Live</NewTabLink>
+        </div>} footer={CardGames}/>
 
         <Card headerTitle={"energy usage tracker"}
               headerSubtitle={<RepoLink link={"energy-usage"}/>}
-              footer={<EnergyUsage/>}/>
+              footer={EnergyUsage}/>
 
         <Card headerTitle={"vcs visualiser"}
               headerSubtitle={<RepoLink link={"vcs-history"}/>}
@@ -117,6 +129,6 @@ export default function Projects() {
                   <RepoLink link={"cheem.uk"}/>
                   <NewTabLink link={"https://cheem.uk"}>Live</NewTabLink>
               </div>}
-              footer={<div style={{height: 1000}}>example</div>}/>
+              footer={CheemUK}/>
     </>;
 }
