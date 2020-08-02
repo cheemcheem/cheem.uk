@@ -46,6 +46,7 @@ export default function Links() {
             <Row title={"usb c hub video"}
                  link={new URL("https://www.bigmessowires.com/2019/05/19/explaining-4k-60hz-video-through-usb-c-hub/")}/>
             <Row title={"cheem.uk 😬"} link={new URL("https://cheem.uk")}/>
+            <Row title={"cameron's dev page"} link={new URL("https://ccallan.dev")}/>
         </SmallCard>
     </>;
 }
