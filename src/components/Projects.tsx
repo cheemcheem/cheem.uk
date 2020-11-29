@@ -31,8 +31,8 @@ export default function Projects() {
     
     const InvoiceStore = <>
         <p>
-            I created this web app to store invoices for different people. It uses {oauth2} for authentication, an
-            {s3} bucket for object storage, and {pql} for database storage.
+            I created this web app to store invoices for different people. It uses {oauth2} for authentication, 
+            an {s3} bucket for object storage, and {pql} for database storage.
         </p>
         <p>
             The app runs using a {material} on a {react} front-end with a {springBoot} back-end.
