@@ -23,7 +23,24 @@ export default function Projects() {
     const maven = <NewTabLink mono link={"https://maven.apache.org/"}>maven</NewTabLink>;
     const gradle = <NewTabLink mono link={"https://gradle.org/"}>gradle</NewTabLink>;
     const lombok = <NewTabLink mono link={"https://projectlombok.org/"}>lombok</NewTabLink>;
+    const oauth2 = <NewTabLink mono link={"https://oauth.net/2/"}>oauth2</NewTabLink>;
+    const s3 = <NewTabLink mono link={"hhttps://aws.amazon.com/s3/"}>s3</NewTabLink>;
+    const pql = <NewTabLink mono link={"https://www.postgresql.org"}>postgresql</NewTabLink>;
+    const material = <NewTabLink mono link={"https://material-ui.com"}>material-ui</NewTabLink>;
+    const agGrid = <NewTabLink mono link={"https://www.ag-grid.com"}>ag-grid</NewTabLink>;
+    
+    const InvoiceStore = <>
+        <p>
+            I created this web app to store invoices for different people. It uses {oauth2} for authentication, an
+            {s3} bucket for object storage, and {pql} for database storage.
+        </p>
+        <p>
+            The app runs using a {material} on a {react} front-end with a {sprintBoot} back-end.
+        </p>   
+        <HashTags hashtags={[springBoot, jdk13, java, webgl, react, typescript, maven, lombok, oauth2, s3, pql, material]}/>
 
+    </>;
+    
     const RubiksCube = <>
         <p>
             I set out on this project to create a Rubik's cube game that works from within the browser.
@@ -51,7 +68,7 @@ export default function Projects() {
         </p>
         <br/>
         <iframe title={"cube"} src={"https://cube.cheem.uk"} width={"100%"} height={500} frameBorder={0}/>
-        <HashTags hashtags={[springBoot, jdk13, java, webgl, react, typescript, maven, lombok]}/>
+        <HashTags hashtags={[springBoot, jdk13, java, webgl, react, typescript, maven, lombok, reactB, babylonJS]}/>
     </>;
 
 
@@ -64,7 +81,8 @@ export default function Projects() {
         <p>
             This is a {springBoot} app that runs on {jdk13} and provides a RESTful API for tracking your household
             energy usage! I created this to get a grasp of how much energy I am spending on a monthly basis, as I
-            still have one of those old top-up meters and have not yet been upgraded to a smart meter.
+            still have one of those old top-up meters and have not yet been upgraded to a smart meter. The
+            front-end runs on {react} using {agGrid}.
         </p>
         <p>
             To use this app, you are required to have a csv of date and balance columns. Once that csv is loaded
@@ -83,7 +101,7 @@ export default function Projects() {
             front-end interface.
         </p>
 
-        <HashTags hashtags={[springBoot, jdk13, java, maven, lombok]}/>
+        <HashTags hashtags={[springBoot, jdk13, java, maven, lombok, react, agGrid]}/>
     </>;
 
 
@@ -104,6 +122,13 @@ export default function Projects() {
             </p>
         </HeaderCard>
 
+        <Card headerTitle={"invoice store"}
+              headerSubtitle={<div className={"card-deck space-between"}>
+                  <RepoLink link={"invoice-store"}/>
+                  <NewTabLink link={"https://invoice.cheem.uk"}>Live</NewTabLink>
+              </div>}
+              footer={InvoiceStore}/>
+
         <Card headerTitle={"rubik's cube solver"}
               headerSubtitle={<div className={"card-deck space-between"}>
                   <RepoLink link={"rubiks-cube-solver"}/>
@@ -111,10 +136,12 @@ export default function Projects() {
               </div>}
               footer={RubiksCube}/>
 
-        <Card headerTitle={"card games"} headerSubtitle={<div className={"card-deck space-between"}>
-            <RepoLink link={"card-games"}/>
-            <NewTabLink link={"https://cards.cheem.uk"}>Live</NewTabLink>
-        </div>} footer={CardGames}/>
+        <Card headerTitle={"card games"} 
+              headerSubtitle={<div className={"card-deck space-between"}>
+                  <RepoLink link={"card-games"}/>
+                  <NewTabLink link={"https://cards.cheem.uk"}>Live</NewTabLink>
+              </div>} 
+              footer={CardGames}/>
 
         <Card headerTitle={"energy usage tracker"}
               headerSubtitle={<RepoLink link={"energy-usage"}/>}
