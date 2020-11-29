@@ -5,7 +5,7 @@ const Projects = React.lazy(() => import("../components/Projects"));
 const Links = React.lazy(() => import("../components/Links"));
 
 export type PageType = "Home" | "Projects" | "Links";
-export type ProjectType = "rubik's cube solver" | "energy usage tracker" | "card games" | "vcs visualiser" | "cheem.uk";
+export type ProjectType = "invoice store" | "rubik's cube solver" | "energy usage tracker" | "card games" | "vcs visualiser" | "cheem.uk";
 export type LinkType = "web development links" | "general development links" | "useful links";
 export type HomeType = "about me";
 export type LocationType = (HomeType | ProjectType | LinkType);
