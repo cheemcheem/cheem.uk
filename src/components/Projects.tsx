@@ -35,7 +35,7 @@ export default function Projects() {
             {s3} bucket for object storage, and {pql} for database storage.
         </p>
         <p>
-            The app runs using a {material} on a {react} front-end with a {sprintBoot} back-end.
+            The app runs using a {material} on a {react} front-end with a {springBoot} back-end.
         </p>   
         <HashTags hashtags={[springBoot, jdk13, java, webgl, react, typescript, maven, lombok, oauth2, s3, pql, material]}/>
 
