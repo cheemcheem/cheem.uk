@@ -5,7 +5,14 @@ const Projects = React.lazy(() => import("../components/Projects"));
 const Links = React.lazy(() => import("../components/Links"));
 
 export type PageType = "Home" | "Projects" | "Links";
-export type ProjectType = "invoice store" | "rubik's cube solver" | "energy usage tracker" | "card games" | "vcs visualiser" | "cheem.uk";
+export type ProjectType =
+    "pixel art"
+    | "invoice store"
+    | "rubik's cube solver"
+    | "energy usage tracker"
+    | "card games"
+    | "vcs visualiser"
+    | "cheem.uk";
 export type LinkType = "web development links" | "general development links" | "useful links";
 export type HomeType = "about me";
 export type LocationType = (HomeType | ProjectType | LinkType);
@@ -25,7 +32,7 @@ export const PageMapping = new Map<PageType, { locations: LocationType[], compon
         component: <Home/>
     }],
     ["Projects", {
-        locations: ["rubik's cube solver", "card games", "energy usage tracker", "vcs visualiser", "cheem.uk"],
+        locations: ["pixel art", "invoice store", "rubik's cube solver", "card games", "energy usage tracker", "vcs visualiser", "cheem.uk"],
         component: <Projects/>
     }],
     ["Links", {

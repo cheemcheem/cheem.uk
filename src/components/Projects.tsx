@@ -24,23 +24,36 @@ export default function Projects() {
     const gradle = <NewTabLink mono link={"https://gradle.org/"}>gradle</NewTabLink>;
     const lombok = <NewTabLink mono link={"https://projectlombok.org/"}>lombok</NewTabLink>;
     const oauth2 = <NewTabLink mono link={"https://oauth.net/2/"}>oauth2</NewTabLink>;
-    const s3 = <NewTabLink mono link={"hhttps://aws.amazon.com/s3/"}>s3</NewTabLink>;
+    const s3 = <NewTabLink mono link={"https://aws.amazon.com/s3/"}>s3</NewTabLink>;
     const pql = <NewTabLink mono link={"https://www.postgresql.org"}>postgresql</NewTabLink>;
     const material = <NewTabLink mono link={"https://material-ui.com"}>material-ui</NewTabLink>;
     const agGrid = <NewTabLink mono link={"https://www.ag-grid.com"}>ag-grid</NewTabLink>;
-    
+
+    const PixelArt = <>
+        <p>
+            This is a minimalistic pixel art maker that works on mobile and desktop.
+        </p>
+        <p>
+            It stores the state of the grid in {react} and uses library called {reactB} that provides {react} components
+            for the WebGL library {babylonJS} which is used to render on the canvas.
+        </p>
+        <HashTags hashtags={[webgl, react, typescript, reactB, babylonJS]}/>
+
+    </>;
+
     const InvoiceStore = <>
         <p>
-            I created this web app to store invoices for different people. It uses {oauth2} for authentication, 
+            I created this web app to store invoices for different people. It uses {oauth2} for authentication,
             an {s3} bucket for object storage, and {pql} for database storage.
         </p>
         <p>
             The app runs using a {material} on a {react} front-end with a {springBoot} back-end.
-        </p>   
-        <HashTags hashtags={[springBoot, jdk13, java, webgl, react, typescript, maven, lombok, oauth2, s3, pql, material]}/>
+        </p>
+        <HashTags
+            hashtags={[springBoot, jdk13, java, webgl, react, typescript, maven, lombok, oauth2, s3, pql, material]}/>
 
     </>;
-    
+
     const RubiksCube = <>
         <p>
             I set out on this project to create a Rubik's cube game that works from within the browser.
@@ -122,6 +135,13 @@ export default function Projects() {
             </p>
         </HeaderCard>
 
+        <Card headerTitle={"pixel art"}
+              headerSubtitle={<div className={"card-deck space-between"}>
+                  <RepoLink link={"pixel-art"}/>
+                  <NewTabLink link={"https://pixel.cheem.uk"}>Live</NewTabLink>
+              </div>}
+              footer={PixelArt}/>
+
         <Card headerTitle={"invoice store"}
               headerSubtitle={<div className={"card-deck space-between"}>
                   <RepoLink link={"invoice-store"}/>
@@ -136,11 +156,11 @@ export default function Projects() {
               </div>}
               footer={RubiksCube}/>
 
-        <Card headerTitle={"card games"} 
+        <Card headerTitle={"card games"}
               headerSubtitle={<div className={"card-deck space-between"}>
                   <RepoLink link={"card-games"}/>
                   <NewTabLink link={"https://cards.cheem.uk"}>Live</NewTabLink>
-              </div>} 
+              </div>}
               footer={CardGames}/>
 
         <Card headerTitle={"energy usage tracker"}
