@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cheem-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cheem
+  template:
+    metadata:
+      labels:
+        app: cheem
+    spec:
+      containers:
+      - image: <IMAGE>
+        name: cheem-container
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cheem-service
+spec:
+  selector:
+     app: cheem
+  type: ClusterIP
+  ports:
+    - name: cheem-port
+      port: 80

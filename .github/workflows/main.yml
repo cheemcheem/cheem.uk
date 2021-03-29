@@ -1,9 +1,5 @@
-# This is a basic workflow to help you get started with Actions
+name: CI/CD
 
-name: CI
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: [ master, develop ]
@@ -32,24 +28,35 @@ jobs:
       - name: Run Tests
         run: CI=true npm test
 
-      - name: Build Project
-        run: npm run build
+      - name: Update SHA
+        run: echo $GITHUB_SHA > $GITHUB_WORKSPACE/site/_meta
+
+      - name: Build container image
+        run: docker build -t {{secrets.DOCKER_REGISTRY}}:$(echo $GITHUB_SHA | head -c7) .
       
-      - name: Prepare SSH Key
-        if: ${{github.ref == 'refs/heads/develop'}}
-        run: 'echo "$SSH_KEY" > key && chmod 700 key'
-        shell: bash
-        env:
-          SSH_KEY: ${{secrets.KEY}}
-      
-      - name: Upload Project to Dev Server 
-        if: ${{github.ref == 'refs/heads/develop'}}
-        run: scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i key -r build/* ${{secrets.USERNAME}}@${{secrets.HOST}}:${{secrets.PATH}}
-          
-      - name: Deploy Project on Dev Server 
-        if: ${{github.ref == 'refs/heads/develop'}}
-        run: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i key ${{secrets.USERNAME}}@${{secrets.HOST}} ${{secrets.RESTART_SERVICE}}
-        
+      - name: Install doctl
+          uses: digitalocean/action-doctl@v2
+          with:
+            token: ${{secrets.DIGITALOCEAN_ACCESS_TOKEN}}
+
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Push image to DigitalOcean Container Registry
+        run: docker push {{secrets.DOCKER_REGISTRY}}:$(echo $GITHUB_SHA | head -c7)
+
+      - name: Update deployment file
+        run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|{{secrets.DOCKER_REGISTRY}}:'${TAG}'|' $GITHUB_WORKSPACE/config/deployment.yml
+
+      - name: Save DigitalOcean kubeconfig with short-lived credentials
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 {{KUBERNETES_CONTEXT}}
+
+      - name: Deploy to DigitalOcean Kubernetes
+        run: kubectl apply -f $GITHUB_WORKSPACE/config/deployment.yml
+
+      - name: Verify deployment
+        run: kubectl rollout status deployment/static-example
+
       - name: Alert IFTTT
         if: ${{github.ref == 'refs/heads/develop'}}
         uses: distributhor/workflow-webhook@v1
