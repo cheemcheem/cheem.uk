@@ -49,7 +49,7 @@ jobs:
         run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|${{secrets.DOCKER_REGISTRY}}:'${TAG}'|' $GITHUB_WORKSPACE/config/cheem.yaml
 
       - name: Save DigitalOcean kubeconfig with short-lived credentials
-        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{KUBERNETES_CONTEXT}}
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{secrets.KUBERNETES_CONTEXT}}
 
       - name: Deploy to DigitalOcean Kubernetes
         run: kubectl apply -f $GITHUB_WORKSPACE/config/cheem.yaml
