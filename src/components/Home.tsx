@@ -32,6 +32,7 @@ export default function Home() {
         <div className={"card-deck-horizontal space-between"} style={{height: "100vh"}}>
             <div>
                 <HeaderCard header={"Kathan Cheema"}>
+                    <p>TEST</p>
                     <p>
                         Welcome to my web page! Here you can find a few of my highlighted projects, links to my GitHub
                         and
