@@ -1,11 +1,15 @@
-import {LocationType, PageMapping, PageType} from "../common/types";
-import React, {PropsWithChildren} from "react";
-import {LocationContext, NavContext, PageContext} from "../common/contexts";
+import { LocationType, PageMapping, PageType } from "../common/types";
+import React, { PropsWithChildren } from "react";
+import { LocationContext, NavContext, PageContext } from "../common/contexts";
 
 function NavListItem(props: { active: boolean, onClick: () => void } & PropsWithChildren<any>) {
     return <>
-        <li tabIndex={0} className={`nav-item ${props.active ? "active" : ""}`} style={{cursor: "pointer"}}
-            onKeyUp={event => event.keyCode === 13 ? props.onClick() : undefined} onClick={props.onClick}>
+        <li  /* eslint-disable-line jsx-a11y/no-noninteractive-element-interactions */
+            tabIndex={0} /* eslint-disable-line jsx-a11y/no-noninteractive-tabindex */
+            className={`nav-item ${props.active ? "active" : ""}`} 
+            style={{ cursor: "pointer" }}
+            onKeyUp={event => event.keyCode === 13 ? props.onClick() : undefined}
+            onClick={props.onClick}> 
             <span className={`nav-link site`}>{props.children}</span>
         </li>
     </>;
@@ -18,10 +22,10 @@ function NavLocation(props: { targetPage: PageType, targetLocation: LocationType
                 <LocationContext.Consumer>
                     {locationContext =>
                         <NavListItem active={props.targetLocation === locationContext.location}
-                                     onClick={() => {
-                                         locationContext.setTargetLocation(props.targetLocation);
-                                         page.setPage(props.targetPage);
-                                     }}>
+                            onClick={() => {
+                                locationContext.setTargetLocation(props.targetLocation);
+                                page.setPage(props.targetPage);
+                            }}>
                             {props.targetLocation}
                         </NavListItem>
                     }
@@ -42,7 +46,7 @@ function NavPage(props: { targetPage: PageType }) {
                                 navContext.isMobile && !navContext.isNavBarLarge
                                     ? <></>
                                     : <NavListItem active={props.targetPage === pageContext.page}
-                                                   onClick={() => pageContext.setPage(props.targetPage)}>
+                                        onClick={() => pageContext.setPage(props.targetPage)}>
                                         {props.targetPage}
                                     </NavListItem>
                             }
@@ -53,7 +57,7 @@ function NavPage(props: { targetPage: PageType }) {
                                         <ul>
                                             {PageMapping.get(props.targetPage)!.locations.map(location =>
                                                 <NavLocation key={location} targetPage={props.targetPage}
-                                                             targetLocation={location}/>
+                                                    targetLocation={location} />
                                             )}
                                         </ul>
                                     </li>
@@ -72,7 +76,7 @@ export default function Nav() {
     return <>
         <nav id="nav" className={"side-nav"}>
             <ul>
-                {pages.map(page => <NavPage key={page} targetPage={page}/>)}
+                {pages.map(page => <NavPage key={page} targetPage={page} />)}
             </ul>
         </nav>
     </>;

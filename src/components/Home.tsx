@@ -39,7 +39,7 @@ export default function Home() {
                     </p>
                 </HeaderCard>
                 <SmallCard id={"about me"} headerTitle={"About Me"}>
-                    <span tabIndex={0}>
+                    <span>
                         <p>
                             Hi there! This section is in development, please have a look at the Projects or Useful Links areas instead!
                         </p>
